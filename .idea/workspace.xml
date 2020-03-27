@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c5064514-e99d-4b21-bb16-867eeaeddaa3" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ProjectId" id="1Zd3vU96FVBFe0iRFdTvAiI45fF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tp_3.11/ex34.c" />
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="CompoundRunConfigurationType" />
+        <option value="FirefoxRemoteDebugType" />
+      </set>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c5064514-e99d-4b21-bb16-867eeaeddaa3" name="Default Changelist" comment="" />
+      <created>1585155374284</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585155374284</updated>
+      <workItem from="1585155378044" duration="132000" />
+      <workItem from="1585155605680" duration="530000" />
+      <workItem from="1585156805390" duration="660000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="137" y="34" width="1183" height="691" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585156129650">
+      <screen x="0" y="34" width="1366" height="691" />
+    </state>
+    <state x="137" y="34" width="1183" height="691" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.34.1366.691@0.34.1366.691" timestamp="1585156129650" />
+    <state x="413" y="80" width="530" height="598" key="FileChooserDialogImpl" timestamp="1585155750521">
+      <screen x="0" y="34" width="1366" height="691" />
+    </state>
+    <state x="413" y="80" width="530" height="598" key="FileChooserDialogImpl/0.34.1366.691@0.34.1366.691" timestamp="1585155750521" />
+    <state x="263" y="168" key="com.intellij.ide.util.TipDialog" timestamp="1585156863238">
+      <screen x="0" y="34" width="1366" height="691" />
+    </state>
+    <state x="263" y="168" key="com.intellij.ide.util.TipDialog/0.34.1366.691@0.34.1366.691" timestamp="1585156863238" />
+    <state x="263" y="163" key="run.anything.popup" timestamp="1585155856247">
+      <screen x="0" y="34" width="1366" height="691" />
+    </state>
+    <state x="263" y="163" key="run.anything.popup/0.34.1366.691@0.34.1366.691" timestamp="1585155856247" />
+  </component>
+</project>
