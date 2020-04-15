@@ -34,7 +34,7 @@ element_t * Ajout_tete_ensemble(element_t *ensemble, int val, int freq) {
 /* Affche tous les elements d'un ensemble avec leur frequence */
 void Affiche_ensemble(element_t *ensemble) {
   element_t *ptr = ensemble;
-  
+  if(!ptr){printf("NULL\n");}
   while (ptr != NULL) {
     printf("val : %d, frequence : %d\n",ptr->valeur,ptr->frequence);
     ptr=ptr->suivant;
@@ -227,4 +227,247 @@ int Intersection_vide(element_t *e1, element_t *e2){
     }
   }
   return 1;
+}
+
+int taille(element_t *e){
+  int r = 0;
+  while(e){
+    e = e->suivant;
+    r++;
+  }
+  return r;
+}
+
+element_t *Supprime_frequence_inf_seuil(element_t *e, int seuil){
+  if(!e->suivant && e->frequence<=seuil){
+    return NULL;
+  }
+  element_t *tem=e;
+  element_t *d;
+  while(tem->suivant){
+    if(tem->suivant->frequence<=seuil){
+      printf("before tem->suivant: v=%d,f=%d\n",tem->suivant->valeur,tem->suivant->frequence);
+      d = tem->suivant;
+      tem->suivant = tem->suivant->suivant;
+      free(d);
+      // if(tem->suivant){printf("after tem->suivant: v=%d,f=%d\n",tem->suivant->valeur,tem->suivant->frequence);}
+    }else{
+      tem = tem->suivant;
+    }
+  }
+  return e;
+}
+
+int Inclus_rec(element_t *e1, element_t *e2){
+  if(!e1){return 1;}
+  else if(!e2){return 0;}
+  else if(e1->valeur != e2->valeur || e1->frequence < e2->frequence){return 0;}
+  else{return Inclus_rec(e1->suivant,e2->suivant);}
+}
+
+element_t *Union(element_t *e1, element_t *e2){
+  if(!e1){return e2;}
+  if(!e2){return e1;}
+  element_t *r = NULL;
+  while(e1 || e2){
+    if((!e2 && e1) || (e2 && e1 && e1->valeur < e2->valeur)){
+      r = Ajout_tete_ensemble(r, e1->valeur, e1->frequence);
+      e1 = e1->suivant;
+    }else if((!e1 && e2) || (e2 && e1 && e2->valeur < e1->valeur)){
+      r = Ajout_tete_ensemble(r, e2->valeur, e2->frequence);
+      e2 = e2->suivant;
+    }else{
+      r = Ajout_tete_ensemble(r, e1->valeur, e1->frequence + e2->frequence);
+      e1 = e1->suivant;
+      e2 = e2->suivant;
+    }
+  }
+  return r;
+}
+
+element_t *Ajout_suivant(element_t *e, int val, int freq){
+  element_t *new = Ajout_tete_ensemble(NULL, val, freq);
+  if(!e){return new;}
+  element_t *suivant = e->suivant;
+  e->suivant = new;
+  new->suivant = suivant;
+  return e;
+}
+
+element_t *Union_triee(element_t *e1, element_t *e2){
+  if(!e1){return e2;}
+  if(!e2){return e1;}
+  element_t *r = malloc(sizeof(element_t));
+  if(e1->valeur < e2->valeur){
+    r = Ajout_tete_ensemble(NULL, e1->valeur, e1->frequence);
+    e1 = e1->suivant;
+  }else if(e1->valeur > e2->valeur){
+    r = Ajout_tete_ensemble(NULL, e2->valeur, e2->frequence);
+    e2 = e2->suivant;
+  }else{
+    r = Ajout_tete_ensemble(NULL, e1->valeur, e1->frequence + e2->frequence);
+    e1 = e1->suivant;
+    e2 = e2->suivant;
+  }
+  element_t *tem = r;
+  while(e1 || e2){
+    //if we code as while(e1 || e2)
+    //...if(!e2 || e1->valeur < e2->valeur)
+    //and delete the while outside the circle
+    //a segmentation fault will be reported
+    //just consider the situation of e1 == NULL and e2 !=NULL
+    if((!e2 && e1)|| (e1 && e2 && e1->valeur < e2->valeur)){
+      tem = Ajout_suivant(tem, e1->valeur, e1->frequence);
+      e1 = e1->suivant;
+    }else if((e2 && !e1)|| (e1 && e2 && e2->valeur < e1->valeur)){
+      tem = Ajout_suivant(tem, e2->valeur, e2->frequence);
+      e2 = e2->suivant;
+    }else{
+      tem = Ajout_suivant(tem, e1->valeur, e1->frequence + e2->frequence);
+      e1 = e1->suivant;
+      e2 = e2->suivant;
+    }
+    tem = tem->suivant;
+  }
+  return r;
+}
+
+element_t *Union_triee_rec(element_t *e1, element_t *e2){
+  if(!e1 && !e2){
+    return NULL;
+  }
+  if(!e1){
+    return Ajout_tete_ensemble(Union_triee_rec(e1, e2->suivant), e2->valeur, e2->frequence);
+  }else if(!e2){
+    return Ajout_tete_ensemble(Union_triee_rec(e1->suivant,e2), e1->valeur, e1->frequence);
+  }else if(e1->valeur < e2->valeur){
+    return Ajout_tete_ensemble(Union_triee_rec(e1->suivant, e2), e1->valeur, e1->frequence);
+  }else if(e2->valeur < e1->valeur){
+    return Ajout_tete_ensemble(Union_triee_rec(e1, e2->suivant), e2->valeur, e2->frequence);
+  }else{
+    return Ajout_tete_ensemble(Union_triee_rec(e1->suivant, e2->suivant), e2->valeur, e2->frequence + e1->frequence);
+  }
+}
+
+element_t *Intersection_triee_rec(element_t *e1, element_t *e2){
+  if(!e1 || !e2){
+    return NULL;
+  }else if(e1->valeur < e2->valeur){
+    return Intersection_triee_rec(e1, e2->suivant);
+  }else if(e2->valeur > e1->valeur){
+    return Intersection_triee_rec(e1->suivant, e2);
+  }else{
+    return Ajout_tete_ensemble(Intersection_triee_rec(e1->suivant,e2->suivant), e1->valeur, min(e1->frequence, e2->frequence));
+  }
+}
+//if we code a recursive function, the list should be added on head
+
+element_t *Intersection_triee(element_t *e1, element_t *e2){
+  if(!e1 || !e2){return NULL;}
+  element_t *r = NULL;
+  element_t *t = NULL;
+  while(!r || (e1 && e2)){
+    if(e1->valeur < e2->valeur){
+      e1 = e1->suivant;
+    }else if(e1->valeur > e2->valeur){
+      e2 = e2->suivant;
+    }else{
+      if(!r){
+        r = Ajout_tete_ensemble(r, e1->valeur, min(e1->frequence, e2->frequence));
+        t = r;
+      }else{
+        t = Ajout_suivant(t, e1->valeur, min(e1->frequence, e2->frequence));
+      }
+      e1 = e1->suivant;
+      e2 = e2->suivant;
+    }
+  }
+  // printf("marque %d\n",0);
+  return r;
+}
+
+element_t *Difference_triee_rec(element_t *e1, element_t *e2){
+  if(!e1){
+    return NULL;
+  }else if(!e2){
+    return e1;
+  }else if(e1->valeur > e2->valeur){
+    return Difference_triee_rec(e1, e2->suivant);
+  }else if(e1->valeur == e2->valeur){
+    if(e1->frequence > e2->frequence){
+      return Ajout_tete_ensemble(Difference_triee_rec(e1->suivant, e2->suivant), e1->valeur, e1->frequence - e2->frequence);
+    }else if(e1->frequence <= e2->frequence){
+      return Difference_triee_rec(e1->suivant, e2->suivant);
+    }
+  }else if(e1->valeur < e2->valeur){
+    return Ajout_tete_ensemble(Difference_triee_rec(e1->suivant, e2), e1->valeur, e1->frequence);
+  }
+}
+
+
+element_t *Difference_triee(element_t *e1, element_t *e2){
+  if(!e1){
+    return e2;
+  }else if(!e2){
+    return e1;
+  }
+  element_t *r = NULL;
+  while(!r){
+    if(e1->valeur < e2->valeur){
+      r = Ajout_tete_ensemble(NULL, e1->valeur, e1->frequence);
+      e1 = e1->suivant;
+    }else if(e1->valeur > e2->valeur){
+      e2 = e2->suivant;
+    }else{
+      if(e1->frequence > e2->frequence){
+        r = Ajout_tete_ensemble(r, e1->valeur, e1->frequence - e2->frequence);
+      }
+      e1 = e1->suivant;
+      e2 = e2->suivant;
+    }
+  }
+  element_t *t = r;
+  int v1, v2, f1, f2;
+  while(e1){
+    if(!e2 || e1->valeur < e2->valeur){
+      t = Ajout_suivant(t, e1->valeur, e1->frequence);
+      e1 = e1->suivant;
+    }else{
+      v1 = e1->valeur, v2 = e2->valeur, f1 = e1->frequence; f2 = e2->frequence;
+      if(e1->valeur > e2->valeur){
+        e2 = e2->suivant;
+      }else{
+        if(f1>f2){
+          // printf("marque %d\n",0);
+          t = Ajout_suivant(t,v1, f1 - f2);
+        }
+        e1 = e1->suivant;
+        e2 = e2->suivant;
+      }
+    }
+  }
+  return r;
+}
+
+int min(int a, int b){
+  if(a>=b){return b;}
+  else {return a;}
+}
+
+element_t *Xor_triee(element_t *e1, element_t *e2){
+  element_t *r1 = Difference_triee_rec(e1, e2);
+  element_t *r2 = Difference_triee_rec(e2, e1);
+  return Union_triee(r1, r2);
+}
+
+void Detruire(element_t *l){
+  element_t *t = l;
+  while(l){
+    // element_t *t = l;
+    printf("free: l->d %d\n",l->valeur);
+    l = l->suivant;
+    free(t);
+    t = l;
+    if(!t){printf("t = NULL\n");}
+  }
 }

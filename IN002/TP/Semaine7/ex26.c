@@ -39,6 +39,7 @@ int main(){
     strcpy(mon_pointA.couleur, "rouge");// don't do that : s[11] = 'no';
     //use strcpy or s[]; s = 'blabla';
     point mon_pointB = {6, 2, "white"};// respect the order
+    point points[2][2]= {{{1,2,"rouge"}, {3,4,"black"}},{{5,6,"rouge"}, {7,8,"black"}}};
 
     printf("pointA (%d, %d) %s\n",mon_pointA.x, mon_pointA.y, mon_pointA.couleur);
     printf("pointB (%d, %d) %s\n",mon_pointB.x, mon_pointB.y, mon_pointB.couleur);

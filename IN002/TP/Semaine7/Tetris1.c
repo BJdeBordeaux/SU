@@ -1,5 +1,7 @@
-#include <cini.h>
-#include <SDL2/SDL.h>
+/*#include <cini.h>
+#include <SDL2/SDL.h>*/
+#include <time.h>
+#include <stdlib.h>
 
 #define TAILLE_CASE 20
 #define HAUTEUR 22
@@ -12,9 +14,9 @@ struct une_case {
   int colonne;
   int ligne;
 };
+typedef struct une_case une_case;
 
-
-
+typedef struct piece piece;
 struct piece {
   int pos_ligne, pos_colonne;
   struct une_case la_piece[4];
@@ -30,7 +32,7 @@ void afficher_piece(struct piece tetromino, char* couleur) {
   for (i=0; i < 4; i++) {
     ligne_deb=(tetromino.pos_ligne+tetromino.la_piece[i].ligne)*TAILLE_CASE;
     colonne_deb=(tetromino.pos_colonne+tetromino.la_piece[i].colonne)*TAILLE_CASE;
-    CINI_fill_rect(colonne_deb,ligne_deb,TAILLE_CASE,TAILLE_CASE,couleur);
+   //  CINI_fill_rect(colonne_deb,ligne_deb,TAILLE_CASE,TAILLE_CASE,couleur);
   }
 }
 
@@ -53,7 +55,7 @@ void afficher_toutes_pieces (char* color[], struct une_case tab_pieces[7][4]){
   struct piece tetromino;
 
   for (i=0; i < 7; i++) {
-    initialiser( &tetromino,tab_piece[i],i);
+    initialiser( &tetromino,tab_pieces[i],i);
     tetromino.pos_ligne=lig;
     lig = lig + 3;
     afficher_piece(tetromino,color[tetromino.type]);
@@ -73,16 +75,33 @@ int main() {
    
    
    /* (a completer) */
+   piece type_O = {0, 0,{{0, 0}, {0, 1}, {1, 0}, {1, 1}}, 0};
+   piece type_L = {0, 0,{{0, 0}, {0, 1}, {1, 0}, {1, 1}}, 0};
+  une_case tab_pieces[7][4] = {
+    // {{0, 0}, {0, 1}, {1, 0}, {1, 1}},
+    {type_O.la_piece[0],
+    type_O.la_piece[1],
+    type_O.la_piece[2],
+    type_O.la_piece[3]},
+    // type_L->la_piece
+    {{0, 0}, {1, 0}, {2, 0}, {3, 0}},
+    {{0, 0}, {1, 0}, {2, 0}, {2, 1}},
+    {{0, 1}, {1, 1}, {2, 1}, {2, 0}},
+    {{0, 0}, {0, 1}, {1, 1}, {1, 2}},
+    {{1, 0}, {1, 1}, {0, 1}, {0, 2}},
+    {{0, 0}, {0, 1}, {1, 1}, {0, 2}},
+  };
+  
    
    /*--------------------  les initialisations  ---------------------*/
    
    srand(time(NULL));
    
    /* (a completer) */
-
+   
    /*----------------------  ouverture de la fen�tre graphique -------*/
 
-   CINI_open_window(LARGEUR*TAILLE_CASE,HAUTEUR*TAILLE_CASE,"black");
+   // CINI_open_window(LARGEUR*TAILLE_CASE,HAUTEUR*TAILLE_CASE,"black");
    
    /* Affichage de test des pieces */
    /* Instruction a mettre en commentaire pour la suite */
@@ -90,43 +109,43 @@ int main() {
    
    /*----------------------  la boucle de jeu  ----------------------*/
 
-   do {
-      /* afficher_plateau( );*/
-      indice = rand()%7;
-      /* initialiser( ); */
-      /* afficher_piece( ); */
+   // do {
+   //    /* afficher_plateau( );*/
+   //    indice = rand()%7;
+   //    /* initialiser( ); */
+   //    /* afficher_piece( ); */
             
-      do {
-         touche = CINI_loop_until_keyup();
-         /* afficher_piece( ); */              /* "efface" la piece en l'affichant en noir ... */
-         /* descendre( ); */  
-         switch (touche) {
-            case SDLK_LEFT:
-               /* decaler_gauche( ); */
-               break;
-            case SDLK_RIGHT:
-               /* decaler_droite( ); */
-               break;
-            case SDLK_d:
-               /* rotation_gauche( ); */
-               break;
-            case SDLK_g:
-               /* rotation_droite( ); */
-               break;
-            /*case SDLK_g:
-               hard_drop( ); 
-               break; */
-            default:
-               break;
-         }
-         /* afficher_piece( ); */   /* ... avant de la reafficher
-                                                                  apres modification */
-      } while ( (touche != SDLK_DOWN) && (touche != SDLK_ESCAPE) ) ;
+   //    do {
+   //       touche = CINI_loop_until_keyup();
+   //       /* afficher_piece( ); */              /* "efface" la piece en l'affichant en noir ... */
+   //       /* descendre( ); */  
+   //       switch (touche) {
+   //          case SDLK_LEFT:
+   //             /* decaler_gauche( ); */
+   //             break;
+   //          case SDLK_RIGHT:
+   //             /* decaler_droite( ); */
+   //             break;
+   //          case SDLK_d:
+   //             /* rotation_gauche( ); */
+   //             break;
+   //          case SDLK_g:
+   //             /* rotation_droite( ); */
+   //             break;
+   //          /*case SDLK_g:
+   //             hard_drop( ); 
+   //             break; */
+   //          default:
+   //             break;
+   //       }
+   //       /* afficher_piece( ); */   /* ... avant de la reafficher
+   //                                                                apres modification */
+   //    } while ( (touche != SDLK_DOWN) && (touche != SDLK_ESCAPE) ) ;
             
-      /* on supprime les lignes completes si elles existent */
-      /* supprimer_lignes( ); */
+   //    /* on supprime les lignes completes si elles existent */
+   //    /* supprimer_lignes( ); */
 
-   } while (touche != SDLK_ESCAPE) ;
+   // } while (touche != SDLK_ESCAPE) ;
       
    return 0;
 }

@@ -1,4 +1,5 @@
 #include<assert.h>
+#include<stdio.h>
 
 #define TNORMAL 11.4
 #define TMOIS14 4.5
@@ -14,7 +15,7 @@ float prixPlace(int a, int d, float h){
 		if(d >= 1 && d<=5){
 			prix = TMOIS26S;
 		}else{
-			prix = TMOIS26WE
+			prix = TMOIS26WE;
 		}
 	}
 	if(h >= 8 && h<= 11 && prix >= TMATIN){
@@ -24,5 +25,5 @@ float prixPlace(int a, int d, float h){
 }
 
 int main(){
-	printf(prixPlace(21, 5, 17));
+	printf("%f\n", prixPlace(21, 5, 17));
 }
