@@ -7,4 +7,5 @@ void print_int_table(int *t, int len){
         if(i%10 == 0){printf("\n");}
         printf("(%d)  ",t[i]);
     }
+    printf("\n");
 }

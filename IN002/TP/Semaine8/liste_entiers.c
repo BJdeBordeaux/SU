@@ -22,6 +22,14 @@ cellule_t * creerListe(int n) {
   return tete;
 }
 
+cellule_t * creerCellule(int n, cellule_t *l) {
+/* cree une cellule d'une liste*/
+  cellule *res = malloc(sizeof(cellule_t));
+  int res->donnee = i;
+  int res->suivant;
+  return res;
+}
+
 void AfficherListeInt(cellule_t *l){
     // int cpt = 1;
     cellule_t *cur_l = l;
