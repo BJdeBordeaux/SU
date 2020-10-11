@@ -33,4 +33,10 @@ public class Point{
 	
 	public double getX(){	return x;	}
 	public double getY(){	return y;	}
+
+	public boolean egals(Point p){
+		if(p == null){return false;}
+		if(p.x == this.x && p.y == this.y){return true;}
+		else{return false;}
+	}
 }
