@@ -36,31 +36,48 @@ void ajouter_animal(int x, int y,  float energie, Animal **liste_animal) {
 }
 
 /* A Faire. Part 1, exercice 5, question 5 */
+// void enlever_animal(Animal **liste, Animal *animal) {
+//   if(*liste){
+//     Animal *tmp = (*liste)->suivant;
+//     if(*liste == animal){
+//       free(liste);
+//       *liste = tmp;
+//     }else{
+//       if(tmp == animal){
+//         (*liste)->suivant = tmp->suivant;
+//         free(tmp);
+//       }else if(tmp->suivant){
+//         Animal *na = tmp->suivant;
+//         while(na){
+//           if(na == animal){
+//             tmp->suivant = na->suivant;
+//             free(na);
+//           }
+//           tmp = tmp->suivant;
+//           na = na->suivant;
+//         }
+//       }
+//     }
+//   }
+// }
+
 void enlever_animal(Animal **liste, Animal *animal) {
-  /*A Completer*/
   if(*liste){
-    Animal *tmp = (*liste)->suivant;
+    Animal *tmp = *liste;
     if(*liste == animal){
-      free(liste);
-      *liste = tmp;
+      *liste = (*liste)->suivant;
+      free(tmp);
     }else{
-      if(tmp == animal){
-        (*liste)->suivant = tmp->suivant;
-        free(tmp);
-      }else if(tmp->suivant){
-        Animal *na = tmp->suivant;
-        while(na){
-          if(na == animal){
-            tmp->suivant = na->suivant;
-            free(na);
-          }
-          tmp = tmp->suivant;
-          na = na->suivant;
+      Animal *na = tmp->suivant;
+      while(na){
+        if(na == animal){
+          tmp->suivant = na->suivant;
+          free(na);
         }
+        tmp = tmp->suivant;
+        na = na->suivant;
       }
-      
     }
-  
   }
 }
 
