@@ -7,6 +7,7 @@ void affiche_tab_mots(char **ptab_mots);//查看单词数组里的单词
 int compte_mots(char **ptab_mots);//求一个单词数组的单词数量
 int compte_mots_chaine(char *s);//求一个句子（字符串）中单词数量
 char **decompose_chaine(char *chaine);//将一个句子打散成字符串数组
+int compte_char(char *s);
 
 char *compose_chaine(char **ptab_mots)
 {
@@ -138,12 +139,11 @@ void detruit_tab_mots(char **ptab_mots)
 
   /* Fonction vue en TD, exercice 2, question 5 */
 
-  int i=0;
+  // int i=0;
 
   if (ptab_mots)
-    while(ptab_mots[i])
-      free(ptab_mots[i++]);
-
+    while(*ptab_mots)
+      free(*ptab_mots++);
   free(ptab_mots);
 }
 

@@ -1,18 +1,15 @@
 public class Point{
 	private double x,y;  //attributs prives
-	protected int cpt = 0;
 
 	public Point(double x2, double y2){ // constructeur 1
 	// convention : le nom de la classe
 		x = x2;
 		y = y2;
-		cpt++;
 	}
 
 	public Point(double d){
 		x = d;
 		y = d;
-		cpt++;
 	}
 
 	public Point(){
@@ -20,7 +17,6 @@ public class Point{
 		// y = Math.random()*10;
 		// the same as below
 		this(Math.random()*10,Math.random()*10);//invocation du constructeur 1
-		cpt++;
 	}
 
 	public String toString(){
@@ -65,11 +61,11 @@ public class Point{
 		if(p == this){return true;}
 		if(p == null){return false;}
 		if(p.getClass() != this.getClass())
-		// if(!(p instanceof Poin t))
+		// if(!(p instanceof Point))
 			{System.out.println("m1");return false;}
 		Point o = (Point) p;
-		if(o.getX() != this.getX()){System.out.println("m2");return false;}
-		if(o.getY() != this.getY()){System.out.println("m3");return false;}
+		if(o.getX() != this.getX()){return false;}
+		if(o.getY() != this.getY()){return false;}
 		return true;
 	}
 }
