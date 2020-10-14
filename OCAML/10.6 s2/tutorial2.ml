@@ -41,14 +41,14 @@ let u n =
       go n 42
 
 let sum_u n =
-  let rec go n a =
-    if n = 0 then a
-    else go (n - 1) (3 * a + 4 + a)
+  let rec go n a b =
+    if n = 0 then  (a + b)
+    else go (n - 1) (3 * a + 4) (a + b)
   in
     if n < 0 then
       raise (Invalid_argument "Argument can't be negative")
     else
-      go n 42
+      go n 42 0
 
 let sumBetweenWithOffset k a b = (b + 1 - a)*k + (b - a)*a + sumTo (b - a - 1) + b
 let sumBetween = sumBetweenWithOffset 0

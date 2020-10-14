@@ -10,7 +10,7 @@ public class TestFeuTricolore{
 		//Q23.3
 		//car verte, orange et rouge (de type Lampe) référencent à une même instances,
 		// alors que ces variables doivent être différentes selon le sujet.
-		FeuTricolore fc = new FeuTricolore(v);
+		// FeuTricolore fc = new FeuTricolore(v);
 
 		//Q23.4
 		//En effet, les trois arguments qu'on donne au constructeur référencent à une même instance
