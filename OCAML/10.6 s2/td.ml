@@ -45,3 +45,33 @@ let sum_u (n: int) =
 		else u_n 0
 	in  if(n<0) then raise(Invalid_argument "Negative ???")
 		else loop n
+
+let rec sum_inter (a: int) (b: int) : int = 
+	let rec loop (n: int) (m: int) = 
+		if (n > a) then (loop (n-1) (m+n))
+		else (m + n)
+	in 	if (a > b) then raise(Invalid_argument "a can not be greater than b from sum_inter")
+		else loop b 0
+
+let _ = assert(sum_inter 4 6 = 15)
+let _ = assert(sum_inter 0 3 = 6)
+let _ = assert(sum_inter (-5) 5 = 0)
+let _ = assert(sum_inter (-5) 0 = -15)
+
+let rec sum1_inter (k: int) (a :int) (b: int) : int = 
+	let rec loop (n: int) (m: int) = 
+		if (n > a) then loop (n-1) (k+n+m)
+		else k+n+m
+	in if(a > b) then raise(Invalid_argument "a can not be greater then b sum1_inter")
+	else loop b 0
+
+let rec sum2_inter (a: int) (b: int) = 
+	let rec loop (n: int) (m:int) = 
+		if (n<b) then loop (n+1) ((sum1_inter n n b) + m)
+		else ((sum1_inter n n b) + m)
+	in if(a>b) then raise(Invalid_argument "a can not be greater then b sum2_inter")
+	else loop a 0
+
+let _ = assert(sum2_inter 0 2 = 12)
+let _ = assert(sum2_inter (-2) 1 = -10)
+let _ = assert(sum2_inter 2 2 = 4)
