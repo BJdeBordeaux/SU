@@ -11,17 +11,11 @@ let prime (n: int) =
 	if ((less_divider 2 n) = n) then true
 	else false
 
-let prime_next (n: int) = 
-	let rec loop (a: int) = 
-		if(prime a = true) then a
-		else loop (a+1)
-	in loop n
+let rec prime_next (n: int) = 
+	if(prime n) then n else prime_next (n+1)
 
-let nth_prime (n: int) : int = 
-	let rec loop (a: int) (p: int) = 
-		if (a = 0) then p
-		else loop (a-1) (prime_next (p+1))
-	in loop n 2
+let rec nth_prime (n: int) : int = 
+	if (n = 0) then prime_next n else nth_prime (n-1)
 
 
 (*EX5*)
@@ -35,9 +29,7 @@ let sqrt_n (n: int) (a: float) (x0: float) : float =
 	in if ((a < 0.) || (n < 0)) then raise(Invalid_argument "a or n can not be negative from sqrt_n")
 	else loop n x0
 
-let eq_eps (e: float) (x: float) (y: float) : bool = 
-	if ((abs_float (x-.y)) < e) then true
-	else false
+let eq_eps (e: float) (x: float) (y: float) : bool = ((abs_float (x-.y)) < e)
 
 let _ = assert( (eq_eps 0.0001 3. 3.1) = false)
 let _ = assert( (eq_eps 0.0001 (-2.0000001) (-2.000002)) = true)
