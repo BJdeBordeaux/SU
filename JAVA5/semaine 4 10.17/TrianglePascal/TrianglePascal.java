@@ -27,9 +27,8 @@ public class TrianglePascal{
 	// toString()
 	public String toString(){
 		String s = "";
-		int i, j;
-		for(i = 0; i < c.length; i++){
-			for(j = 0; j< c[i].length; j++){
+		for(int[] i : c){
+			for(int j : i){
 					s = s + c[i][j] + " ";
 				}
 			s = s + "\n";

@@ -9,15 +9,22 @@ public class Pile{
 		}
 	}
 
+	public Pile(int n){
+		pile = new Machine[n]; 
+		for(int i = 0; i<pile.length; i++){
+			pile[i] = null;
+		}
+	}
+
 	public void empiler(Machine m){
 		if(this.estPleine()){
 			System.out.println("Sorry, the pile if full.");
 		}else{
-			int i;
-			for(i = pile.length-1; i > 0; i--){
-				pile[i] = pile[i-1];
+			int i = 0;
+			while(pile[i] != null){
+				i++;
 			}
-			pile[0] = m;
+			pile[i] = m;
 		}
 	}
 
@@ -26,12 +33,11 @@ public class Pile{
 			System.out.println("Sorry, the pile if empty.");
 			return null;
 		}else{
-			Machine m = pile[0];
-			int i;
-			for(i = 1; i < pile.length; i++){
-				pile[i-1] = pile[i];
+			int i = pile.length;
+			while(pile[i] == null){
+				i--;
 			}
-			return m;
+			return pile[m];
 		}	
 	}
 
