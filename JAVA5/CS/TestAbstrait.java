@@ -1,8 +1,8 @@
 public class TestAbstrait{
 	public static void main(String[] args){
 		Abstrait a = new Abstrait2("LI");
-		System.out.println(a.toString());
-		a.affiche();
+		// System.out.println(a.toString());
+		// a.affiche();
 
 		Abstrait2 ab = new Abstrait2("ab 2,2");
 		Abstrait2 ac = new Abstrait3("ac 2,3");
@@ -20,6 +20,20 @@ public class TestAbstrait{
 		// System.out.println(ab.getClass());
 		// System.out.println(ac.getClass());
 
+		A aaa = new A();
+		B bbb = new B();
+		C ccc = new C();
+		ab.mm(ccc);
+		ac.mm(ccc);
+		ad.mm(ccc);
 
+		A aabb = new B();
+		A aacc = new C();
+		ab.mm(aabb);
+		ac.mm(aabb);
+		ad.mm(aabb);
+		ab.mm(aacc);
+		ac.mm(aacc);
+		ad.mm(aacc);
 	}
 }

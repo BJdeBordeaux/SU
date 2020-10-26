@@ -22,6 +22,7 @@ int main(void) {
 	Animal *liste_proie = NULL;
 	Animal *liste_predateur = NULL;
 
+
 	for(i = 0; i < NB_PROIES; i++){
 		x = rand()%SIZE_X;
 		y = rand()%SIZE_Y;

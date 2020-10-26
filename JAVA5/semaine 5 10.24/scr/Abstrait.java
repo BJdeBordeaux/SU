@@ -15,4 +15,12 @@ public abstract class Abstrait{
 	}
 
 	public abstract void affiche();
+
+	public void sus(int a){
+		System.out.println(a + " from "+ this.getClass());
+	}
+
+	public void sus(double a){
+		System.out.println(a + " from "+ this.getClass());
+	}
 }

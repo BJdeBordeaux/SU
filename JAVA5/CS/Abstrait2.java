@@ -19,11 +19,11 @@ public class Abstrait2 extends Abstrait{
 		System.out.println(a + " from "+ this.getClass());
 	}
 
-	public void mm(D d){
-		System.out.println(d.getClass()+ " from " this.getClass() + ", " + this.nom);
+	public void mm(A a){
+		System.out.println(a.getClass()+ " from "  + this.getClass() + ", " + this.nom);
 	}
 
-	public void mm(C c){
-		System.out.println(c.getClass()+ " from " this.getClass() + ", " + this.nom);
-	}
+	// public void mm(B b){
+	// 	System.out.println(b.getClass()+ " from "  + this.getClass() + ", " + this.nom);
+	// }
 }

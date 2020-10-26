@@ -1,7 +1,7 @@
 CFLAGS = -g -Wall -Wextra -pedantic
 CC = gcc
 
-PROGRAMS =   tests_ecosys ecosys
+PROGRAMS =   tests_ecosys ecosys ex
 
 .PHONY:	all clean
 
@@ -22,6 +22,9 @@ main_tests.o: main_tests.c
 main_ecosys.o: main_ecosys.c 
 	gcc -c $(CFLAGS) main_ecosys.c
 
+ex: ex.c
+	$(CC) -o $@ $(CFLAGS)  $^
+
 #Ou plus simplement
 #%.o:%.c %.h
 #	$(CC)  $(GCC_FLAGS) -c  $<
@@ -29,3 +32,7 @@ main_ecosys.o: main_ecosys.c
 
 clean:
 	rm -f *.o *~ $(PROGRAMS)
+
+remake:
+	clean
+	make

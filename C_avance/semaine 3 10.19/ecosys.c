@@ -3,10 +3,22 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ecosys.h"
+#define PP printf("here")
+
+
+float p_ch_dir=0.01;
+int gain_energie_proie=6;
+int gain_energie_predateur=20;
+float p_reproduce_proie=0.4;
+float p_reproduce_predateur=0.5;
+int temps_repousse_herbe=-15;
+float p_manger = 1;
+
+
 
 /* PARTIE 1*/
 /* Fourni: Part 1, exercice 3, question 2 */
-Animal *creer_animal(int x, int y, float energie) {
+Animal *creer_animal(int x, int y, float energie){
   Animal *na = (Animal *)malloc(sizeof(Animal));
   assert(na);
   na->x = x;
@@ -62,19 +74,21 @@ void ajouter_animal(int x, int y,  float energie, Animal **liste_animal) {
 // }
 
 void enlever_animal(Animal **liste, Animal *animal) {
-  if(*liste){
+  if(liste != NULL && animal != NULL){
     Animal *tmp = *liste;
     if(*liste == animal){
       *liste = (*liste)->suivant;
       free(tmp);
     }else{
-      while(tmp->suivant){
+      while(tmp && tmp->suivant){
         if(tmp->suivant == animal){
           tmp->suivant = animal->suivant;
           free(animal);
         }
-        tmp = tmp->suivant;
-      }
+        if(tmp->suivant != NULL){
+          tmp = tmp->suivant;
+        }
+      }        
     }
   }
 }
@@ -181,40 +195,111 @@ void clear_screen() {
 /* Part 2. Exercice 5, question 1 */
 void bouger_animaux(Animal *la) {
     /*A Completer*/
+  while(la){
 
+    if(rand()*1./RAND_MAX < p_ch_dir){
+      la->dir[0] = (la->dir[0] + 1)%3;
+      la->dir[1] = (la->dir[1] + 1)%3;
+    }
+    la->x += la->dir[0];
+    if(la->x >= SIZE_X){la->x -= SIZE_X;}
+    else if(la->x < 0){la->x += SIZE_X;}
+    la->y += la->dir[1];
+    if(la->y >= SIZE_Y){la->y -= SIZE_Y;}
+    else if(la->y < 0){la->y += SIZE_Y;}
+    assert(la->x >= 0 && la->y >= 0 && la->x <= SIZE_X && la->y <= SIZE_Y);
+    la = la->suivant;
+  }
 }
 
 /* Part 2. Exercice 5, question 3 */
 void reproduce(Animal **liste_animal, float p_reproduce) {
    /*A Completer*/
+  if(liste_animal){
+    Animal *ani = *liste_animal;
+    while(ani != NULL){
+      if(rand()*1./RAND_MAX < p_reproduce){
+          Animal *enfant = creer_animal(ani->x, ani->y, ani->energie/2);
+          ani->energie /= 2;
+          *liste_animal = ajouter_en_tete_animal(*liste_animal, enfant);
+      }
+      ani = ani->suivant;
+    }    
+  }
 
 }
 
 
 /* Part 2. Exercice 7, question 1 */
 void rafraichir_proies(Animal **liste_proie, int monde[SIZE_X][SIZE_Y]) {
-    /*A Completer*/
-
+  if(liste_proie != NULL){
+    Animal *a = *liste_proie;
+    bouger_animaux(a); 
+    a = *liste_proie;
+    while(a){
+      a->energie -= 1;
+      if(monde[a->x][a->y] >= 0){
+        a->energie += gain_energie_proie;
+        monde[a->x][a->y] = temps_repousse_herbe;
+      }
+      if(a->energie < 0){
+        Animal *tem = a;
+        a = a->suivant;
+        enlever_animal(liste_proie, tem);
+      }else{
+        a = a->suivant;
+      } 
+    }    
+  }
 }
 
 /* Part 2. Exercice 8, question 1 */
 Animal *animal_en_XY(Animal *l, int x, int y) {
-    /*A Completer*/
-
+  while(l != NULL){
+    if(l->x == x && l->y == y){
+      return l;
+    }
+    l = l->suivant;
+  }
   return NULL;
 } 
 
 /* Part 2. Exercice 8, question 2 */
 void rafraichir_predateurs(Animal **liste_predateur, Animal **liste_proie) {
-   /*A Completer*/
-
+  if(liste_predateur != NULL){
+    Animal *a = *liste_predateur;
+    bouger_animaux(a);
+    a = *liste_predateur;
+    Animal *b;
+    while(a != NULL){
+      a->energie -= 1;
+      if(liste_proie != NULL){
+        b=animal_en_XY(*liste_proie, a->x, a->y);
+        if((b != NULL)&& rand()*1./RAND_MAX < p_manger){
+          a->energie += gain_energie_predateur;
+          enlever_animal(liste_proie, b);
+        }  
+      }
+      
+      if(a->energie < 0){
+        Animal *tem = a;
+        a = a->suivant;
+        enlever_animal(liste_predateur, tem);
+      }else{
+        a = a->suivant;
+      } 
+    }  
+  }
+  
 }
 
 /* Part 2. Exercice 6, question 2 */
 void rafraichir_monde(int monde[SIZE_X][SIZE_Y]){
-
-   /*A Completer*/
-
-
+  int i, j;
+  for(i = 0; i < SIZE_X; i++){
+    for(j = 0; j < SIZE_Y; j++){
+      monde[i][j]++;
+    }
+  }
 }
 
