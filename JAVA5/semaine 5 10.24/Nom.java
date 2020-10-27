@@ -1,8 +1,8 @@
 public class Nom{
-    private static char voyelles[]  = {'a', 'o', 'e', 'u', 'i'};
+    private static char voyelles[]  = {'a', 'o', 'e', 'u', 'i','y'};
     private static char consonnes[] = {'b', 'c', 'd', 'f', 'g', 'h', 'j',
             'k', 'l', 'm', 'n', 'p', 'q', 'r',
-            's', 't', 'v', 'w', 'x', 'y', 'z'};
+            's', 't', 'v', 'w', 'x', 'z'};
     public static int rendAlea(int inf, int sup){
         return (int)(Math.random()*(sup - inf + 1)+inf);
     }
@@ -12,11 +12,11 @@ public class Nom{
     }
 
     public static char rendConsonne(){
-        return consonnes[rendAlea(0, 20)];
+        return consonnes[rendAlea(0, consonnes.length - 1)];
     }
 
     public static char rendVoyelle(){
-        return consonnes[rendAlea(0, 4)];
+        return voyelles[rendAlea(0, voyelles.length - 1)];
     }
 
     public static String genereNom() {
