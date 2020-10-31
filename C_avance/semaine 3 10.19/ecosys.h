@@ -5,13 +5,6 @@
 #define SIZE_Y 50
 
 
-/*extern float p_ch_dir = 0.01;
-extern int gain_energie_proie = 6;
-extern int gain_energie_predateur = 20;
-extern float p_reproduce_proie = 0.4;
-extern float p_reproduce_predateur = 0.5;
-extern int temps_repousse_herbe = -15;*/
-
 extern float p_ch_dir;
 extern int gain_energie_proie;
 extern int gain_energie_predateur;

@@ -9,7 +9,7 @@
 
 
 
-#define NB_PROIES 20
+#define NB_PROIES 50
 #define NB_PREDATEURS 20
 #define T_WAIT 40000
 #define ENERGIE 20
@@ -57,25 +57,25 @@ int main(void) {
 
 	i = 0;
 	FILE *f = fopen("Evol_Pop.txt", "w");
-	while(i<200 && (liste_proie != NULL)){
-		afficher_ecosys(liste_proie, liste_predateurs);
+	int npo,npd;
+	afficher_ecosys(liste_proie, liste_predateurs);
+	while(i<100 && (liste_proie != NULL)){
 		rafraichir_proies(&liste_proie, monde);
 		rafraichir_predateurs(&liste_predateurs, &liste_proie);
-		// reproduce(&liste_proie, p_reproduce_proie);
-		// reproduce(&liste_predateurs, p_reproduce_predateur);
+		reproduce(&liste_proie, p_reproduce_proie);
+		reproduce(&liste_predateurs, p_reproduce_predateur);
 		rafraichir_monde(monde);
-		// usleep(T_WAIT);
+		usleep(T_WAIT);
 		fprintf(f, "%d %d %d\n", i, compte_animal_it(liste_proie), compte_animal_it(liste_predateurs));
 		i++;
-		
-		
-		
+		npo = compte_animal_rec(liste_proie);
+		npd = compte_animal_rec(liste_predateurs);
+		afficher_ecosys(liste_proie, liste_predateurs);
+		printf("proies, predateurs: %d, %d\n",npo,npd );	
 	}
 	fclose(f);
 
-	int npo = compte_animal_it(liste_proie);
-	int npd = compte_animal_it(liste_predateurs);
-	printf("proies, predateurs: %d, %d\n",npo,npd );
+	
 
 	liberer_liste_animaux(liste_proie);
 	liberer_liste_animaux(liste_predateurs);

@@ -48,25 +48,6 @@ void ajouter_animal(int x, int y,  float energie, Animal **liste_animal) {
 }
 
 /* A Faire. Part 1, exercice 5, question 5 */
-// void enlever_animal(Animal **liste, Animal *animal) {
-//   if(liste != NULL && animal != NULL){
-//     Animal *tmp = *liste;
-//     if(*liste == animal){
-//       *liste = (*liste)->suivant;
-//       free(tmp);
-//     }else{
-//       while(tmp && tmp->suivant){
-//         if(tmp->suivant == animal){
-//           tmp->suivant = animal->suivant;
-//           free(animal);
-//         }
-//         if(tmp->suivant != NULL){
-//           tmp = tmp->suivant;
-//         }
-//       }        
-//     }
-//   }
-// }
 
 void enlever_animal(Animal **liste, Animal *animal) {
   Animal *current;
@@ -81,20 +62,6 @@ void enlever_animal(Animal **liste, Animal *animal) {
 
 
 /* A Faire. Part 1, exercice 5, question 2 */
-// Animal* liberer_liste_animaux(Animal *liste) {
-//    /*A Completer*/
-//   if(!liste){
-//     return NULL;
-//   }
-
-//   Animal *tmp;
-//   while(liste){
-//     tmp = liste->suivant;
-//     free(liste);
-//     liste = tmp;
-//   }
-//   return NULL;
-// }
 
 Animal* liberer_liste_animaux(Animal *liste) {
    /*A Completer*/
@@ -152,10 +119,14 @@ void afficher_ecosys(Animal *liste_proie, Animal *liste_predateur) {
   while(pa){
     nbpred++;
     assert(pa->x >= 0 && pa->y >= 0 && pa->x <= SIZE_X && pa->y <= SIZE_Y);
-    if(ecosys[pa->x][pa->y] == ' ')
+    if(ecosys[pa->x][pa->y] == ' ' || ecosys[pa->x][pa->y] == 'O')
       {ecosys[pa->x][pa->y] = 'O';}
     else
       {ecosys[pa->x][pa->y] = '@';}
+    // if(ecosys[pa->x][pa->y] == '@' || ecosys[pa->x][pa->y] == '*')
+    //   {ecosys[pa->x][pa->y] = '@';}
+    // else
+    //   {ecosys[pa->x][pa->y] = 'O';}
     pa = pa->suivant;
   }
 
