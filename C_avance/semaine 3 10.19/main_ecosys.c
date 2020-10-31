@@ -9,7 +9,7 @@
 
 
 
-#define NB_PROIES 50
+#define NB_PROIES 20
 #define NB_PREDATEURS 20
 #define T_WAIT 40000
 #define ENERGIE 20
@@ -59,7 +59,7 @@ int main(void) {
 	FILE *f = fopen("Evol_Pop.txt", "w");
 	int npo,npd;
 	afficher_ecosys(liste_proie, liste_predateurs);
-	while(i<100 && (liste_proie != NULL)){
+	while(i<500 && (liste_proie != NULL)){
 		rafraichir_proies(&liste_proie, monde);
 		rafraichir_predateurs(&liste_predateurs, &liste_proie);
 		reproduce(&liste_proie, p_reproduce_proie);
