@@ -57,12 +57,12 @@ int main(void) {
 
 	i = 0;
 	FILE *f = fopen("Evol_Pop.txt", "w");
-	while(i<50 && (liste_proie != NULL)){
+	while(i<200 && (liste_proie != NULL)){
 		afficher_ecosys(liste_proie, liste_predateurs);
 		rafraichir_proies(&liste_proie, monde);
 		rafraichir_predateurs(&liste_predateurs, &liste_proie);
-		reproduce(&liste_proie, p_reproduce_proie);
-		reproduce(&liste_predateurs, p_reproduce_predateur);
+		// reproduce(&liste_proie, p_reproduce_proie);
+		// reproduce(&liste_predateurs, p_reproduce_predateur);
 		rafraichir_monde(monde);
 		// usleep(T_WAIT);
 		fprintf(f, "%d %d %d\n", i, compte_animal_it(liste_proie), compte_animal_it(liste_predateurs));

@@ -49,62 +49,60 @@ void ajouter_animal(int x, int y,  float energie, Animal **liste_animal) {
 
 /* A Faire. Part 1, exercice 5, question 5 */
 // void enlever_animal(Animal **liste, Animal *animal) {
-//   if(*liste){
-//     Animal *tmp = (*liste)->suivant;
+//   if(liste != NULL && animal != NULL){
+//     Animal *tmp = *liste;
 //     if(*liste == animal){
-//       free(liste);
-//       *liste = tmp;
+//       *liste = (*liste)->suivant;
+//       free(tmp);
 //     }else{
-//       if(tmp == animal){
-//         (*liste)->suivant = tmp->suivant;
-//         free(tmp);
-//       }else if(tmp->suivant){
-//         Animal *na = tmp->suivant;
-//         while(na){
-//           if(na == animal){
-//             tmp->suivant = na->suivant;
-//             free(na);
-//           }
-//           tmp = tmp->suivant;
-//           na = na->suivant;
+//       while(tmp && tmp->suivant){
+//         if(tmp->suivant == animal){
+//           tmp->suivant = animal->suivant;
+//           free(animal);
 //         }
-//       }
+//         if(tmp->suivant != NULL){
+//           tmp = tmp->suivant;
+//         }
+//       }        
 //     }
 //   }
 // }
 
 void enlever_animal(Animal **liste, Animal *animal) {
-  if(liste != NULL && animal != NULL){
-    Animal *tmp = *liste;
-    if(*liste == animal){
-      *liste = (*liste)->suivant;
-      free(tmp);
-    }else{
-      while(tmp && tmp->suivant){
-        if(tmp->suivant == animal){
-          tmp->suivant = animal->suivant;
-          free(animal);
-        }
-        if(tmp->suivant != NULL){
-          tmp = tmp->suivant;
-        }
-      }        
-    }
+  Animal *current;
+  if (*liste == NULL || animal == NULL) return;
+  while ((current = *liste) != NULL && current->suivant != animal &&
+         *liste != animal) {
+    liste = &current->suivant;
   }
+  *liste = current->suivant;
+  free(current);
 }
 
+
 /* A Faire. Part 1, exercice 5, question 2 */
+// Animal* liberer_liste_animaux(Animal *liste) {
+//    /*A Completer*/
+//   if(!liste){
+//     return NULL;
+//   }
+
+//   Animal *tmp;
+//   while(liste){
+//     tmp = liste->suivant;
+//     free(liste);
+//     liste = tmp;
+//   }
+//   return NULL;
+// }
+
 Animal* liberer_liste_animaux(Animal *liste) {
    /*A Completer*/
-  if(!liste){
-    return NULL;
-  }
-
   Animal *tmp;
-  while(liste){
-    tmp = liste->suivant;
-    free(liste);
-    liste = tmp;
+  Animal *nxt = liste;
+  while((tmp = nxt) != NULL){
+    nxt = tmp->suivant;
+    free(tmp);
   }
   return NULL;
 }

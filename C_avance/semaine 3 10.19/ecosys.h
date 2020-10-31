@@ -42,6 +42,7 @@ void afficher_ecosys(Animal *liste_predateur, Animal *liste_proie);
 
 void bouger_animaux(Animal *la);
 Animal *animal_en_XY(Animal *l, int x, int y);
+void reproduce(Animal **liste_animal, float p_reproduce);
 void rafraichir_predateurs(Animal **liste_predateur, Animal **liste_proie);
 void rafraichir_proies(Animal **liste_proie, int monde[SIZE_X][SIZE_Y]) ;
 void rafraichir_monde(int monde[SIZE_X][SIZE_Y]);
