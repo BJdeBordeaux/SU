@@ -53,34 +53,30 @@ typedef struct _ty_etu{
 	int notes[20];
 }ty_etu;
 
-ty_etu *lecture_ascii_etu(char *fichier){
-	
+ty_etu *lecture_ascii_etu(char *fichier, int *nb_etu){
+	int i;
+	ty_etu* tab_etu;
 	FILE *f;
-	if(!(f = fopen(fichier, "r"))){
-		printf("Impossible de lire le fichier");
-		exit(1);
+	
+	f = fopen(fichier, "r");
+	if(f == NULL){
+		printf("Impossible de lire le fichier %s\n", fichier);
+		return NULL;
 	}
-	int nb_etu;
-	int length_line = 200;
-	char buffer[length_line];
-	char* line = fgets(buffer, length_line, f);
-	sscanf(line, "%d", &nb_etu);
-	ty_etu* tab_etu = (ty_etu*) malloc(sizeof(ty_etu)*nb_etu);
-	int i, j;
-	char *buffer2;
-	char *nom, *prenom, *codes_ue;
-	int id_etu, nb_ue, notes;
-	for(i = 0; i < nb_etu; i++){
-		line = fgets(buffer, length_line, f);
-		sscanf(buffer, "%d %s %s %d", &id_etu, nom, prenom, &notes);
-		(tab_etu+i)->id_etu = id_etu;
-		strcpy((tab_etu+i)->nom, nom);
-		strcpy((tab_etu+i)->prenom, prenom);
- 		(tab_etu+i)->nb_ue = nb_ue;
-		for(j = 0; j < nb_ue; j++){
-			sscanf(buffer, "%s %d", codes_ue, &notes);
-			strcpy(*((tab_etu+i)->codes_ue+j), codes_ue);
-			*((tab_etu+i)->notes+j) = notes;
+	
+	if(fscanf(f, "%d", nb_etu) != 1){
+		printf("Erreur en lecture de nombre d'étudiant\n");
+		fclose(f);
+		return NULL;
+	}
+
+	tab_etu = (ty_etu*) malloc(*nb_etu*sizeof(ty_etu));
+	
+	int j;
+	for(i = 0; i < *nb_etu; i++){
+		fscanf(f, " %d %s %s %d", &(tab_etu[i].id_etu), tab_etu[i].nom, tab_etu[i].prenom, &(tab_etu[i].nb_ue));
+		for(j = 0; j < tab_etu[i].nb_ue; j++){
+			fscanf(f, " %s %d", tab_etu[i].codes_ue[j], &(tab_etu[i].notes[j]));
 		}
 	}
 	return tab_etu;
@@ -97,7 +93,12 @@ int main(void){
 
 
 	// ex3
-	ty_etu* tab_etu = lecture_ascii_etu("etu.txt");
+	int *nb_etu;
+	ty_etu* tab_etu = lecture_ascii_etu("etu.txt", nb_etu);
+	printf("nb etu : %d\n", *nb_etu);
+	printf("id, nom, prenom, nb_ue, ue1 et notes: %d %s %s %d %s %d\n",
+		tab_etu[0].id_etu, tab_etu[0].nom, tab_etu[0].prenom, tab_etu[0].nb_ue, 
+		tab_etu[0].codes_ue[0], tab_etu[0].notes[0]);
 
 	return 0;
 }
