@@ -93,10 +93,10 @@ int main(void){
 
 
 	// ex3
-	int *nb_etu;
-	ty_etu* tab_etu = lecture_ascii_etu("etu.txt", nb_etu);
-	printf("nb etu : %d\n", *nb_etu);
-	printf("id, nom, prenom, nb_ue, ue1 et notes: %d %s %s %d %s %d\n",
+	int nb_etu;
+	ty_etu* tab_etu = lecture_ascii_etu("etu.txt", &nb_etu);
+	printf("nb etu : %d\n", nb_etu);
+	printf("id, nom, prenom, nb_ue, ue1 et notes:\n%d %s %s %d %s %d\n",
 		tab_etu[0].id_etu, tab_etu[0].nom, tab_etu[0].prenom, tab_etu[0].nb_ue, 
 		tab_etu[0].codes_ue[0], tab_etu[0].notes[0]);
 
