@@ -5,7 +5,7 @@
 #define DIM2 6
 #define PP printf("here\n")
 
-void InitTab(char tab[DIM1][DIM2]){
+void InitTab(char tab[][DIM2]){
 	int i, j;
 	for(i = 0; i < DIM1; i++){
 		for(j = 0; j < DIM2; j++){
@@ -14,16 +14,16 @@ void InitTab(char tab[DIM1][DIM2]){
 	}
 }
 
-void InitTab2(char *tab){
+void InitTab2(char **tab, int nba, int nbb){
 	int i, j;
-	for(i = 0; i < DIM1; i++){
-		for(j = 0; j < DIM2; j++){
-			*((tab+i)+j) = '0';
+	for(i = 0; i < nba; i++){
+		for(j = 0; j < nbb; j++){
+			tab[i][j] = 0;
 		}
 	}
 }
 
-void print_char_table(char t[DIM1][DIM2]){
+void print_char_table(char t[][DIM2]){
     int i, j;
     for(i = 0; i < DIM1; i++){
         for(j = 0; j < DIM2; j++){
@@ -34,15 +34,15 @@ void print_char_table(char t[DIM1][DIM2]){
     printf("\n");
 }
 
-void print_char_table2(char *t){
+void print_char_table2(char **t){
     int i, j;
     for(i = 0; i < DIM1; i++){
         for(j = 0; j < DIM2; j++){
-        	printf("%c  ",*((t+i)+j));
+        	printf("\t%d",t[i][j]);
         }
-        printf("\n");
+        putchar('\n');
     }
-    printf("\n");
+    putchar('\n');
 }
 
 typedef struct _ty_etu{
@@ -87,10 +87,18 @@ int main(void){
 	
 	// ex1
 	char tab2D[DIM1][DIM2];
-	char* tab2D2 = (char*) malloc(sizeof(char)*DIM1*DIM2);
-	InitTab2(tab2D2);
+	char** tab2D2 = malloc(sizeof(char*)*DIM1);
+	int i;
+	for(i = 0; i < DIM1; i++){
+		tab2D2[i] = malloc(sizeof(char)*DIM2);
+	}
+	InitTab2(tab2D2,DIM1,DIM2);
 	print_char_table2(tab2D2);
-
+	
+	for(i = 0; i < DIM1; i++){
+		free(tab2D2[i]);
+	}
+	free(tab2D2);
 
 	// ex3
 	int nb_etu;

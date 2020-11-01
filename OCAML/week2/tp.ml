@@ -1,21 +1,25 @@
 (*tp semaine 3*)
 (*EX4*)
 let less_divider (i: int) (n: int) : int = 
-	let rec loop (a: int) (n: int) = 
-		if(n mod a = 0) then a
-		else loop (a+1) n
-	in if ((i<2) || (n<2)) then raise(Invalid_argument "i or n can not be greater than 2 from less_divider")
-	else loop i n
+  let rec loop (a: int) (n: int) = 
+    if(a = n) then 0
+    else if(n mod a = 0) then a
+    else loop (a+1) n
+  in if(n = 0) then raise(Division_by_zero) 
+  else if(n<0) then raise(Invalid_argument "i or n can not be greater than 2 from less_divider")
+  else loop i n
 
 let prime (n: int) = 
-	if ((less_divider 2 n) = n) then true
-	else false
+  if(n<2)then false else ((less_divider 2 n) = 0)
 
-let rec prime_next (n: int) = 
-	if(prime n) then n else prime_next (n+1)
+let rec next_prime (n: int) = 
+  if(prime n) then n else next_prime (n+1)
 
-let rec nth_prime (n: int) : int = 
-	if (n = 0) then prime_next n else nth_prime (n-1)
+let nth_prime (n: int): int = 
+  let rec loop (a: int) (p: int) = 
+    if a = 0 then p
+    else loop (a-1) (next_prime (p+1))
+  in loop n 2
 
 
 (*EX5*)
