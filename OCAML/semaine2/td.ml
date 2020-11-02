@@ -56,6 +56,17 @@ let sum_u2 n =
   else
     go n 42 0
 
+   let rec iter (n:int) (f: 'a -> 'a) (a:'a) : 'a =
+  if (n > 0) then (iter (n-1) f (f a))
+  else a
+
+let sum_u_2_iter (n:int) : int * int * int =
+  (* Hypothese : n >= 0 *)
+  let f ((n, t, s) : int * int * int) : int * int * int =
+    if (n = 0) then (0, t, s + t)
+    else (n-1, 3 * t + 4, s + 3 * t + 4)
+  in iter n f (n, 42, 42)    (* ==> (0, t, sum_u *)
+
 let rec sum_inter (a: int) (b: int) : int = 
 	let rec loop (n: int) (m: int) = 
 		if (n > a) then (loop (n-1) (m+n))
