@@ -4,8 +4,9 @@ let rec cpt (xs : 'a list) : int =
   |_ -> 0
 
 let len_comp_3 (xs : 'a list) : int =
-  if (cpt xs > 3) then 1
-  else if (cpt xs = 3) then 0
+  let c = cpt xs
+  in if (c > 3) then 1
+  else if (c = 3) then 0
   else (-1)
 
 let _ = assert(len_comp_3 [1; 2; 3; 4; 5] = 1)
