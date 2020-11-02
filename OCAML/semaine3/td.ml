@@ -9,6 +9,12 @@ let len_comp_3 (xs : 'a list) : int =
   else if (c = 3) then 0
   else (-1)
 
+let len_comp_32 (xs : 'a list) : int =
+  match xs with
+  |[a; b; c] -> 0
+  |a::b::c::l -> 1
+  |_ -> (-1)
+
 let _ = assert(len_comp_3 [1; 2; 3; 4; 5] = 1)
 let _ = assert(len_comp_3 [1; 2; 3] = 0)
 let _ = assert(len_comp_3 [1; 2] = (-1))
