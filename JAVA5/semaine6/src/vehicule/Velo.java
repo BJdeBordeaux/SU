@@ -1,7 +1,7 @@
-public class Velo extends Vehicule{
+public class Velo extends SansMoteur{
     protected double vitesse;
 
-    public Velo(double v, int np) {
+    public Velo(double v) {
         super();
         vitesse = v;
     }

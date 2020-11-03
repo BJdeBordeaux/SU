@@ -1,6 +1,6 @@
 public class TestVehicule {
     public static void main(String[] args) {
-        Velo vl = new Velo(15, 3);
+        Velo vl = new Velo(15);
         System.out.println(vl.toString());
         vl.transporter("Angers", "Paris");
         Voiture vt = new Voiture(50, 50, 4);

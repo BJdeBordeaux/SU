@@ -6,18 +6,18 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - TestFaune",
+            "request": "launch",
+            "mainClass": "TestFaune",
+            "projectName": "semaine6_b7916ded"
+        },
+        {
+            "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
             "mainClass": "${file}",
             "preLaunchTask": "build",
             "projectName": "semaine6_b7916ded"
-        },
-        // {
-        //     "type": "java",
-        //     "name": "CodeLens (Launch) - TestVehicule",
-        //     "request": "launch",
-        //     "mainClass": "TestVehicule",
-        //     "projectName": "semaine6_b7916ded"
-        // },
+        }
     ]
 }
