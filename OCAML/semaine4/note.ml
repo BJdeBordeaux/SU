@@ -6,6 +6,7 @@ let rec map (f: 'a -> 'b) (xs: 'a list) : ('b list) =
 let _ = assert(map (fun x -> x*x) [1; 2; 3] = [1; 4; 9])
 let _ = assert(map (fun x -> x*x) [] = [])
 let _ = assert(map (fun x -> 5::x) [[3]; []] = [[5; 3]; [5]])
+let _ = assert(map (fun x -> 5::x) [[3]; []] = List.map (fun x -> 5::x) [[3]; []])
 
 let rec filtre (f: 'a -> bool) (l: 'a list) : ('a list) = 
   match l with 
@@ -42,7 +43,23 @@ let rec fold_left (f: 'a->'b->'a) (a: 'a) (l: 'b list) : 'a =
 let somme_carre2 (l: 'a list) : 'a = 
   match l with
   |[] -> 0
-  |_ -> fold_left (fun a b -> b*b+a) 0 l
+  |_ -> fold_left (fun a b -> a + b*b) 0 l
 
 let _ = assert(somme_carre2 [1; 2; 3] = 14)
 let _ = assert(somme_carre2 [0] = 0)
+
+let max (a: 'a) (b: 'a) : 'a = 
+  if(a>b)then a else b
+
+let find_max (l: 'a list) : 'a = 
+  match l with
+  |[] -> raise(Invalid_argument "empty set!")
+  |a::la -> fold_left max a la
+
+let find_max2 (l: 'a list) : 'a = 
+    match l with
+    |[] -> raise(Invalid_argument "empty set!")
+    |a::la -> fold_right max la a
+
+let _ = assert(find_max2 [1; 2; 3] = 3)
+let _ = assert(find_max2 [0] = 0)
