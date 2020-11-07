@@ -96,18 +96,22 @@ public class Faune {
             Animal proche = tab[getIndiceAnimalLePlusProche(a)];
             // System.out.println(a + " a pour voisin le plus proche : " + proche);
             a.move(proche);
-            int moveX = 0, moveY = 0;
+            // int moveX = 0, moveY = 0;
             if(a.getX() >= TAILLE){
-                moveX = 1;
+                a.move(-1,0);
+                // moveX = 1;
             }else if(a.getX() < 0){
-                moveX = -1;
+                a.move(1,0);
+                // moveX = -1;
             }
             if(a.getY() >= TAILLE){
-                moveY = 1;
+                // moveY = 1;
+                a.move(0,-1);
             }else if(a.getY() < 0){
-                moveY = -1;
+                // moveY = -1;
+                a.move(0,1);
             }
-            a.move(-TAILLE*moveX, -TAILLE*moveY);
+            // a.move(-TAILLE*moveX, -TAILLE*moveY);
         }
 
 
