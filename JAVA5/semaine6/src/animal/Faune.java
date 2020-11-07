@@ -2,7 +2,6 @@ public class Faune {
     public static final int TAILLE = 15;
     public static final int NBANIMAL = 21;
     protected Animal[] tab;
-    protected int nb_a = 0;
 
     public Faune() {
         tab = new Animal[NBANIMAL];
@@ -10,7 +9,7 @@ public class Faune {
             tab[i] = new Vipere((int)(Math.random()*TAILLE), (int)(Math.random()*TAILLE));
             tab[i+NBANIMAL/3] = new Renard((int)(Math.random()*TAILLE), (int)(Math.random()*TAILLE));
             tab[i+2*NBANIMAL/3] = new Poule((int)(Math.random()*TAILLE), (int)(Math.random()*TAILLE));
-            nb_a += 3;
+            // nb_a += 3;
         }
     }
 
@@ -22,11 +21,12 @@ public class Faune {
             }
         }
 
-        Animal a = tab[0];
-        nb_a = 0;
-        while(a != null && nb_a < NBANIMAL){
-            terr[a.getX()][a.getY()] = a.toString();
-            a = tab[nb_a++];
+        
+        
+        for(Animal a: tab){
+            if(a != null){
+                terr[a.getX()][a.getY()] = a.toString();
+            }
         }
 
         String res = "";
@@ -58,16 +58,13 @@ public class Faune {
     public int getIndiceAnimalLePlusProche(Animal requete){
         Double dist_min = Double.POSITIVE_INFINITY;
         int index = -1;
-        int xa, ya;
         int xb = requete.getX();
         int yb = requete.getY();
         double d;
         for(int i = 0; i < tab.length; i++){
-            xa = tab[i].getX();
-            ya = tab[i].getY();
             if(tab[i] == requete){continue;}
             else if(tab[i] == null){continue;}
-            else if((d = distance(xa, ya, xb, yb)) < dist_min){
+            else if((d = distance(tab[i].getX(), tab[i].getY(), xb, yb)) < dist_min){
                 dist_min = d;
                 index = i;
             }
@@ -77,14 +74,62 @@ public class Faune {
     }
 
     public void etatDeLaFaune(){
-        for(int i = 0; i < nb_a; i++){
-            System.out.println("Indice le plus proche : " + getIndiceAnimalLePlusProche(tab[i])
+        for(int i = 0; i < tab.length; i++){
+            if(tab[i] != null){
+                System.out.println("Indice le plus proche : " + getIndiceAnimalLePlusProche(tab[i])
                 + " pour " + tab[i].toString());
+            }
         }
     }
+
+
 
     public Animal[] getTab() {
         return tab;
     }
 
+    public void update(){
+        for(Animal a : tab){
+            if(a == null){
+                continue;
+            }
+            Animal proche = tab[getIndiceAnimalLePlusProche(a)];
+            // System.out.println(a + " a pour voisin le plus proche : " + proche);
+            a.move(proche);
+            int moveX = 0, moveY = 0;
+            if(a.getX() >= TAILLE){
+                moveX = 1;
+            }else if(a.getX() < 0){
+                moveX = -1;
+            }
+            if(a.getY() >= TAILLE){
+                moveY = 1;
+            }else if(a.getY() < 0){
+                moveY = -1;
+            }
+            a.move(-TAILLE*moveX, -TAILLE*moveY);
+        }
+
+
+        int[] mondeX = new int[tab.length];
+        int[] mondeY = new int[tab.length];
+        for(int i = 0; i < tab.length; i++){
+            if(tab[i] == null){continue;}
+            mondeX[i] = tab[i].getX();
+            mondeY[i] = tab[i].getY();
+            for(int j = 0; j < i; j++){
+                if(tab[j] == null){continue;}
+                if(mondeX[i] == mondeX[j] && mondeY[i] == mondeY[j]){
+                    if(tab[i].getPoire() == tab[j].getType()){
+                        System.out.println(tab[i].toString() + " mange " + tab[j].toString());
+                        tab[j] = null;
+                    }else if(tab[i].getPredateur() == tab[j].getType()){
+                        System.out.println(tab[j].toString() + " mange " + tab[i].toString());
+                        tab[i] = null;
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }

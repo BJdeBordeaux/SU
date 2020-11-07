@@ -9,7 +9,7 @@
             "name": "CodeLens (Launch) - TestFaune",
             "request": "launch",
             "mainClass": "TestFaune",
-            "projectName": "semaine6_b7916ded"
+            "projectName": "semaine6_b7916ded",
         },
         {
             "type": "java",
