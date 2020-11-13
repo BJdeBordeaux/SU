@@ -167,8 +167,12 @@ void bouger_animaux(Animal *la) {
   while(la){
 
     if(rand()*1./RAND_MAX < p_ch_dir){
-      la->dir[0] = (la->dir[0] + 1)%3;
-      la->dir[1] = (la->dir[1] + 1)%3;
+    	int a = la->dir[0];
+    	int b = la->dir[1];
+    	while(a == la->dir[0] && b == la->dir[1]){
+    		la->dir[0] = (la->dir[0] - 1)%3;
+      		la->dir[1] = (la->dir[1] - 1)%3;
+    	}
     }
     la->x += la->dir[0];
     if(la->x >= SIZE_X){la->x -= SIZE_X;}
