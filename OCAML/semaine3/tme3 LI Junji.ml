@@ -6,12 +6,12 @@ let rec merge (xs:'a list) (ys:'a list) : 'a list =
     then x :: merge xss ys
     else y :: merge xs yss
 
-let _ = assert((merge [8; 5; 7] []) = [8; 5; 7])
-let _ = assert((merge [] [8; 5; 7]) = [8; 5; 7])
-let _ = assert((merge [1] [3; 6; 2]) = [1; 3; 6; 2]) 
-let _ = assert((merge [5] [3; 6; 2]) = [3; 5; 6; 2]) 
-let _ = assert((merge [1; 5] [3; 6; 2]) = [1; 3; 5; 6; 2])
-let _ = assert(merge [0;2;4;8] [1;3;5;7] = [0; 1; 2; 3; 4; 5; 7; 8])
+    let _ = assert((merge [8; 5; 7] []) = [8; 5; 7])
+    let _ = assert((merge [] [8; 5; 7]) = [8; 5; 7])
+    let _ = assert((merge [1] [3; 6; 2]) = [1; 3; 6; 2]) 
+    let _ = assert((merge [5] [3; 6; 2]) = [3; 5; 6; 2]) 
+    let _ = assert((merge [1; 5] [3; 6; 2]) = [1; 3; 5; 6; 2])
+    let _ = assert(merge [0;2;4;8] [1;3;5;7] = [0; 1; 2; 3; 4; 5; 7; 8])
 
 let rec split (xs:'a list) : ('a list) * ('a list) = 
   match xs with
@@ -25,6 +25,13 @@ let rec split (xs:'a list) : ('a list) * ('a list) =
   let _ = assert((split [1;2;3]) = ([1;3],[2]))
 
 let rec merge_sort (xs:'a list) : 'a list = 
+  match xs with 
+  |[] -> []
+  |[a] -> [a]
+  |_ -> let la, lb = split xs in
+    merge (merge_sort la) (merge_sort lb)
+
+let rec merge_sort_v2 (xs:'a list) : 'a list = 
   match xs with 
   |[] -> []
   |a :: l -> merge [a] (merge_sort l)
