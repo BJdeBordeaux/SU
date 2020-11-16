@@ -79,3 +79,55 @@ let rec range_i (i:int) (j:int) : (int list) =
 let rec range_n (x:int) (n:int) : (int list) =
   if(n<=0) then []
   else (range_n x (n-1)) @[x+n-1]
+
+  (* list_scheme_red *)
+
+
+  (* merge_sort *)
+  (* Q1 *)
+let rec merge (xs:'a list) (ys:'a list) : 'a list =
+  match (xs, ys) with
+  |([], yss) -> yss
+  |(xss, []) -> xss
+  |(x :: xss, y :: yss) -> if(x < y) 
+      then x :: merge xss ys
+      else y :: merge xs yss
+
+(* Q2 *)
+let rec split (xs:'a list) : ('a list * 'a list) =
+  match xs with
+  |[] -> [], []
+  |[x] -> ([x],[])
+  |x :: y :: xss-> let (a, b) = split xss 
+      in x :: a, y :: b
+
+(* Q3 *)
+let rec merge_sort (xs:'a list) : 'a list =
+  match xs with 
+  |[] -> []
+  |[a] -> [a]
+  |_ -> let la, lb = split xs in
+      merge (merge_sort la) (merge_sort lb)
+(* Q4 *)
+let rec merge_gen (cmp:'a -> 'a -> bool) (xs:'a list) (ys:'a list) : 'a list =
+  match (xs, ys) with
+  |([], yss) -> yss
+  |(xss, []) -> xss
+  |(x :: xss, y :: yss) -> if(cmp x y) 
+      then x :: merge_gen cmp xss ys
+      else y :: merge_gen cmp xs yss
+  
+(* Q5 *)
+let rec merge_sort_gen (cmp:'a -> 'a -> bool) (xs:'a list) : 'a list =
+  match xs with 
+  |[] -> []
+  |a :: l -> merge_gen cmp [a] (merge_sort_gen cmp l)
+
+(* Q6 *)
+let sort (xs:(int*int) list) : (int*int) list =
+  let cmp = fun (a, b) (c, d) -> (a+b < c+d) in
+  match xs with 
+  |[] -> []
+  |[a] -> [a]
+  |_ -> let la, lb = split xs in
+      merge_gen cmp (merge_sort_gen cmp la) (merge_sort_gen cmp lb)
