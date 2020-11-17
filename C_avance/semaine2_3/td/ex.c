@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #define DIM1 5
 #define DIM2 6
 #define PP printf("here\n")
@@ -70,7 +71,13 @@ ty_etu *lecture_ascii_etu(char *fichier, int *nb_etu){
 		return NULL;
 	}
 
+	// // or this version from corrige
+	// int verif;
+	// verif = fscanf(f, "%d", nb_etu);
+	// assert(verif == 1);
+
 	tab_etu = (ty_etu*) malloc(*nb_etu*sizeof(ty_etu));
+	assert(tab_etu);
 	
 	int j;
 	for(i = 0; i < *nb_etu; i++){
@@ -82,6 +89,24 @@ ty_etu *lecture_ascii_etu(char *fichier, int *nb_etu){
 	return tab_etu;
 	
 }
+
+void ecriture_binaire_etu(char *nomFi, ty_etu *tEtu, int nb_etu){
+	FILE *f;
+
+	f = fopen(nomFi, "w");
+	if(f == NULL){
+		fprintf(stderr, "Impossible d'ouvrir le fichier %s\n", nomFi);
+		return ;
+	}
+
+	fwrite(&nb_etu, sizeof(int), 1, f);
+	fwrite(tEtu, sizeof(ty_etu), nb_etu, f);
+
+	fclose(f);
+	return ;
+}
+
+
 
 int main(void){
 	
@@ -107,6 +132,8 @@ int main(void){
 	printf("id, nom, prenom, nb_ue, ue1 et notes:\n%d %s %s %d %s %d\n",
 		tab_etu[0].id_etu, tab_etu[0].nom, tab_etu[0].prenom, tab_etu[0].nb_ue, 
 		tab_etu[0].codes_ue[0], tab_etu[0].notes[0]);
+
+	
 
 	return 0;
 }

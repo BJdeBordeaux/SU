@@ -124,6 +124,7 @@ let rec merge_sort_gen (cmp:'a -> 'a -> bool) (xs:'a list) : 'a list =
   |a :: l -> merge_gen cmp [a] (merge_sort_gen cmp l)
 
 (* Q6 *)
+
 let sort (xs:(int*int) list) : (int*int) list =
   let cmp = fun (a, b) (c, d) -> (a+b < c+d) in
   match xs with 
