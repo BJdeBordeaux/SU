@@ -65,7 +65,8 @@ ty_etu *lecture_ascii_etu(char *fichier, int *nb_etu){
 		return NULL;
 	}
 	
-	if(fscanf(f, "%d", nb_etu) != 1){
+	int verif = fscanf(f, "%d", nb_etu);
+	if(verif != 1){
 		printf("Erreur en lecture de nombre d'étudiant\n");
 		fclose(f);
 		return NULL;
@@ -73,7 +74,7 @@ ty_etu *lecture_ascii_etu(char *fichier, int *nb_etu){
 
 	// // or this version from corrige
 	// int verif;
-	// verif = fscanf(f, "%d", nb_etu);
+	// verif = fscanf(f, " %d", nb_etu);
 	// assert(verif == 1);
 
 	tab_etu = (ty_etu*) malloc(*nb_etu*sizeof(ty_etu));
@@ -106,6 +107,27 @@ void ecriture_binaire_etu(char *nomFi, ty_etu *tEtu, int nb_etu){
 	return ;
 }
 
+ty_etu* lecture_binaire_etu(char *nomFi, int *nb_etu){
+
+	FILE *f;
+	int i;
+	
+	f = fopen(nomFi, "r");
+	if(f == NULL){
+		printf("Impossible d'ouvrir le fichier %s\n", nomFi);
+		exit(1);
+	}
+
+	fread(nb_etu, sizeof(int), 1, f);
+	ty_etu *tab = malloc(*nb_etu*sizeof(ty_etu));
+	assert(tab);
+	fread(tab, sizeof(ty_etu), *nb_etu, f);
+
+	fclose(f);
+	return tab;
+
+}
+
 
 
 int main(void){
@@ -128,12 +150,25 @@ int main(void){
 	// ex3
 	int nb_etu;
 	ty_etu* tab_etu = lecture_ascii_etu("etu.txt", &nb_etu);
-	printf("nb etu : %d\n", nb_etu);
-	printf("id, nom, prenom, nb_ue, ue1 et notes:\n%d %s %s %d %s %d\n",
-		tab_etu[0].id_etu, tab_etu[0].nom, tab_etu[0].prenom, tab_etu[0].nb_ue, 
-		tab_etu[0].codes_ue[0], tab_etu[0].notes[0]);
+	// printf("nb etu : %d\n", nb_etu);
+	// printf("id, nom, prenom, nb_ue, ue1 et notes:\n%d %s %s %d %s %d\n",
+	// 	tab_etu[0].id_etu, tab_etu[0].nom, tab_etu[0].prenom, tab_etu[0].nb_ue, 
+	// 	tab_etu[0].codes_ue[0], tab_etu[0].notes[0]);
 
+	ecriture_binaire_etu("etu_binaire.txt", tab_etu, nb_etu);
 	
-
+	int j;
+	ty_etu* tab_etu2 = lecture_binaire_etu("etu_binaire.txt", &nb_etu);
+	printf("nb etu : %d\n", nb_etu);
+	printf("id, nom, prenom, nb_ue, code ue et notes :\n");
+	for(i = 0; i < nb_etu; i++){
+		printf("%d %s %s %d",
+		tab_etu[i].id_etu, tab_etu[i].nom, tab_etu[i].prenom, tab_etu[i].nb_ue);
+		for(j = 0; j < tab_etu[i].nb_ue; j++){
+			printf("%s %d ", tab_etu[i].codes_ue[j], tab_etu[i].notes[j]);
+		}
+		printf("\n");
+	}
+	
 	return 0;
 }
