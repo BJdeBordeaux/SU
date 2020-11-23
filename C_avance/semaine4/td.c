@@ -121,7 +121,7 @@ PNoeud chercher_lettre(PNoeud n, char lettre){
 }
 
 int rechercher_mot(PNoeud dico, char *mot){
-    PNoeud n = rechercher_mot(dico, mot[0]);
+    PNoeud n = rechercher_lettre(dico, mot[0]);
 
     if(n == NULL){
         return 0;
