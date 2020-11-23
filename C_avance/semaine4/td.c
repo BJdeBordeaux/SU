@@ -27,15 +27,18 @@ Lm_mot *part_Lmot(Lm_mot **pl){
     Lm_mot *p = *pl;
     Lm_mot *pivot;
 
-    if(lenth_Lmot(*pl) < 3){
+    int len = lenth_Lmot(*pl);
+    if(len < 3){
         *pl = NULL;
         return p;
     }
 
-    int length = lenth_Lmot(*pl);
-    // a continuer
+    len /= 2;
+    for(p = *pl; len-- > 1; p = p->suiv);
 
-    return NULL;
+    pivot = p->suiv;
+    p->suiv = NULL;
+    return pivot;
 }
 
 Nd_mot *Lm2abr(Lm_mot *l){
@@ -121,8 +124,8 @@ PNoeud chercher_lettre(PNoeud n, char lettre){
     }
 }
 
-int rechercher_mot(PNoeud dico, char *mot){
-    PNoeud n = rechercher_lettre(dico, mot[0]);
+int chercher_mot(PNoeud dico, char *mot){
+    PNoeud n = chercher_lettre(dico, mot[0]);
 
     if(n == NULL){
         return 0;
@@ -130,5 +133,7 @@ int rechercher_mot(PNoeud dico, char *mot){
     if(strlen(mot) == 1){
         return n->fin_de_mot = fin;
     }
-    return rechercher_mot(n->fils, mot+1);
+    return chercher_mot(n->fils, mot+1);
 }
+
+
