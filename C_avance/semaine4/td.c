@@ -33,6 +33,7 @@ Lm_mot *part_Lmot(Lm_mot **pl){
     }
 
     int length = lenth_Lmot(*pl);
+    // a continuer
 
     return NULL;
 }
