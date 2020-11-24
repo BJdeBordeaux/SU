@@ -1,0 +1,63 @@
+1) Une méthode abstraite est celle 
+    dont on ne précise que la signature et 
+    qui sera implémenté dans les classes filles
+    (sinon la class fille est abstraite)
+
+    Toute classe contenant une méthode abstraite est forcément abstraite
+
+    Une classe concrète doit implémenter toutes les méthodes abstraites des classes parentes
+
+    En ce qui concerne les classes données, 
+    - Figure est une classe abstraite
+        -surface() est une méthode abstraite de Figure
+    - Figure2D est une classe abstraite
+        -perimetre() est une méthode abstraite de Figure2D
+
+2) 
+public abstract class Figure{
+    public abstract double surface();
+    public String toString(){
+        return "C'est un figure.";
+    }
+}
+
+public abstract class Figure2D extends Figure{
+    public abstract double perimetre();
+}
+
+public class Rectangle extends Figure2D{
+    public double longueur, largeur;
+
+    public Rectangle(double la, double lb){
+        super();
+        longueur = la;
+        largeur = lb;
+    }
+    
+    public double surface(){
+        return longueur * largeur;
+    }
+    public double perimetre(){
+        return 2 * (longueur + largeur);
+    }
+}
+
+public class Carre extends Rectangle{
+    public Carre(double c){super(c, c);}
+}
+
+public class Ellipse extends Figure2D{
+    private double a, b;
+
+    public Ellipse(double a, double b){
+        super();
+        this.a = a; this.b = b;
+    }
+
+    public double surface(){
+        return a*b*Math.PI;
+    }
+
+    public double perimetre(){return Math.PI*Math.sqrt((a*a + b*b)/2);}
+
+}

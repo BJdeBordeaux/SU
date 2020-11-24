@@ -1,0 +1,7 @@
+/**
+ * Mammifere
+ */
+public class Mammifere {
+
+    
+}
