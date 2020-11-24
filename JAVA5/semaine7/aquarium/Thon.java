@@ -9,14 +9,14 @@ public class Thon extends Poisson{
 
     @Override
     public String toString() {
-        return "Thon ["+ super.position.getX() + 
-        ", " + super.position.getY() +"]";
+        return "Thon("+ super.position.getX() + 
+        ", " + super.position.getY() +")";
     }
     
     public void move(Point cible) {
         if(this.position.distanceTo(cible) >= 60){
-            position.setX((position.getX() + (int)(Math.random() * 31 -15));
-            position.setY((position.getY() + (int)(Math.random() * 31 -15));
+            position.setX((position.getX() + (int)(Math.random() * 31 -15)));
+            position.setY((position.getY() + (int)(Math.random() * 31 -15)));
         }else{
             position.setX((position.getX() + cible.getX())/2);
             position.setY((position.getY() + cible.getY())/2);

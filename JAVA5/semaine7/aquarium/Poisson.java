@@ -12,10 +12,14 @@ public abstract class Poisson {
     public void verifPosition() {
         int x = position.getX();
         int y = position.getY();
-        if (x > 499) {
+        if (x < 0){
+            position.setX(-(-x % 500) + 500);
+        }else if (x > 499) {
             position.setX(x % 500);
         }
-        if (y > 499) {
+        if (y < 0){
+            position.setX(-(-y % 500) + 500);
+        } else if (y > 499) {
             position.setY(y % 500);
         }
     }

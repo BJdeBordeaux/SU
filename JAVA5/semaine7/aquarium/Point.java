@@ -29,3 +29,7 @@ public class Point {
 
     
   }
+/*
+LI Junji 28610187
+* Bon c'est pas moi qui ecrit cette classe apparament XD
+*/

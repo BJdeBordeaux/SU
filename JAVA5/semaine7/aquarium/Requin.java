@@ -10,13 +10,13 @@ public class Requin extends Poisson{
 
     @Override
     public String toString() {
-        return "Requin ["+ super.position.getX() + 
-        ", " + super.position.getY() +"]";
+        return "Requin("+ super.position.getX() + 
+        ", " + super.position.getY() +")";
     }
     
     public void move(Point cible) {
-        position.setX((posistion.getX() + cible.getX())/2);
-        position.setY((posistion.getY() + cible.getY())/2);
+        position.setX((position.getX() + cible.getX())/2);
+        position.setY((position.getY() + cible.getY())/2);
         verifPosition();
     }
 
