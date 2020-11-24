@@ -14,15 +14,18 @@ public class Thon extends Poisson{
     }
     
     public void move(Point cible) {
-        if(posistion.distanceTo(cible) >= 60){
-            position.setX((posistion.getX() + (int)(Math.random() * 31 -15));
-            position.setY((posistion.getY() + (int)(Math.random() * 31 -15));
+        if(this.position.distanceTo(cible) >= 60){
+            position.setX((position.getX() + (int)(Math.random() * 31 -15));
+            position.setY((position.getY() + (int)(Math.random() * 31 -15));
         }else{
-            position.setX((posistion.getX() + cible.getX())/2);
-            position.setY((posistion.getY() + cible.getY())/2);
+            position.setX((position.getX() + cible.getX())/2);
+            position.setY((position.getY() + cible.getY())/2);
         }
         verifPosition();
     }
 
-    
+    @Override
+    public Thon clone(){
+        return new Thon(position.getX(), position.getY());
+    }
 }

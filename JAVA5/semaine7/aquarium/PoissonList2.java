@@ -1,24 +1,20 @@
 import java.util.ArrayList;
 
-public class PoissonList extends ArrayList {
+public class PoissonList2 extends ArrayList<Poisson> {
 
-    ArrayList<Poisson> poissons;
-
-    public PoissonList() {
-        poissons = new ArrayList<Poisson>(); 
+    public PoissonList2() {
     }
 
-    public PoissonList(PoissonList list) {
-        poissons = new ArrayList<Poisson>();
-        for (Poisson poisson : list.poissons) {
-            poissons.add(poisson.clone());
+    public PoissonList2(PoissonList2 list) {
+        for (Poisson poisson : list) {
+            add(poisson.clone());
         }
         
     }
 
     public int nbThon() {
         int cpt = 0;
-        for (Poisson poisson : poissons) {
+        for (Poisson poisson : this) {
             if(poisson instanceof Thon){
                 cpt += 1;
             }
@@ -29,10 +25,10 @@ public class PoissonList extends ArrayList {
     public int rangPoissonProche(int index){
         int lePlusProche = index;
         double minDistance = Double.POSITIVE_INFINITY;
-        Poisson poissonIndex = poissons.get(index);
-        for (int i = 1; i < poissons.size(); i++){
-            if(poissons.get(i) == poissonIndex){continue;}
-            double distance = poissons.get(i).getPosition().distanceTo(poissonIndex.getPosition());
+        Poisson poissonIndex = get(index);
+        for (int i = 1; i < size(); i++){
+            if(get(i) == poissonIndex){continue;}
+            double distance = get(i).getPosition().distanceTo(poissonIndex.getPosition());
             if(distance < minDistance){
                 lePlusProche = i;
                 minDistance = distance;
@@ -44,9 +40,9 @@ public class PoissonList extends ArrayList {
 
     public void bougerTousPoissons(){
         Point centre = new Point(250, 250);
-        for (Poisson poisson : poissons) {
-            int indexPlusProche = rangPoissonProche(poissons.indexOf(poisson));
-            Poisson poissonPlusProche = poissons.get(indexPlusProche);
+        for (Poisson poisson : this) {
+            int indexPlusProche = rangPoissonProche(indexOf(poisson));
+            Poisson poissonPlusProche = get(indexPlusProche);
             if(poissonPlusProche instanceof Thon){
                 poisson.move(poissonPlusProche.getPosition());
             }else{
@@ -56,25 +52,25 @@ public class PoissonList extends ArrayList {
         }
     }
 
-    public PoissonList faireUnPas() throws PoissonInconnuException {
+    public PoissonList2 faireUnPas() throws PoissonInconnuException {
         bougerTousPoissons();
-        PoissonList l2 = new PoissonList(this);
-        for (Poisson poisson : poissons) {
-            int indexPlusProche = rangPoissonProche(poissons.indexOf(poisson));
-            Poisson poissonPlusProche = poissons.get(indexPlusProche);
+        PoissonList2 l2 = new PoissonList2();
+        for (Poisson poisson : this) {
+            int indexPlusProche = rangPoissonProche(indexOf(poisson));
+            Poisson poissonPlusProche = get(indexPlusProche);
             boolean voisin = (poisson.getPosition().distanceTo(poissonPlusProche.getPosition()) < 2);
             if(voisin){
                 if(poisson instanceof Thon && poissonPlusProche instanceof Requin){continue;}
                 else if(poisson instanceof Thon && poissonPlusProche instanceof Thon && indexOf(poisson) < indexPlusProche){
-                    l2.poissons.add(new Thon());
-                    l2.poissons.add(poisson);
+                    l2.add(new Thon());
+                    l2.add(poisson);
                 }else if(poisson instanceof Requin){
-                    l2.poissons.add(poisson);
+                    l2.add(poisson);
                 }else{
                     throw new PoissonInconnuException();
                 }
             }else{
-                l2.poissons.add(poisson);
+                l2.add(poisson);
             }
             poisson.verifPosition();
         }

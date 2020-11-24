@@ -19,4 +19,9 @@ public class Requin extends Poisson{
         position.setY((posistion.getY() + cible.getY())/2);
         verifPosition();
     }
+
+    @Override
+    public Requin clone(){
+        return new Requin(position.getX(), position.getY());
+    }
 }

@@ -12,13 +12,25 @@ public abstract class Poisson {
     public void verifPosition() {
         int x = position.getX();
         int y = position.getY();
-        if(x > 499){
-            position.setX(x%500);
+        if (x > 499) {
+            position.setX(x % 500);
         }
-        if(y > 499){
-            position.setY(y%500);
+        if (y > 499) {
+            position.setY(y % 500);
         }
     }
 
+    
+
     public abstract void move(Point cible);
+
+    public abstract Poisson clone();
+
+    public Point getPosition() {
+        return position;
+    }
+
+    public void setPosition(Point position) {
+        this.position = position;
+    }
 }
