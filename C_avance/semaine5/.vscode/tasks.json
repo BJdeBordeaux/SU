@@ -1,0 +1,28 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "make"
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: gcc-7 build active file",
+            "command": "make",
+            "args": [
+                "all"
+            ],
+            "options": {
+                "cwd": "${fileDirname}",
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "compiler: /usr/bin/gcc-7"
+        }
+    ]
+}
