@@ -8,7 +8,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/ex_liste_entiers",
+            "program": "${workspaceFolder}/ex_liste_string",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

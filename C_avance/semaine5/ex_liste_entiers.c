@@ -62,6 +62,21 @@ int main(void) {
   pliste->ecrire(tmp, file);
   fclose(file);
 
+  *tmp = 100;
+  assert(*(int*)(chercher_liste(pliste, tmp)->data) == *tmp);
+  
+  assert(*(int*)chercher_liste_triee(pliste, tmp)->data == *tmp);
+
+  ecrire_liste(pliste, "entier_sortie.txt");
+
+  assert(lire_liste(pliste, "entier_entree.txt") == 1);
+
+  ecrire_liste(pliste, "entier_sortie.txt");
+
+  ajouter_liste(pliste, 1, tmp);
+
+  assert(*(int*)(extraire_en_tete(pliste)->data) == *tmp);
+
   afficher_liste(pliste);
 
   detruire_liste(pliste);

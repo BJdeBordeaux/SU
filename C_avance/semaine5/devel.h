@@ -4,5 +4,6 @@
 #include<stdio.h>
 
 #define affiche_message(x) printf("%s, ligne %d, fonction %s\n", (x), __LINE__, __PRETTY_FUNCTION__)
+#define newLigne() printf("\n");
 
 #endif

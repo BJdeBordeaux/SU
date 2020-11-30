@@ -67,12 +67,6 @@ void inserer_place(PListe pliste, void *data){
 }
 
 
-
-
-
-
-
-
 PElement chercher_liste(PListe pliste, void *data) {
   PElement tmp=pliste->elements;
   while(tmp) {
