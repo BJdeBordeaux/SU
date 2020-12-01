@@ -1,0 +1,31 @@
+Q53.1
+ligne 8 : déclaration de la variable p1 de type Point qui référence en mémoire un objet Point de coordonnées (5, 2)
+ligne 9 : déclaration de la varaible p2 de type Point qui référence en mémoire un objet Point de coordonnées (5, 2)
+l10 : déclaration de la variable p3 qui reçoit une copie de référence contenue dans p1
+l11 : déclaration de la varaible p2 de type Point qui référence en mémoire un objet Point de coordonnées (1, 1)
+l12-14 : F T F
+
+.2
+public boolean equals(Object o){
+    Point p = (Point) o;
+    return (this.x == o.x) && (this.y == o.y);
+}
+
+.3
+À l'exécution on aura une erreur car on ne peut pas un appliquer un cast
+sur un objet String pour obtenir un Point
+
+Q54.4
+Oui un Merlu a la propriété de nager par héritage de la classe Poisson
+
+.9
+Non parce que Chat n'implémente pas Submarine
+
+.10
+Pas besoin de modifier la classe Mer
+On pourra ajouter un chat de type ChatSub en utilisant la méthode ajouter() de la classe Mer
+
+55.1
+Si on avait un grand nombre de véhicule différents, on devait ajouter autant de if() qu'il y a de sous classe de véhicule
+Dans l'idéal on ne devait pas modifier la méthode remplirReservoir() à chaque fois qu'une nouvelle classe Véhicule est définie
+
