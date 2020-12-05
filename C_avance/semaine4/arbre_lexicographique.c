@@ -79,21 +79,32 @@ int taille(PNoeud racine) {
 }
 
 void afficher_mots(PNoeud n, char mot_en_cours[], int index) {
+  if(n == NULL){return;}
+  mot_en_cours[index] = n->lettre;
+  if(n->fin_de_mot == fin){
+    mot_en_cours[index+1] = '\0';
+    printf("%s\n",mot_en_cours);
+  } 
 
-  /* a completer. Exercice 4, question 1 */
+  afficher_mots(n->fils, mot_en_cours, index+1);
+
+  afficher_mots(n->frere_suivant, mot_en_cours, index);
 
 }
 
 void afficher_dico(PNoeud racine) {
-
-  /* a completer. Exercice 4, question 1 */
-
+  
+  char mot_en_cours[LONGUEUR_MAX_MOT];
+  afficher_mots(racine, mot_en_cours , 0);
 }
 
 void detruire_dico(PNoeud dico) {
 
-  /* a completer. Exercice 4, question 2 */
-
+  if(dico != NULL){
+    detruire_dico(dico->fils);
+    detruire_dico(dico->frere_suivant);
+    free(dico);
+  }
 }
 
 PNoeud chercher_lettre(PNoeud n, char lettre) {
@@ -122,6 +133,24 @@ int rechercher_mot(PNoeud dico, char *mot) {
 
 PNoeud lire_dico(const char *nom_fichier) {
 
-  /* a completer. Exercice 4, question 3 */
+  FILE *f = fopen(nom_fichier, "r");
+  if(f == NULL){
+    fprintf(stderr, "Impossible d'ouvrir le fichiner %s\n", nom_fichier);
+    return NULL;
+  }
 
+  PNoeud dico = malloc(sizeof(Noeud));
+
+  char mot[LONGUEUR_MAX_MOT];
+  while(feof(f)){
+    if(fgets(mot, LONGUEUR_MAX_MOT, f)){
+      break;
+    }
+    mot[strlen(mot)] = '\0';
+    if(strlen(mot)>=1){
+      ajouter_mot(dico, mot);
+    }
+  }
+  fclose(f);
+  return dico;
 }
