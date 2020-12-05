@@ -1,7 +1,7 @@
 CFLAGS = -g -Wall -Wextra -pedantic
 CC = gcc
 
-PROGRAMS =   tests_ecosys ecosys ex
+PROGRAMS = ex
 
 .PHONY:	all clean
 
