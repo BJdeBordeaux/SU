@@ -43,12 +43,13 @@ class ArrayListReversible extends ArrayList<Object> implements Reversible{
     }
 
     public boolean checkReversibility() {
+        reversible = true;
         for (Object object : this) {
             if(!(object instanceof Reversible)){
                 reversible = false;
+                return reversible;
             }
         }
-        reversible = true;
         return reversible;
     }
 
