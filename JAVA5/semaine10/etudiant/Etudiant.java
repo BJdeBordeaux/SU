@@ -2,13 +2,13 @@ import java.util.ArrayList;
 
 public class Etudiant {
     private String nom;
-    private int[] notes;
+    private int nbNotesMax = 5;
+    private int[] notes = new int[nbNotesMax];
     private int lgRelle;
     private static ArrayList<Etudiant> etudiants = new ArrayList<Etudiant>();
 
     public Etudiant(String nom) {
         this.nom = nom;
-        notes = new int[5];
         etudiants.add(this);
     }
 
@@ -22,11 +22,12 @@ public class Etudiant {
     }
 
     public void entrerNote(int note) throws TabNotesPleinException{
-        if (lgRelle >= notes.length) {
+        if (lgRelle < notes.length) {
+            notes[lgRelle] = note;
+            lgRelle += 1;
+        }else {
             throw new TabNotesPleinException("Le tableau de notes de " + nom + " est plein.\n");
         }
-        notes[lgRelle] = note;
-        lgRelle += 1;
     }
 
     public static ArrayList<Etudiant> getEtudiants() {

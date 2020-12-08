@@ -6,21 +6,16 @@ import java.util.ArrayList;
 public class TestEtudiants {
 
     public static void main(String[] args) {
-        
-                
+        int note;
         Etudiant curEtudiant = null;
         for (int i = 0; i < args.length; i++) {
             try {
-                int note = Integer.parseInt(args[i]);
+                note = Integer.parseInt(args[i]);
                 // System.out.print(note + " est une note, ");
-                if(curEtudiant != null){
-                    curEtudiant.entrerNote(note);
-                }
+                curEtudiant.entrerNote(note);
             } catch (NumberFormatException e) {
                 // System.out.print("\n" + args[i] + " est un nom,");
-                if(curEtudiant != null){
-                    System.out.println(curEtudiant);
-                }
+                System.out.println(curEtudiant);
                 curEtudiant = new Etudiant(args[i]);
             } catch (TabNotesPleinException e) {
                 System.out.print("Le tableau de " +curEtudiant.getNom() + " est plein\n" );
