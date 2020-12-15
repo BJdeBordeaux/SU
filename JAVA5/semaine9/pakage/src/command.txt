@@ -1,0 +1,5 @@
+javac -d ./bin  -cp src src/a/test/Test.java
+// pour compiler
+java -cp bin a.test.Test
+// pour exécution
+depuis bj@bj-Lenovo-ideapad-310S-14IKB:~/Bureau/坐在你的对桌/SU/C_SU/JAVA5/semaine9/pakage$
