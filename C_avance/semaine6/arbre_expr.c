@@ -92,7 +92,7 @@ PNoeudBinaire construire_arbre_expr_rec(FILE *f, PArbreBinaire pab) {
   /* a completer. Exercice 5, question 4 */
   PNoeudBinaire pn = malloc(sizeof(NoeudBinaire));
   DataExpr *data = lire_expr(f);
-  
+  // a completer un jour 
   if(data->type_noeud == OP){
     pn->gauche = construire_arbre_expr_rec(f, pab);
     pn->data = data;
