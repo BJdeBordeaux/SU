@@ -108,6 +108,7 @@ void detruire_dico(PNoeud dico) {
 }
 
 PNoeud chercher_lettre(PNoeud n, char lettre) {
+  printf("noeud = %c, lettre = %c, fin de mot = %d\n", n->lettre, lettre, n->fin_de_mot==fin);
   if (n==NULL) {
     return NULL;
   }
@@ -123,9 +124,20 @@ PNoeud chercher_lettre(PNoeud n, char lettre) {
 int rechercher_mot(PNoeud dico, char *mot) {
   PNoeud n=chercher_lettre(dico,mot[0]);
   if (n==NULL) {
+    printf("null\n");
     return 0;
   }
   if (strlen(mot)==1) {
+    if (n->fin_de_mot == fin)
+    {
+      printf("yes\n");
+    }else
+    {
+      printf("no\n");
+    }
+    
+    
+    
     return n->fin_de_mot == fin;
   }
   return rechercher_mot(n->fils,mot+1);
@@ -140,11 +152,10 @@ PNoeud lire_dico(const char *nom_fichier) {
   }
 
   PNoeud dico = malloc(sizeof(Noeud));
-
   char mot[LONGUEUR_MAX_MOT];
-  while(feof(f)){
-    if(fgets(mot, LONGUEUR_MAX_MOT, f)){
-      break;
+  while(!feof(f)){
+    if(!fgets(mot, LONGUEUR_MAX_MOT, f)){
+      continue;
     }
     mot[strlen(mot)] = '\0';
     if(strlen(mot)>=1){

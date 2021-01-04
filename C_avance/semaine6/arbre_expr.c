@@ -2,22 +2,43 @@
 #include<stdlib.h>
 #include<ctype.h>
 #include"arbre_expr.h"
+#include"devel.h"
 
 void *dupliquer_expr(const void *src) {
-  /* a completer. Exercice 5, question 1 */
-  return NULL; // pour que cela compile
+  DataExpr *isrc = (DataExpr*) src;
+  DataExpr *idst = (DataExpr*) malloc(sizeof(DataExpr));
+  if (idst==NULL) {
+    affiche_message("Erreur d'allocation");
+    return NULL;
+  }
+  *idst = *isrc;
+  return (void *)idst; 
 }
 
 void copier_expr(const void *src, void *dst) {
-  /* a completer. Exercice 5, question 1 */
+  DataExpr *isrc = (DataExpr*) src;
+  DataExpr *idst = (DataExpr*) dst;
+  *idst = *isrc; 
 }
 
 void detruire_expr(void *data) {
-  /* a completer. Exercice 5, question 1 */
+  free(data);
 }
 
 void afficher_expr(const void *data) {
-  /* a completer. Exercice 5, question 2 */
+  DataExpr* idata = (DataExpr*) data;
+  if(idata){
+    if (idata->indice_var >= 0)
+    {
+      fprintf(stdout, " %c ", idata->indice_var + 'A');
+    }else if(idata->operateur){
+      fprintf(stdout, " %c ", idata->operateur);
+    }else if (idata->constante){
+      fprintf(stdout, " %f ", idata->constante);
+    }else{
+      affiche_message("Erreur de valeur.");
+    }
+  }
 }
 
 int comparer_expr(const void *a, const void *b) {
@@ -26,23 +47,77 @@ int comparer_expr(const void *a, const void *b) {
 }
 
 int ecrire_expr(const void *data, FILE *f) {
-  /* a completer. Exercice 5, question 2 */
+  DataExpr* idata = (DataExpr*) data;
+  if(idata){
+    if (idata->type_noeud == VAR)
+    {
+      fprintf(f, " %c ", idata->indice_var + 'A');
+    }else if(idata->type_noeud == OP){
+      fprintf(f, " %c ", idata->operateur);
+    }else if (idata->type_noeud == CST){
+      fprintf(f, " %f ", idata->constante);
+    }else{
+      affiche_message("Erreur de valeur.");
+    }
+  }
   return 1;
 }
 
 void * lire_expr(FILE *f) {
-  /* a completer. Exercice 5, question 3 */
-  return NULL; // pour que cela compile
+  DataExpr *res = (DataExpr*) malloc(sizeof(DataExpr));
+  char *buffer = malloc(sizeof(char));
+  // float float_buffer;
+  if(buffer){
+    affiche_message("Erreur d'allocation.");
+    return NULL;
+  }
+  do
+  {
+    *buffer = fgetc(f);
+  } while (isspace(buffer));    
+  if (isdigit(buffer)){
+    res->type_noeud = CST;
+    res->constante = atof(buffer);
+  }else if (isupper(buffer)){
+    res->type_noeud = VAR;
+    res->indice_var = *buffer-'A';
+  }else{
+    res->type_noeud = OP;
+    res->operateur=*buffer;
+  }
+  return res;
 }  
 
 PNoeudBinaire construire_arbre_expr_rec(FILE *f, PArbreBinaire pab) {
   /* a completer. Exercice 5, question 4 */
-  return NULL; // pour que cela compile
+  PNoeudBinaire pn = malloc(sizeof(NoeudBinaire));
+  DataExpr *data = lire_expr(f);
+  
+  if(data->type_noeud == OP){
+    pn->gauche = construire_arbre_expr_rec(f, pab);
+    pn->data = data;
+    pn->droit = construire_arbre_expr_rec(f, pab);
+  }else if(data->type_noeud == CST){
+
+  }else if(data->type_noeud == VAR)  {
+    /* code */
+  }else{
+    affiche_message("Erreur de type de noeud.");
+  }
+  
+  
+  
+  
+
+  return pn; // pour que cela compile
 }
 
 PArbreBinaire construire_arbre_expr(FILE *f) {
   /* a completer. Exercice 5, question 4 */
-  return NULL; // pour que cela compile
+  PArbreBinaire pab = creer_arbre(0 ,dupliquer_expr, copier_expr, detruire_expr, afficher_expr, comparer_expr, ecrire_expr, lire_expr);
+  construire_arbre_expr_rec(f, pab);
+  pab->copie=1;
+  return pab;
 }
 
 void init_var_a_lire(void *data, void *oa) {

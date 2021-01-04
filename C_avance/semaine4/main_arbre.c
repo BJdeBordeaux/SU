@@ -13,7 +13,7 @@ int main(int argc, char **argv)
     int i;
     char* mot;
     PNoeud dico = lire_dico("french_za");
-
+    // afficher_dico(dico);
     if(argc != 3){
       fprintf(stderr, "Usage : main_abr mot nb_recherches\n");
       exit(1);
@@ -25,6 +25,11 @@ int main(int argc, char **argv)
     for ( i = 0; i < nbr; i++)
     {
       res = rechercher_mot(dico, mot);
+    }
+    if(res){
+      printf("if res = %d.\n", res);
+    }else{
+      printf("niet res = %d.\n", res);
     }
     if(res){
       printf("Le mot %s n'a pas ete trouve.\n", mot);
