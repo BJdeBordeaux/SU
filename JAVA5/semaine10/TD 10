@@ -1,0 +1,8 @@
+TD 10
+EX73
+Q1 3
+Q2 Boule[] urne = {b1, b2, b3, b4};
+Q3 Boule choix = urne[(int)(Math.randam()*4)]; probabilité = 1/2;
+Q4 l2 : public final static String[] couleurs = {"rouge" , "jaune" , "bleue" , "verte" , "orange" , "violette" };
+l4 : return new Boule(couleurs[(int)(Math.random()*couleurs.length)]);
+Q6 

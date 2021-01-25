@@ -9,7 +9,7 @@ PNoeud creer_noeud(char lettre){
     printf("Impossible d'allouer un noeud\n");
     return NULL;
   }
- 
+
   pn->lettre=lettre;
   pn->fin_de_mot=non_fin;
   pn->frere_suivant=NULL;
@@ -157,7 +157,7 @@ PNoeud lire_dico(const char *nom_fichier) {
     if(!fgets(mot, LONGUEUR_MAX_MOT, f)){
       continue;
     }
-    mot[strlen(mot)] = '\0';
+    mot[strlen(mot)-1] = '\0';
     if(strlen(mot)>=1){
       ajouter_mot(dico, mot);
     }
