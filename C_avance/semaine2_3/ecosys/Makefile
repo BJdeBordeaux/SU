@@ -1,7 +1,7 @@
 CFLAGS = -g -Wall -Wextra -pedantic
 CC = gcc
 
-PROGRAMS =   tests_ecosys ecosys
+PROGRAMS =  main_tests main_ecosys
 
 .PHONY:	all clean
 
@@ -9,11 +9,11 @@ PROGRAMS =   tests_ecosys ecosys
 
 all: $(PROGRAMS)
 
-tests_ecosys: ecosys.o main_tests.o
+main_tests: ecosys.o main_tests.o
 	$(CC) -o $@ $(CFLAGS) $^
 
 
-ecosys: ecosys.o main_ecosys.o
+main_ecosys: ecosys.o main_ecosys.o
 	$(CC) -o $@ $(CFLAGS) $^
 
 main_tests.o: main_tests.c

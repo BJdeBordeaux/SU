@@ -1,0 +1,122 @@
+﻿******Villes et Pays******
+
+Q1.
+
+Create table Ville(
+nom varchar(32),
+population number(10),
+pays varchar(32), 
+constraint pk_ville primary key(nom)
+);
+
+create table Pays(
+nom varchar(32),
+capitale varchar(32),
+constraint pk_pays primary key(nom)
+);
+
+alter table Ville add constraint fk_pays foreign key (pays) references Pays(nom) ;
+alter table Pays add constraint fk_ville foreign key (capitale) references Ville(nom) ;
+
+Q2.
+
+insert into Ville values('Paris', 3000000, null);
+insert into Pays values('France', 'Paris');
+update Ville set pays='France' where nom='Paris';
+
+/* Autre solution: Oracle*/
+alter table Ville disable constraint fk_pays ;
+insert into Ville values('Paris', 3000000, 'France');
+insert into Pays values('France', 'Paris');
+alter table Ville enable constraint fk_pays ;
+
+/*Autre solution: H2*/
+ALTER TABLE Ville SET REFERENTIAL_INTEGRITY FALSE;
+insert into Ville values('Paris', 3000000, 'France');
+insert into Pays values('France', 'Paris');
+ALTER TABLE Ville SET REFERENTIAL_INTEGRITY TRUE;
+
+Q3.
+
+alter table Ville drop constraint fk_pays;
+alter table Ville add constraint fk_pays foreign key (pays) references Pays(nom) on delete cascade ;
+
+Q4.
+
+alter table Pays drop constraint fk_ville;
+drop table Ville;
+drop table Pays;
+
+/*autre ordre possible*/
+alter table Ville drop constraint fk_pays ;
+drop table Pays;
+drop table Ville;
+
+
+********Mise à Jour de Tables************
+
+- INSERTIONS:
+
+1.
+insert into employe(numss, prenomE) values (12456,'Alain');
+insert into employe values(21456,'LARS', 'Anna','paris', '25-08-1975');
+
+3.
+insert into projet values (78143,'ORCA',21456,'paris',250000) ;
+
+/*Autre solution*/
+
+insert into projet
+
+select 78143, 'ORCA', NumSS, villeE, 250000 from Employe where nomE='LARS' and prenomE='Anna';
+
+4.
+4.
+
+insert into grille_sal values ('Responsable', 80000);
+insert into grille_sal values ('Développeur',45000);
+insert into grille_sal values ('Technicien',35000) ;
+5.
+
+Impossible
+
+6.
+Impossible
+B>- SUPPRESSIONS:
+delete from Employe where ((sysdate-datenaiss)/365)>67;
+
+/*Autre solution*/
+delete from Employe where DATEDIFF(year, DateNaiss,Sysdate)>67;
+
+9.
+delete from Employe where prenomE='Anna' and nomE='LARS';
+
+10.
+delete from Employe where NumSS in (select NumSS    
+
+            from Embauche
+  where (sysdate - dateEmb)<365);
+ delete from Employe where NumSS = ANY (select NumSS  from Embauche where (sysdate - dateEmb)<365);
+
+- MISE A JOUR:
+
+
+
+12.
+13.
+Update Employe
+pdate Employe
+
+set villeE=(select villeP
+
+            from Projet
+
+u            where NumProj=78143)
+whe re PrenomE = 'Anna' and NomE = 'LARS'; /*ou  where numSS=21456; */
+
+update Projet p
+
+set budget=(select sum(s.salaire)
+from embauche e, grille_sal s               where p.numproj=e.numproj and e.profil=s.profil)*2;
+
+

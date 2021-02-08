@@ -1,0 +1,74 @@
+A ne pas modifier, SVP.
+
+B.5.
+select count(idC) as nbCategories from Categorie;
+
+select count(*) as nbCategories from Categorie;
+
+B.6.
+select count(distinct idC) from Astre;
+
+B.8.
+select round(avg(rayon)/1000,2) || ' milliers km' as Moyenne from Astre;
+
+C.10.
+select a.idC, count(*)
+from Astre a
+group by a.idC
+order by count(*) DESC;
+
+11.a.
+select t.idA2, count(*)
+from TourneAutour t group by t.idA2;
+
+11.b
+select a.nom, count(*)
+from Astre a, TourneAutour t
+where a.idA=t.idA2
+group by a.idA, a.nom;
+
+13.a.
+select idC, max(rayon)
+from Astre
+group by idC
+order by max(rayon) ;
+
+13.b.
+select c.nom, max(a.rayon)
+from Astre a, Categorie c
+where a.idC=c.idC
+group by c.idC, c.nom
+order by count(*) DESC ;
+
+13.c.
+select a1.idC, a1.nom, a1.rayon
+from Astre a1
+where a1.rayon = (select max(a2.rayon)
+from Astre a2
+where a1.idC=a2.idC);
+
+select a1.idC, a1.nom, a1.rayon
+from Astre a1
+where a1.rayon = (select max(a2.rayon)
+from Astre a2
+group by a2.idC
+having a2.idC=a1.idC);
+
+D.14.
+select idC
+from Astre
+group by idC
+having count(*) >=2 ;
+
+select distinct o1.dateObs
+from Observation o1
+where not exists(select * from Astre a
+where not exists(select * from Observation o2
+where a.idA=o2.idA and o1.dateObs=o2.dateObs));
+
+
+E
+
+18.a.select dateObsfrom Observationgroup by dateObshaving count(distinct idA) = (select count(*) from Astre);select distinct o1.dateObsfrom Observation o1where not exists(select * from Astre awhere not exists(select * from Observation o2where a.idA=o2.idA and o1.dateObs=o2.dateObs));18.b.select dateObsfrom Observationgroup by dateObshaving count(distinct idA) = (select count(distinct idA) from Observation);select distinct o1.dateObsfrom Observation o1where not exists(select * from Observation o3where not exists(select * from Observation o2where o3.idA=o2.idA and o1.dateObs=o2.dateObs));19.a.select a1.idCfrom Astre a1group by a1.idChaving count(a1.idA) = (select count(distinct o2.idA)from Astre a2, Observation o2where a2.idA=o2.idA and a2.idC=a1.idC ) ;select a1.idCfrom Astre a1where not exists(select * from Astre a2where a2.idC=a1.idCand not exists (select * from Observation o2 where a2.idA=o2.idA));19.b.
+
+

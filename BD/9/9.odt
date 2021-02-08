@@ -1,0 +1,168 @@
+--TD
+
+--1.1
+CREATE table ville(
+    nom varchar(10),
+    population int,
+    pays varchar(10),
+
+    primary key(nom)
+);
+
+CREATE table pays(
+    nom varchar(10),
+    capitale varchar(10),
+
+    primary key(nom)
+);
+
+ALTER table ville add constraint fk_ville foreign key(pays) references pays(nom);
+ALTER table pays add foreign key(capitale) references ville(nom);
+
+--1.2
+INSERT into ville values('Paris', 3000000,null);
+INSERT into pays values('France','Paris');
+UPDATE ville set pays='France' where nom='Paris';
+
+--1.3
+ALTER table ville drop constraint fk_ville;
+ALTER table ville add constraint fk_ville foreign key(pays) references pays(nom) on delete cascade;
+
+--1.4
+ALTER table ville drop constraint fk_ville;
+DROP table pays;
+Drop table ville;
+
+--3.1
+insert into Employe(NumSS,PrenomE) values(12345,'Alain');
+
+--3.2
+insert into employe(numss,nome,prenome,villee,datenaiss) values(21456,'LARS','Anna','Paris',to_date('25-08-1975','dd-mm-yyyy'));
+
+--3.3
+insert into projet values(78143,'ORCA',21456,'Paris',250000);
+
+--3.4
+insert into grille_sal values('Responsable',80000);
+insert into grille_sal values('Développeur',45000);
+insert into grille_sal values('Technicien',35000) ;
+
+--3.5
+il y a pas de testeur dans la table projet
+
+--3.6
+il y a pas de developpeur dans la table projet
+
+--3.7
+delete from employe where (sysdate-datenaiss)/365>67;
+
+--3.8
+delete from employe where prenome='Alain';
+
+--3.9
+delete from employe where prenome='Anna' and nome='LARS';
+
+--3.10
+delete from employe where numss in (
+    select numss from embauche
+    where (sysdate-dateemb)<365
+);
+
+--3.11
+delete from projet p where p.budget < (
+    select sum(s.salaire) from grille_sal s, embauche e
+    where e.numproj=p.numproj and s.profil=e.profil
+);
+
+--3.12
+update employe set nome='BERNARD' where prenome='Alain';
+
+--3.13
+update employe set villee = (
+    select villep from projet where numproj=781143
+)where nome='LARS' and prenome='Anna';
+update projet set respproj=21456 where numproj=781143;
+
+--3.14
+update projet p set budget = 2*(
+    select sum(s.salaire) from grille_sal s,embauche e 
+    where e.numproj=p.numproj and s.profil=e.profil
+);
+
+--TME
+--1.1
+insert into employe values(22334, 'Adam', 'Funk', 'Paris', '1-12-1982', sysdate);
+insert into employe values(22334, 'Rachid', 'Allaoui', 'Lyon', '13-4-1986', sysdate);
+
+--1.2
+insert into employe values(22334, 'Adam', 'Funk', 'Paris', '1-12-1882', sysdate);
+
+--1.3
+insert into employe values(1234567, 'Adam', 'Funk', 'Paris', '1-12-1982', sysdate);
+
+--1.4
+insert into employe values(22334, 'Adam', 'Funk', 'London', '1-12-1982', sysdate);
+
+--1.5
+insert into employe values(45566, 'Rachid', 'Allaoui', 'Lyon', '13-4-1986', sysdate);
+insert into employe values(77889, 'Florent', 'Girac' , 'Marseille', '4-11-1990', sysdate);
+
+insert into projet values(123, 'ADOOP', 000, 'Paris', 120000);
+
+--1.6
+insert into projet values(123, 'ADOOP', 22334, 'London', 120000);
+
+--1.7
+insert into projet values(123, 'ADOOP', 22334, 'Paris', 120000);
+insert into projet values(757, 'SKALA', 45566, 'Lyon', 180000);
+insert into projet values(890, 'BAJA', 22334, 'Paris', 24000);
+
+--"en l'etat"??? J'ai pas compris 
+
+--1.8
+insert into grille_sal values('Admin', 80000);
+insert into grille_sal values('Deve', 45000);
+insert into grille_sal values('Tech', 35000);
+
+insert into embauche values(22330000004,123,sysdate,'Admin');
+insert into embauche values(22334,123,sysdate,'Admin');
+
+--1.9
+delete from employe where numss=22334;
+
+alter table projet drop constraint fk_resp;
+alter table embauche drop constraint fk_emb_emp;
+
+alter table projet add constraint fk_resp foreign key (RespProj) references Employe on delete cascade;
+alter table embauche add constraint fk_emb_emp foreign key (NumSS) references Employe on delete cascade;
+
+--1.10
+alter table embauche drop constraint fk_emb_proj;
+alter table embauche add constraint fk_emb_proj foreign key (NumProj) references Projet on delete cascade;
+delete from projet where numproj=120000;
+
+--1.11
+alter table embauche drop constraint fk_emb_sal;
+alter table embauche add constraint fk_emb_sal foreign key (Profil) references Grille_sal on delete cascade;
+delete from grille_sal where profil='Admin';
+
+--1.12
+--Oui, Embauche est foreign key d'aucune table
+
+--1.13
+update employe set numss=45566 where numss=22334;
+ 
+--1.14
+update projet set respproj=000 where numproj=123;
+
+--1.15
+update employe set villee = (
+    select villep from projet
+    where numss = respproj
+);
+
+--1.16
+update grille_sal set profil=1234 where profil='Admin';
+
+--2
+delete from embauche;

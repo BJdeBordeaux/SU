@@ -1,0 +1,62 @@
+CREATE table EMPLOYE(
+    NumSS int check(NumSS>0 and NumSS<99999), 
+    NomE varchar(20), 
+    PrenomE varchar(20), 
+    NumChef int, 
+    VilleE varchar(9) check(VilleE='Paris' or VilleE='Lyon' or VilleE='Marseille'), 
+    DateNaiss date, 
+    DateEnreg date,
+
+    primary key(NumSS),
+    foreign key (NumChef) references EMPLOYE,
+    unique(NomE,PrenomE),
+
+    constraint moins_que_70
+    check(DateEnreg-DateNaiss<70)
+);
+
+CREATE table PROJET(
+    NumProj int, 
+    NomProj varchar(20), 
+    RespProj int not null, 
+    VilleP varchar(9), 
+    Budget int,
+    primary key(NumProj),
+    foreign key (RespProj) references EMPLOYE
+);
+
+CREATE table GRILLE_SAL(
+    Profil varchar(20), 
+    salaire numeric(7,2) check(salaire<90000),
+    primary key(Profil)
+);
+
+CREATE table EMBAUCHE(
+    NumSS int, 
+    NumProj int, 
+    DateEmb date, 
+    Profil varchar(20),
+    primary key(NumSS,NumProj),
+    foreign key (NumSS) references EMPLOYE,
+    foreign key (NumProj) references PROJET,
+    foreign key (Profil) references GRILLE_SAL
+);
+
+create assertion meme_ville
+    check(NOT EXISTS(
+        SELECT * FROM PROJET,EMPLOYE
+        WHERE VilleP<>VillE AND RespProj=NumSS
+));
+
+create assertion est_dans 
+    check(NOT EXISTS(
+        SELECT * FROM EMPLOYE,PROJET
+        WHERE NumChef NOT IN(SELECT NumSS FROM EMPLOYE)
+        OR RespProj NumChef NOT IN(SELECT NumSS FROM EMPLOYE)
+));
+
+create assertion est_dans 
+    check(NOT EXISTS(
+        SELECT * FROM EMBAUCHE eb, EMPLOYE ep, PROJET pj, GRILLE_SAL pf
+        WHERE eb.NumSS<>ep.NumSS OR eb.NumProj<>pj.NumProj OR eb.Profil<>pf.Profil
+));

@@ -1,0 +1,59 @@
+﻿*********A ne pas modifier*********
+Create table EMPLOYE (
+NumSS  number(5) check (length(NumSS)=5) /*check (NumSS>=10000)*/,
+NomE varchar(20),
+PrenomE varchar(20),
+NumChef number(5) check (length(NumChef)=5) /*check (NumChef>=10000)*/,
+VilleE varchar(9) check (lower(villeE) in ('paris', 'lyon', 'marseille')),
+DateNaiss date,
+DateEnreg date Default sysdate,
+constraint pk_emp primary key(NumSS),
+constraint unique_nom_prenom unique(NomE, PrenomE),
+constraint fk_emp foreign key (NumChef) references Employe (NumSS),
+constrtaint limite_age_emp check (DATEDIFF(year,DateNaiss,dateEnreg)<=70.0)
+);
+
+Create table PROJET (
+NumProj Number(7) check (length(NumProj) >=5) /*check (numproj >= 10000)*/,
+NomProj varchar(20),
+RespProj number(5) Not Null /*check (length(RespProj)=5)*/  /*check (RespProj>=10000)*/
+VilleP varchar(9) check (lower(villeP) in ('paris', 'lyon', 'marseille')),
+Budget number(6),
+constraint pk_proj primary key(NumProj),
+constraint fk_proj foreign key(RespProj) references Employe(NumSS)
+);
+
+Create table GRILLE_SAL (
+Profil varchar(20),
+salaire number(7,2) check (salaire >= 90000),
+constraint pk_sal primary key (profil)
+);
+
+Create table EMBAUCHE (
+NumSS number(5) /*check (length(NumSS)=5) */
+NumProj Number(7) /*check (length(NumProj) >=5)*/
+DateEmb date default sysdate,
+Profil varchar(20),
+constraint pk_emb primary key (NumSS, NumProj),
+constraint fk_emb_emp foreign key (NumSS) references Employe(NumSS),
+constraint fk_emb_proj foreign key (NumProj) references Projet(NumProj),
+constraint fk_emb_sal foreign key (Profil) references Grille_sal(Profil)
+);
+
+**************************************************************************************
+create domain C1 as number(5) check (length(value)=5); 
+/*create domain C1 as number(5) check(value>=10000);*/
+create domain C2 as varchar(20);
+create domain C3 varchar(9) check (lower(value) in ('paris', 'lyon', 'marseille'));
+
+create table Employe(
+NumSS C1, 
+NomE C2, 
+PrenomE C2, 
+NumChef C1, 
+VilleE C3,
+DateNaiss date ,
+DateEnreg date default sysdate, 
+etc.
+);
+

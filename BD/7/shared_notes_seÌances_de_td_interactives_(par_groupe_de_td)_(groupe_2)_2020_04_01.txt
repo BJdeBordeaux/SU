@@ -1,0 +1,56 @@
+﻿18.a.
+select dateObs
+from Observation
+group by dateObs
+having count(distinct idA) = (select count(*) from Astre);
+
+select distinct o1.dateObs
+from Observation o1
+where not exists(select * from Astre a
+where not exists(select * from Observation o2
+where a.idA=o2.idA and o1.dateObs=o2.dateObs));
+
+18.b.
+select dateObs
+from Observation
+group by dateObs
+having count(distinct idA) = (select count(distinct idA) from Observation);
+
+select distinct o1.dateObs
+from Observation o1
+where not exists(select * from Observation o3
+where not exists(select * from Observation o2
+where o3.idA=o2.idA and o1.dateObs=o2.dateObs));
+
+19.a.
+select a1.idC
+from Astre a1
+group by a1.idC
+having count(a1.idA) = (select count(distinct o2.idA)
+from Astre a2, Observation o2
+where a2.idA=o2.idA and a2.idC=a1.idC ) ;
+
+select a1.idC
+from Astre a1
+where not exists(select * from Astre a2
+where a2.idC=a1.idC
+and not exists (select * from Observation o2 where a2.idA=o2.idA));
+
+19.b.
+select c.nom
+from Astre a1, Categorie c
+where c.idC=a1.idC
+group by a1.idC, c.nom
+having count(a1.idA) = (select count(distinct o2.idA)
+from Astre a2, Observation o2
+where a2.idA=o2.idA and a2.idC=a1.idC ) ;
+
+select c.nom
+from Categorie c
+where not exists (select * from Astre a
+where a.idC=c.idC
+and not exists (select * from Observation o2 where a.idA=o2.idA ));
+
+
+
+
