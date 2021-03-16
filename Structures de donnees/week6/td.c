@@ -119,3 +119,19 @@ void tri(Tableau* t, int min, int max){
 // case 2 on met toutes les val entre min + 3*(max-min)/N
 // ......
 // on va trier chaque liste chainee et on concatener les listes
+
+// EXO3
+// Q1.2
+// - tri O(nlogn)
+// - parcourt O(n)
+// - la recherche O(logn)
+// complexité finale O(tri + parcourt*recherche) = O(2nlogn) = O(nlogn)
+
+// Q2
+// — Comparer chaque appartement avec a1 → O(n)
+// — Trouver l’appartement avec le plus petit loyer → O(n)
+// — Trier selon un critère et comparer selon l’autre critère → O(n log n)
+
+// Q3
+// La meilleure solution est 8. Il faut trier les tâches par durée croissante
+// (O(n log n)) et les ordonnancer comme cela.
