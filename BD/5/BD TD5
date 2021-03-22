@@ -1,0 +1,81 @@
+BD TD5
+
+(3)
+select distinct a.nomath, a.prenomath from athlete a 
+where exists (select * from athletesequipe ae, equipe e, pays p 
+where a.aid = ae.aid and ae.eqid = e.eqid and e.codepays = p.codepays and p.nomp = 'France');
+
+(4)
+select distinct s.nomsp, e.nomep, e.categorie from sport s, epreuve e, rangequipe r
+where e.sid = s.sid and r.epid = e.epid;
+
+select distinct s.nomsp, e.nomep, e.categorie from sport s, epreuve e
+where e.sid = s.sid and exists(select * from rangequipe r
+where r.epid = e.epid);
+
+select distinct s.nomsp, e.nomep, e.categorie from sport s, epreuve e
+where e.sid = s.sid and e.pid in (select epid from rangequipe);
+
+(6)
+1.DIRECT
+select distinct a.* from athlete a, RANGINDIVIDUEL r, RANGEQUIPE re, ATHLETESEQUIPE ae 
+where a.aid = r.AID and a.aid = ae.aid and ae.eqid = re.eqid;
+
+2.EXISTS
+select * from athlete a
+	where exists (select * from RANGINDIVIDUEL r, RANGEQUIPE re, ATHLETESEQUIPE ae where a.aid = r.AID and a.aid = ae.aid and ae.eqid = re.eqid);
+
+3.IN (efficace car jointure est coûteuse)
+select a.* from ATHLETE a
+where aid in (select aid from RANGINDIVIDUEL) and aid in (select aid from ATHLETESEQUIPE ae, RANGEQUIPE re  where ae.eqid = re.eqid);
+
+4.INTERSECT
+
+(7)
+select distinct a1.nomath
+from athlete a1, athlete a2 
+where a1.nomath = a2.nomath and a1.aid <> a2.aid;
+
+(8)
+1.DIRECT
+select distinct a.* 
+from athlete a, RANGINDIVIDUEL ra, RANGINDIVIDUEL rb 
+where ra.aid = a.aid and rb.aid = a.aid and ra.epid <> rb.epid;
+
+2.EXISTS
+select distinct a.*
+from ATHLETE a
+where exists (select * from RANGINDIVIDUEL r where r.aid = a.aid and exists(select * from RANGINDIVIDUEL r2 where r2.aid = a.aid and r2.epid <> r.epid));
+
+(9)
+1.DIRECT
+select distinct a.*
+from ATHLETE a, RANGINDIVIDUEL r, RANGINDIVIDUEL r2
+where a.aid = r.aid and a.aid = r2.aid and r.rang <= 3 and r2.rang is null;
+
+2.EXISTS
+select distinct a.*
+from ATHLETE a
+where exists(select * from RANGINDIVIDUEL where aid = a.aid and rang <= 3) and exists(select * from RANGINDIVIDUEL where aid = a.aid and rang is null);
+
+(10)
+1.EXISTS
+select distinct a.* 
+from ATHLETE a
+where exists (select * from RANGINDIVIDUEL where rang <= 3 and a.aid = aid);
+
+2.IN
+select distinct a.* 
+from ATHLETE a
+where aid in (select aid from RANGINDIVIDUEL where rang <= 3);
+
+(11)
+select distinct p.nomp
+from pays p, equipe e
+where e.codepays = p.codepays and not exists (select * from equipe e2 where e2.codepays = p.codepays and e2.eqid <> e.eqid);
+
+(12)
+select distinct a.* 
+from ATHLETE a, RANGINDIVIDUEL r, RANGINDIVIDUEL r2
+where a.aid = r.aid and a.aid = r2.aid and r.epid <> r2.epid and 
+not exists(select * from RANGINDIVIDUEL r3 where r3.aid = a.aid and r3.epid <> r2.epid and r3.epid <> r.epid);
