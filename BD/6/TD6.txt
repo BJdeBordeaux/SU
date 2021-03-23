@@ -99,3 +99,4 @@ where dateNaissance is not null and a.datenaissance >= ALL(select datenaissance 
 select a.datenaissance, a.Codepays
 from athlete a, pays p
 where dateNaissance is not null and a.codepays = p.codepays and a.datenaissance >= ALL(select datenaissance from athlete where dateNaissance is not null and codepays = p.codepays);
+
