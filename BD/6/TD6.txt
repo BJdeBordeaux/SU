@@ -1,0 +1,101 @@
+(2)(a)
+select distinct NOMP
+from PAYS p, athlete a
+where a.codepays = p.codepays;
+
+(b)
+select distinct NOMP
+from PAYS p, athlete a1
+where a1.codepays = p.codepays
+	and not exists (select * from athlete a2 where a2.codepays = a1.codepays and a2.aid <> a1.aid);
+
+（3）(a)
+select a.nomath, a.prenomath
+from athlete a
+where aid not in (select aid from rangindividuel r where rang is null);
+
+(b)
+select nomp
+from pays p
+where p.codepays not in 
+(select codepays from athlete where aid in (
+select aid from rangindividuel where rang is null));
+
+(c)
+select nomp
+from pays p
+where exists (select * from athlete a1 where a1.codepays = p.codepays)
+and not exists 
+(select * from athlete a, rangindividuel r where p.codepays = a.codepays and a.aid = r.aid and rang is null);
+
+(4)(a)
+select distinct NOMATH,PRENOMATH 
+from athlete a
+where aid not in 
+	(select aid from rangindividuel r where rang <= 3) 
+and not exists (select * from ATHLETESEQUIPE ae, RANGEQUIPE re where a.aid = ae.aid and ae.eqid = re.eqid and rang <= 3);
+
+(a2) not in
+select distinct NOMATH,PRENOMATH 
+from athlete a
+where aid not in 
+(select aid from rangindividuel r where rang <= 3) and aid not in (select ae.aid from ATHLETESEQUIPE ae, RANGEQUIPE re where ae.eqid = re.eqid and rang <= 3);
+
+(b)
+select  NOMP
+from PAYS p
+where
+	exists (select * from athlete a1 where a1.codepays = p.codepays) and
+	not exists 
+		(select *
+		from athlete a2
+		where a2.codepays = p.codepays and a2.aid in 
+			(select aid from rangindividuel where rang <= 3)) and
+	not exists 
+		(select * from equipe e, RANGEQUIPE re where e.codepays = p.codepays and e.eqid = re.eqid and rang <= 3);
+
+(5)
+select s.nomsp, e.nomep, e.categorie, datediff(day, datedebut, datefin) + 1 as duree
+from sport s, epreuve e
+where e.sid = s.sid and datediff(day, datedebut, datefin) + 1 >= All (select datediff(day, datedebut, datefin) + 1 from epreuve);
+
+(6)
+select nomath, prenomath
+from ATHLETE a
+where  a.aid in (select aid from RANGINDIVIDUEL) and
+not exists (select * from RANGINDIVIDUEL r where a.aid = r.aid and  (r.rang > 3 or r.rang is null));
+
+SELECT a.* 
+FROM athlete a
+WHERE 3 >= ALL(select r.rang from rangIndividuel r where r.aid = a.aid) AND 
+EXISTS(SELECT * from rangIndividuel where aid = a.aid);
+
+http://www-bd.lip6.fr/wiki/site/enseignement/licence/2i009/tme6-h2
+(1)
+select s.nomsp 
+from sport s
+where not exists (select * from epreuve e where s.sid = e.sid and datediff(day, e.datedebut, e.datefin)  + 1 > 1);
+
+(2)
+(a)Select s.nomsp as Non_mixte
+from sport s
+where not exists(select *
+from epreuve e
+where e.sid=s.sid and e.categorie='Mixte'); 
+
+(b)select s.nomSp from sport s where s.sid not in (select e.sid from epreuve e where e.categorie = 'Mixte'); 
+
+(3)
+(a)select distinct e.eqid 
+from ATHLETESEQUIPE e
+where not exists (select * from athletesequipe e2, RANGINDIVIDUEL r where e2.eqid = e.eqid and r.aid = e2.aid and r.rang <= 3);
+
+(4)
+select a.datenaissance, a.Codepays
+from athlete a
+where dateNaissance is not null and a.datenaissance >= ALL(select datenaissance from athlete where dateNaissance is not null);
+
+(5)
+select a.datenaissance, a.Codepays
+from athlete a, pays p
+where dateNaissance is not null and a.codepays = p.codepays and a.datenaissance >= ALL(select datenaissance from athlete where dateNaissance is not null and codepays = p.codepays);
