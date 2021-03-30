@@ -114,6 +114,18 @@ void parcours_pre(ABR a){
     parcours_pre(a->fd);
 }
 
+// Q2
+// Dans un ARN, 
+
+typedef enum{rouge, noir} Couleur;
+struct _arn
+{
+    int 
+    struct _arn* fg;
+    struct _arn* fd;
+};
+
+// FOR ALL tests
 int main()
 {
     ABR a1 = creeAB(1);

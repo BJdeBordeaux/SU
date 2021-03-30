@@ -1,0 +1,27 @@
+exo 1
+si y a seulement un noeud, h = 0
+alors    2^h <= n <=2^(h+1)-1
+donc     h <= log2(n), log2(n+1) <= h+1
+donc                   log2(n+1)-1 <= h
+donc     ciel(log(n+1) - 1) <= h <= floor(log(n))
+
+1.5 : insertion d'un nouveau min
+h swap => O(h) = O(log(n))
+
+exo 2
+(3^h-1)/2 <= n <= (3^(h+1)-1)/2
+h <= log3(2n+1) <= h+1
+h = ciel(log3(2n+1))-1
+
+O(log3(n))
+Non car log2(n) === log3(n)
+fg = 3i-1, fm = 3i, fd = 3i+1, pere = round(i/3)
+
+exo 3
+Q1
+structure : un deuxième tableau
+M : float[] pour f, on obtient T par f
+T : int[] pour i de 0 à K
+Q2
+table de hachage sur la val de c
+    mais les opérations passent de O(n) dans le pire des cas
