@@ -1,0 +1,121 @@
+tme 7
+1.
+select count(*) from athlete;
+
+2.
+select count(distinct aid) from RANGINDIVIDUEL;
+
+3.
+select round(avg(datediff(day, dateNaissance, '2014-02-06'))/365.0, 1)
+from athlete a
+where codepays = 'FRA';
+
+4.
+select 
+'Durée moyenne = ' 
+|| round(avg(datediff(day, datedebut, datefin)+1.0), 2)  
+|| ' min = ' || min(datediff(day, datedebut, datefin)) + 1 
+|| ' max = ' || max(datediff(day, datedebut, datefin)+1)
+from EPREUVE;
+
+5.
+select round(count(distinct aid)*1.0/count(distinct codepays)*1.0, 3)
+from athlete a;
+
+6.
+select codepays, count(aid) as nbAthlete
+from athlete
+group by codepays
+order by nbAthlete;
+
+7.
+select avg(ct)
+from (select count(aid)*1.0 as ct
+from athlete
+group by codepays); // h2
+
+select avg(count(aid))
+from athlete
+group by codepays); // oracle
+
+8.
+select eqid, count(*)
+from athletesequipe
+group by eqid
+order by count(*) desc;
+
+9.
+select categorie, count(epid) as nbEpreuve
+from epreuve
+group by categorie;
+
+
+10.
+select nomsp, count(epid)
+from epreuve e, sport s
+where e.sid = s.sid
+group by nomsp 
+order by count(epid) desc;
+
+11.
+select codepays, count(rang) as nbMetailles, count(distinct ri.aid) as nbAthleteAvecMetailles
+from RANGINDIVIDUEL ri, athlete a
+where a.aid = ri.aid and rang <=3
+group by codepays
+order by nbMetailles desc;
+
+12.
+select codepays, sid, count(rang) as nbMetailles, count(distinct ri.aid) as nbAthleteAvecMetailles
+from epreuve e, athlete a, RANGINDIVIDUEL ri
+where ri.aid = a.aid and e.epid = ri.epid and rang <= 3
+group by codepays, sid
+order by codepays, nbMetailles desc;
+
+13.
+(1)
+select eqid
+from ATHLETESEQUIPE 
+group by eqid
+having count(*) = 10;
+
+(2)
+select eqid
+from ATHLETESEQUIPE 
+group by eqid
+having count(*) = (select max(count)
+from (select count(*) as count from ATHLETESEQUIPE group by eqid));
+
+// oracle ...select(max(count(*)))...
+
+14.
+select count(*) 
+from (select count(*)
+from RANGINDIVIDUEL
+group by epid
+having count(*) >=100);
+
+15.
+select nomp
+from pays p, athlete a, RANGINDIVIDUEL ri
+where ri.aid = a.aid and a.codepays = p.codepays and rang <= 3
+group by nomp
+having count(*) >= 20;
+
+16.
+select nomp
+from pays p, athlete a, RANGINDIVIDUEL ri
+where ri.aid = a.aid and a.codepays = p.codepays and rang <= 3
+group by nomp
+having count(*) >= 20;
+
+17.
+select nomp
+from pays p, RANGINDIVIDUEL ri, athlete a
+where p.codepays = a.codepays and a.aid = ri.aid
+
+18.
+select nomp, count(distinct e.sid)
+from pays p, RANGINDIVIDUEL ri, athlete a, epreuve e
+where p.codepays = a.codepays and a.aid = ri.aid and ri.epid = e.epid
+group by p.codepays
+having count(distinct e.sid) = (select count(distinct s.sid) from sport s, RANGINDIVIDUEL ri, epreuve e where s.sid = e.sid and e. epid = ri.epid);

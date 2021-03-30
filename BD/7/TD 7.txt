@@ -1,0 +1,117 @@
+TD 7
+
+B
+
+5.
+select count(*) as nbCategorie
+from categorie c;
+
+6.
+select count(distinct nom) as nbCategorie
+from categorie c
+where c.idc in (select idc from astre);
+
+或者
+select count(distinct idC) 
+from Astre;
+
+7.
+select min(rayon), max(rayon) 
+from astre;
+
+8.
+select round(avg(rayon)/1000, 2) || 'milliers km' as RayonMoyenne
+from astre;
+
+9.
+（a)
+select max(rayon) 
+from astre;
+
+(b) 
+select nom, rayon
+from astre
+where rayon = (select max(rayon) from astre);
+
+10.
+select idc, count(ida)
+from astre
+group by idc
+order by count(ida) desc, idc;
+
+11.
+(a)
+select ida2, count(*)
+from TOURNEAUTOUR tt
+group by ida2;
+
+(b)
+select nom, count(*)
+from TOURNEAUTOUR tt, astre a
+where a.ida = tt.ida2
+group by ida2;
+
+12.
+select nom, dateobs, avg(valobs)
+from observation o, astre a
+where o.ida = a.ida
+group by nom; （X）
+
+select a.nom, dateobs, avg(valobs)
+from observation o, astre a
+where o.ida = a.ida
+group by a.aid, o.dateobs;
+
+13
+(a)
+select idc, max(rayon)
+from astre
+group by idc
+order by max(rayon);
+
+(b)
+select c.nom, max(rayon)
+from astre a, categorie c
+where a.idc = c.idc
+group by c.idc
+order by count(a.*) desc;
+
+(c)
+select a.idc, a.nom, a.rayon
+from astre a
+where a.rayon = 
+	(select max(rayon) from astre aa where aa.idc = a.idc);
+	或者
+	(select max(rayon) from astre aa group by aa.idc having aa.idc = a.idc);
+
+14.
+select idc
+from astre a
+group by idc
+having count(*) >= 2;
+
+15.
+select dateobs, count(*), max(valobs)
+from observation
+group by dateobs
+having max(valobs) >= 8000;
+
+16.
+select nom
+from astre a, observation o
+where a.ida = o.ida
+group by nom
+having count(*) = 2;
+
+17.
+select nom
+from astre a, tourneautour ta
+where a.ida = ta.ida2
+group by ida
+having count(*) = 2;
+
+18.
+select dateobs
+from observation o
+group by dateobs, ida
+having count(*) = (select count(*) from astre);
