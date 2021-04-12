@@ -90,20 +90,36 @@ void afficherListeGraph(Graph* g){
     }
 }
 
-void libere_listeA(ListeArete * l){
+void libere_listeA2(ListeArete *l){
     // mettre u a -1, une fois on rencontre une arete
     //      avec u = -1, on le libere
-    ListeArete * tmp = l, *tmp_suiv;
-    while (tmp){ 
-        tmp_suiv = tmp->suiv;
-        if(tmp->a->u != -1){
-            tmp->a->u = -1;
+    ListeArete *tmp_suiv = NULL;
+    while (l){ 
+        tmp_suiv = l->suiv;
+        if(l->a->u != -1){
+            l->a->u = -1;
         }else{
-            free(tmp);
+            free(l->a);
         }
-        tmp = tmp_suiv;
+        free(l);
+        l = tmp_suiv;
     }
-    free(l);
+}
+
+void libere_listeA(ListeArete* la)
+{
+    // ATTENTION : l'arrete est partagee entre deux listes chainees
+    while(la != NULL) {
+        ListeArete* suiv = la->suiv;
+
+        if(la->a->u != -1) { // c'est la première fois qu'on rencontre cette arête
+            la->a->u = -1;
+        } else { // c'est la deuxième fois que l'on rencontre cette arête donc on peut faire free
+            free(la->a);
+        }
+        free(la);
+        la = suiv;
+    }
 }
 
 void free_graph(Graph* g){
@@ -164,6 +180,9 @@ int main()
     miseAJourSommet(g, 1, "Ville B", 200, 400);
     miseAJourSommet(g, 2, "Ville C", 300, 600);
     miseAJourSommet(g, 3, "Ville D", 400, 800);
+    ajouterArete(g, 0, 1, 0.15);
+    ajouterArete(g, 2, 1, 0.15);
+    afficherListeGraph(g);
     free_graph(g);
 
     return 0;
