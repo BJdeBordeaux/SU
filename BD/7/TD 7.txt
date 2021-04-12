@@ -111,7 +111,52 @@ group by ida
 having count(*) = 2;
 
 18.
+(1)
 select dateobs
-from observation o
-group by dateobs, ida
-having count(*) = (select count(*) from astre);
+from observation
+group by dateobs
+having count(distinct ida) = (select count(*) from astre);
+
+(2)
+select dateobs
+from observation
+group by dateobs
+having count(distinct ida) = (select count(distinct ida) from observation);
+
+19.
+(1)
+NOT IN:
+select a.idc
+from astre a
+where idc not in(select a2.idc from astre a2 where a2.ida not in (select ida from observation));
+
+HAVING:
+select a.idc
+from astre a, observation o
+where a.ida = o.ida
+group by a.idc
+having count(distinct o.ida) = (select count (distinct a2.ida) from astre a2 where a2.idc = a.idc);
+
+une autre écriture:
+select a.idc
+from astre a
+group by a.idc
+having count(a.ida) = (select count(distinct o.ida) 
+						from observation o, astre a2
+						where o.ida = a2.ida and a2.idc = a.idc);
+
+
+(2)
+select c.nom
+from categorie c, astre a, observation o
+where c.idc = a.idc and a.ida = o.ida
+group by c.nom
+having count(distinct o.ida) = (select count (distinct a2.ida) from astre a2 where a2.idc = a.idc);
+
+select c.nom
+from astre a, categorie c
+where a.idc = c.idc
+group by a.idc
+having count(a.ida) = (select count(distinct o.ida) 
+						from observation o, astre a2
+						where o.ida = a2.ida and a2.idc = a.idc);

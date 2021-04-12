@@ -102,20 +102,31 @@ group by nomp
 having count(*) >= 20;
 
 16.
-select nomp
-from pays p, athlete a, RANGINDIVIDUEL ri
-where ri.aid = a.aid and a.codepays = p.codepays and rang <= 3
-group by nomp
-having count(*) >= 20;
+select sid 
+from epreuve
+group by sid
+having count(distinct e.categorie) = (select count(distinct categorie) from epreuve);
 
-17.
-select nomp
-from pays p, RANGINDIVIDUEL ri, athlete a
-where p.codepays = a.codepays and a.aid = ri.aid
-
-18.
+17. 
 select nomp, count(distinct e.sid)
 from pays p, RANGINDIVIDUEL ri, athlete a, epreuve e
 where p.codepays = a.codepays and a.aid = ri.aid and ri.epid = e.epid
 group by p.codepays
-having count(distinct e.sid) = (select count(distinct s.sid) from sport s, RANGINDIVIDUEL ri, epreuve e where s.sid = e.sid and e. epid = ri.epid);
+having count(distinct e.sid) = (select count(distinct e.sid) from RANGINDIVIDUEL ri, epreuve e where e.epid = ri.epid);
+
+********
+foofle
+********
+
+18.
+select s.nsp, count(s.njo), sum(somme) as "Somme totale"
+from sponsorise s
+group by s.nsp
+order by "Somme totale"  desc;
+
+19.
+select neq
+from equipe e, match m
+where e.neq = m.eq1
+group by neq
+having count(distinct st) >= 3;
