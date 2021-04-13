@@ -1,0 +1,53 @@
+/*TME 8*/
+insert into employe values(21456, 'LARS', 'Anna', NULL, 'Paris', to_date('25-08-1975','DD-MM-YYYY'), CURRENT_DATE);
+insert into GRILLE_SAL values ('chef de projet', 5000);
+insert into projet values(10001, 'First Project', 21456, 'Paris', 45000000);
+insert into embauche values(21456, 10001, current_date, 'chef de projet');
+
+insert into employe(numss, nome, prenome, datenaiss ) values(21457, 'DUPONT', 'Camille', to_date('09-08-1964','DD-MM-YYYY'));
+
+
+1.
+insert into employe values(21456, 'qqq', 'Anna', NULL, 'Paris', to_date('25-08-1975','DD-MM-YYYY'), CURRENT_DATE);
+
+Unique index or primary key violation: "PUBLIC.PRIMARY_KEY_C ON PUBLIC.EMPLOYE(NUMSS) VALUES 5"; SQL statement:
+
+2.
+insert into employe values(21457, 'DUPONT', 'Charles', NULL, 'Paris', to_date('25-08-1930','DD-MM-YYYY'), CURRENT_DATE);
+
+Check constraint violation: "(DATEDIFF('YEAR', DATENAISS, CURRENT_DATE) <= 70)"; SQL statement:
+
+3.
+insert into employe values(21457888888, 'DUPONT', 'Charles', NULL, 'Paris', to_date('25-08-1990','DD-MM-YYYY'), CURRENT_DATE);
+
+Value too long for column "NUMSS DECIMAL(5, 0)": "21457888888 (11)"; SQL statement:
+
+4.
+insert into employe values(21457, 'DUPONT', 'Charles', NULL, 'Bordeaux', to_date('25-08-1990','DD-MM-YYYY'), CURRENT_DATE);
+
+Check constraint violation: "(LOWER(VILLEE) IN('paris', 'lyon', 'marseille'))"; SQL statement:
+
+5.
+insert into employe values(21458, 'LARS', 'Anna', NULL, 'Lyon', to_date('25-08-1978','DD-MM-YYYY'), CURRENT_DATE);
+
+Unique index or primary key violation: "PUBLIC.UNIQ_NOM_PRENOM_INDEX_C ON PUBLIC.EMPLOYE(NOME, PRENOME) VALUES 1"; SQL statement:
+
+6.
+insert into Grille_sal values ('Grand Chef', 90001);
+
+Check constraint violation: "(SALAIRE <= 90000)"; SQL statement:
+
+7.
+insert into projet values(10002, 'Soleil', 21454, 'Paris', 50000);
+
+Check constraint violation: "C10: (RESPPROJ IN(    SELECT DISTINCT
+        NUMSS
+    FROM PUBLIC.EMPLOYE
+        /* PUBLIC.EMPLOYE.tableScan */
+        /* scanCount: 2 */
+    WHERE VILLEP = VILLEE))"; SQL statement:
+
+8.
+insert into embauche values (21456, 19999, current_date, 'Chef de projet');
+
+Referential integrity constraint violation: "FK_EMB_PROJ: PUBLIC.EMBAUCHE FOREIGN KEY(NUMPROJ) REFERENCES PUBLIC.PROJET(NUMPROJ) (19999)";

@@ -1,0 +1,87 @@
+/* TD8 */
+
+/*supprimer tout*/
+Drop all objects;
+
+/*C1*/
+create domain NSS as numeric(5) check (length(value) = 5);
+
+/*C2*/
+create domain Txt as varchar(20);
+
+/*C3*/
+create domain Ville as varchar(9) check(lower(value) in ('paris', 'lyon', 'marseille'));
+
+/*C4
+DateEnreg date default current_date,*/
+
+/*C6*/
+create domain NPj as numeric(7) check(length(value) >= 5);
+
+/*N.B. domaine pour Budget, c'est pas dans l'énoncé*/
+create domain Bg as numeric(10,2);
+
+/*C7
+... 
+NumChef NSS not null,
+...
+foreign key(NumChef) references NumSS 
+	on update cascade,
+	on delete cascade;*/
+
+/*C8*/
+create domain Salaire as numeric(7,2) check(value <= 90000);
+
+/*C9*/
+create domain DNaiss as date check(datediff(year, value, current_date) <= 70);
+
+/*NB. 
+current_date : 2021-04-13
+sysdate : 2021-04-13 11:52:47.120642+02*/
+
+create table EMPLOYE(
+	NumSS NSS,
+	NomE Txt,
+	PrenomE Txt,
+	NumChef NSS,
+	VilleE Ville,
+	DateNaiss DNaiss,
+	DateEnreg date default current_date,
+	constraint pk_emp primary key(NumSS),
+	constraint fk_chef foreign key(NumChef) references Employe(Numss),/* sans "references", c'est la clé primaire*/
+	constraint uniq_nom_prenom unique(nomE, prenomE)
+);
+
+create table Projet(
+	NumProj NPj,
+	NomProj Txt,
+	RespProj NSS not null,
+	VilleP Ville,
+	Budget Bg,
+	constraint pk_proj primary key(NumProj),
+	constraint fk_proj foreign key(RespProj) references Employe(NumSS),
+	constraint C10 check(RespProj in (select NumSS from Employe where VilleP = VilleE))
+);
+
+/*autrement pour C10*/
+create assertion domicile_resp
+check(
+not exists (select * from Employe e, Projet p 
+			where p.RespProj = e.NumSS and e.VilleE <> p.VilleP));
+
+create table Grille_sal(
+	Profil Txt,
+	salaire Salaire,
+	constraint pk_sal primary key(profil)
+);
+
+create table Embauche(
+	NumSS NSS,
+	NumProj NPj,
+	DateEmb date default current_date,
+	Profil Txt,
+	constraint pk_emb primary key(NumSS, NumProj),
+	constraint fk_emb_emp foreign key(NumSS) references Employe(NumSS),
+	constraint fk_emb_proj foreign key(NumProj) references Projet(NumProj),
+	constraint fk_emb_sal foreign key(Profil) references Grille_sal(Profil)
+);

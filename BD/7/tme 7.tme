@@ -125,8 +125,21 @@ group by s.nsp
 order by "Somme totale"  desc;
 
 19.
-select neq
-from equipe e, match m
-where e.neq = m.eq1
-group by neq
+select eq1
+from match m
+group by eq1
 having count(distinct st) >= 3;
+
+20.
+Par Equation : c(jo) = c(eq):
+select s.nsp
+from sponsorise s
+group by s.nsp
+having count(*) = (select count(distinct j.eq) from sponsorise s2, joueur j where s2.nsp = s.nsp and s2.njo = j.njo group by s2.nsp);
+
+corrigé :
+select s.nsp
+from sponsorise s, joueur j
+where s.njo = j.njo
+group by s.nsp
+having count(s.njo) = count(distinct j.eq)
