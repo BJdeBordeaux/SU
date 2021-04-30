@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "reseau.C": "cpp",
+        "graphe.h": "c"
+    }
+}
