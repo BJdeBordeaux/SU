@@ -1,0 +1,134 @@
+/* Ville et Pays */
+create table Ville(
+	nom varchar(25),
+	population decimal(10),
+	pays varchar(25),
+	constraint pk_ville primary key(nom)
+);
+
+create table if not exists Pays(
+	nom varchar(25),
+	capital varchar(25),
+	constraint pk_pays primary key(nom),
+	constraint fk_pays_ville foreign key(capital) references Ville(nom)
+);
+
+alter table Ville
+	add constraint fk_ville_pays foreign key(pays) references Pays(nom);
+
+/*
+alter table ville
+	drop constraint fk_ville_pays;
+*/
+
+/*
+drop table ville if exists;
+drop table pays if exists;
+*/
+
+insert into pays values('France', null);
+/*insert into Pays(nom, capital) values('France', null);*/
+
+insert into ville values('Paris', 3000000, 'France');
+
+update Pays set capital = 'Paris' where nom = 'France';
+
+/* Q2 */
+
+/* Solution 1 */
+/*
+alter table ville set referential_integrity false;
+delete from ville;
+delete from pays;
+alter table ville set referential_integrity true;
+*/
+
+/* Solution 2 */
+/*
+update pays set capital = null where nom = 'France';
+delete from ville where nom = 'Paris';
+delete from pays where nom = 'France';
+*/
+
+/* solution 2.2 */
+/*
+update ville set pays = null where nom = 'Paris';
+delete from pays where nom = 'France';
+delete from ville where nom = 'Paris';
+*/
+
+/* Q3 */
+alter table ville drop constraint fk_ville_pays;
+alter table ville add constraint fk_ville_pays foreign key(pays) references Pays(nom) on delete cascade;
+
+/* Q4 */
+alter table ville drop constraint fk_ville_pays;
+drop table pays;
+drop table ville;
+
+
+/******************************************/
+
+/* arbre ordonne */
+create table if not exists Arbre(
+	id number(10),
+	par number(10),
+	pos number(2),
+	constraint pk_arbre primary key(id),
+	constraint fk_arbre foreign key(par) references (id)
+);
+
+
+/* (1(2(4, 5), 3(6, 7(8, 9)))) */
+insert into Arbre values (1, null, 0);	
+insert into Arbre values (2, 1, 0);
+insert into Arbre values (3, 1, 1);
+insert into Arbre values (4, 2, 0);
+insert into Arbre values (5, 2, 1);
+insert into Arbre values (6, 3, 0);
+insert into Arbre values (7, 3, 1);
+insert into Arbre values (8, 7, 0);
+insert into Arbre values (9, 7, 1);
+
+/* Q2 */
+Oui
+insert into Arbre values (1, null, 0);
+
+/* Q3 */
+alter table arbre add constraint pos_unique unique(par, pos);
+/* alter table arbre drop constraint pos_unique;*/
+
+/* Q4 */
+delete from arbre
+	where par = 2;
+delete from arbre
+	where id = 2;
+
+/* Q5 */
+delete from Arbre
+where par = 3;
+delete from Arbre
+where par = 7;
+delete from Arbre
+where id = 3;
+
+/* Q6 NON, il existe des ref vers le noeud 3 */
+
+
+/* Q7 */
+alter table arbre 
+	drop constraint fk_arbre;
+	
+alter table arbre 
+	add constraint fk_arbre foreign key(par) references (id)
+		on delete cascade;
+
+/* Q8 NON, il existe des ref vers le noeud 3 */
+
+/* Q9 */
+alter table arbre 
+	drop constraint fk_arbre;
+	
+alter table arbre 
+	add constraint fk_arbre foreign key(par) references (id)
+		on delete cascade;

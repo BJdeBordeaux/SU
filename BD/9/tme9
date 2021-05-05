@@ -1,0 +1,28 @@
+insert into employe(numss, nome, prenome, villee, datenaiss) values (22334, 'Adam', 'Funk', 'Paris', to_date('01-12-1982','DD-MM-YYYY'));
+insert into employe(numss, nome, prenome, villee, datenaiss) values (45566, 'Rachid', 'Allaoui', 'Lyon', to_date('13-4-1986','DD-MM-YYYY'));
+insert into employe(numss, nome, prenome, villee, datenaiss) values (77889, 'Florent', 'Girac' , 'Marseille', to_date('4-11-1990','DD-MM-YYYY'));
+
+/*
+insert into projet values(123, 'ADOOP', 22334, 'Paris', 120000);
+*/
+
+insert into grille_sal values('Admin', 80000);
+insert into grille_sal values('Deve', 45000);
+insert into grille_sal values('Tech', 35000);
+
+
+/* Q9 */
+delete from Employe where numss not in (select respProj from Projet) and numss not in (select numss from embauche); 
+
+/* Q10 */
+delete from projet where numproj not in (select numproj from embauche);
+
+/* Q11 */
+delete from grille_sal where profil not in (select profil from embauche);
+
+/* Q12 */
+/* Oui, car il n'y a aucun tuple qui référence les tuples Embauche. */
+
+/* Q13 */
+update employe set numss = numss + 1
+	where numss not in (select numss from embauche union select respproj from projet);
