@@ -43,7 +43,7 @@ void insererEnFin(PListe l, PCellule c){
     PCellule fin = l->fin;
     c->precedent = fin;
     c->suivant = NULL;
-    fin->precedent = c;
+    fin->suivant = c;
     l->fin = c;
 }
 

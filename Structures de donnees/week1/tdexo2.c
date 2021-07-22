@@ -7,8 +7,8 @@ int main(int argc, char const *argv[])
     srand(time(NULL));
 
     float nb = rand()*1./RAND_MAX*1.;
-    float nb2 = rand()/RAND_MAX*1.;
-    float nb3 = rand()*1./RAND_MAX;// non
+    float nb2 = rand()/RAND_MAX*1.;// non
+    float nb3 = rand()*1./RAND_MAX;
     float nb4 = (float) rand()/RAND_MAX;
 
     if (argc < 1) {
@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
     int vMin = 0;
     int nb5 = vMin + rand()%(n+1);
 
-    printf("nb aleatoire : %f\n", nb4);
+    printf("nb aleatoire : %f\n", nb2);
     printf("random int in [0, %d] : %d\n", n, nb5);
 
     // int *p = &n;
@@ -29,4 +29,4 @@ int main(int argc, char const *argv[])
 
     return 0;
 }
-abcdefg
+
