@@ -52,10 +52,10 @@ void inserer_place(PListe pliste, void *data){
     while(tmp->suivant!=NULL) {
       int comp=pliste->comparer(data,tmp->suivant->data);
       if (comp<=0) {
-	// insertion avant le suivant
-	newe->suivant=tmp->suivant;
-	tmp->suivant=newe;
-	return;
+        // insertion avant le suivant
+        newe->suivant=tmp->suivant;
+        tmp->suivant=newe;
+        return;
       }
       // sinon, on passe au suivant
       tmp=tmp->suivant;

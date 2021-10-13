@@ -67,6 +67,23 @@ cellule_t *Inserer_en_pos(int d, int pos, cellule_t *liste){
     return liste;
 }
 
+cellule_t *Inserer_en_pos2(int d, int pos, cellule_t *liste){
+    if(liste == NULL || pos == 0){
+        return Inserer_tete(d, liste);
+    }
+    cellule_t *new = Creer_cellule(d);
+    cellule_t *tem = liste;
+    cellule_t *prev = NULL;
+    while(tem && pos>0){
+        prev = tem;
+        tem = tem->suivant;
+        pos--;
+    }
+    new->suivant = tem;
+    prev->suivant = new;
+    return liste;
+}
+
 // EX31
 cellule_t *Liberer_liste(cellule_t *liste){
     cellule_t *tem;

@@ -136,11 +136,11 @@ void demander_variables(PArbreBinaire pabe, float var_lue[]) {
   for (i=0;i<26;i++) 
     {
       if (val[i]) 
-	{
-	  printf("%c=", 'A'+i);
-	  scanf("%f", &var);
-	  var_lue[i]=var;
-	}
+        {
+          printf("%c=", 'A'+i);
+          scanf("%f", &var);
+          var_lue[i]=var;
+        }
     }	
 }
 
