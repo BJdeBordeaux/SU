@@ -21,14 +21,16 @@ nok:
 	beq $16, $0, ok
 	ori $4, $0, 0
 	lui $4, 0x1001
-	ori $4, 0x31
+	###ori $4, 0x31
+	ori $4, $4, 0x31 ###
 	ori $2, $0, 4
 	syscall
 	j fin_ok
 ok:	
 	ori $4, $0, 0
 	lui $4, 0x1001
-	ori $4, 0x24
+	### ori $4, $4, 0x24
+	ori $4, $4, 0x31 ###
 	ori $2, $0, 4
 	syscall
 fin_ok:

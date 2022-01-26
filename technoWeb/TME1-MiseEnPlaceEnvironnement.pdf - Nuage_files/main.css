@@ -1,0 +1,88 @@
+/**
+ *
+ * (c) Copyright Ascensio System SIA 2021
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+.icon-onlyoffice-new-docx {
+    background-image: url("../img/new-docx.svg");
+}
+.icon-onlyoffice-new-xlsx {
+    background-image: url("../img/new-xlsx.svg");
+}
+.icon-onlyoffice-new-pptx {
+    background-image: url("../img/new-pptx.svg");
+}
+.icon-onlyoffice-open,
+.icon-onlyoffice-convert {
+    background-image: url("../img/app-dark.svg");
+}
+
+/* onlyoffice-inline */
+body.onlyoffice-inline {
+    overscroll-behavior-y: none;
+    overflow: hidden;
+}
+body.onlyoffice-inline #app-navigation,
+body.onlyoffice-inline .searchbox,
+body.onlyoffice-inline #app-content #controls {
+    display: none;
+}
+body.onlyoffice-inline #app-navigation-toggle {
+    display: none !important;
+}
+body.onlyoffice-inline #content #app-content {
+    margin-left: 0;
+}
+#onlyofficeFrame {
+    background-color: #fff;
+    width: 100%;
+    height: calc(100vh - 50px);
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 1010;
+}
+
+.onlyoffice-public-open {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* AscDesktopEditor */
+.AscDesktopEditor #body-user #header {
+    display: none;
+}
+.AscDesktopEditor #body-user #content {
+    padding-top: 0;
+}
+.AscDesktopEditor #body-user #app-navigation,
+.AscDesktopEditor #body-user #controls,
+.AscDesktopEditor #body-user #app-sidebar {
+    top: 0;
+}
+.AscDesktopEditor #body-user #app-navigation {
+    height: 100%;
+}
+.AscDesktopEditor #body-user #app-sidebar {
+    height: 100vh;
+}
+.AscDesktopEditor #body-user table.multiselect thead,
+.AscDesktopEditor #app-content-files thead {
+    top: 44px;
+}
+.AscDesktopEditor #body-user #gallery-button {
+    display: none;
+}

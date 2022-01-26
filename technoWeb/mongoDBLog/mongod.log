@@ -1,0 +1,38 @@
+2022-01-24T20:35:10.730+0100 I CONTROL  [initandlisten] MongoDB starting : pid=15776 port=27017 dbpath=/home/bj/Bureau/坐在你的对桌/SU/C_SU/technoWeb/./mongoDB 64-bit host=bj-Lenovo-ideapad-310S-14IKB
+2022-01-24T20:35:10.730+0100 I CONTROL  [initandlisten] db version v3.6.8
+2022-01-24T20:35:10.730+0100 I CONTROL  [initandlisten] git version: 8e540c0b6db93ce994cc548f000900bdc740f80a
+2022-01-24T20:35:10.730+0100 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.1.1  11 Sep 2018
+2022-01-24T20:35:10.730+0100 I CONTROL  [initandlisten] allocator: tcmalloc
+2022-01-24T20:35:10.730+0100 I CONTROL  [initandlisten] modules: none
+2022-01-24T20:35:10.730+0100 I CONTROL  [initandlisten] build environment:
+2022-01-24T20:35:10.730+0100 I CONTROL  [initandlisten]     distarch: x86_64
+2022-01-24T20:35:10.731+0100 I CONTROL  [initandlisten]     target_arch: x86_64
+2022-01-24T20:35:10.731+0100 I CONTROL  [initandlisten] options: { processManagement: { fork: true }, storage: { dbPath: "./mongoDB" }, systemLog: { destination: "file", path: "./mongoDBLog/mongod.log" } }
+2022-01-24T20:35:10.731+0100 I -        [initandlisten] Detected data files in /home/bj/Bureau/坐在你的对桌/SU/C_SU/technoWeb/./mongoDB created by the 'wiredTiger' storage engine, so setting the active storage engine to 'wiredTiger'.
+2022-01-24T20:35:10.731+0100 I STORAGE  [initandlisten] 
+2022-01-24T20:35:10.731+0100 I STORAGE  [initandlisten] ** WARNING: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine
+2022-01-24T20:35:10.731+0100 I STORAGE  [initandlisten] **          See http://dochub.mongodb.org/core/prodnotes-filesystem
+2022-01-24T20:35:10.731+0100 I STORAGE  [initandlisten] wiredtiger_open config: create,cache_size=1381M,session_max=20000,eviction=(threads_min=4,threads_max=4),config_base=false,statistics=(fast),cache_cursors=false,compatibility=(release="3.0",require_max="3.0"),log=(enabled=true,archive=true,path=journal,compressor=snappy),file_manager=(close_idle_time=100000),statistics_log=(wait=0),verbose=(recovery_progress),
+2022-01-24T20:35:11.338+0100 I STORAGE  [initandlisten] WiredTiger message [1643052911:338447][15776:0x7f43d21e9ac0], txn-recover: Main recovery loop: starting at 2/12160
+2022-01-24T20:35:11.419+0100 I STORAGE  [initandlisten] WiredTiger message [1643052911:419894][15776:0x7f43d21e9ac0], txn-recover: Recovering log 2 through 3
+2022-01-24T20:35:11.465+0100 I STORAGE  [initandlisten] WiredTiger message [1643052911:465965][15776:0x7f43d21e9ac0], txn-recover: Recovering log 3 through 3
+2022-01-24T20:35:11.502+0100 I STORAGE  [initandlisten] WiredTiger message [1643052911:502279][15776:0x7f43d21e9ac0], txn-recover: Set global recovery timestamp: 0
+2022-01-24T20:35:11.530+0100 I CONTROL  [initandlisten] 
+2022-01-24T20:35:11.530+0100 I CONTROL  [initandlisten] ** WARNING: Access control is not enabled for the database.
+2022-01-24T20:35:11.530+0100 I CONTROL  [initandlisten] **          Read and write access to data and configuration is unrestricted.
+2022-01-24T20:35:11.530+0100 I CONTROL  [initandlisten] 
+2022-01-24T20:35:11.530+0100 I CONTROL  [initandlisten] ** WARNING: This server is bound to localhost.
+2022-01-24T20:35:11.530+0100 I CONTROL  [initandlisten] **          Remote systems will be unable to connect to this server. 
+2022-01-24T20:35:11.530+0100 I CONTROL  [initandlisten] **          Start the server with --bind_ip <address> to specify which IP 
+2022-01-24T20:35:11.530+0100 I CONTROL  [initandlisten] **          addresses it should serve responses from, or with --bind_ip_all to
+2022-01-24T20:35:11.530+0100 I CONTROL  [initandlisten] **          bind to all interfaces. If this behavior is desired, start the
+2022-01-24T20:35:11.530+0100 I CONTROL  [initandlisten] **          server with --bind_ip 127.0.0.1 to disable this warning.
+2022-01-24T20:35:11.530+0100 I CONTROL  [initandlisten] 
+2022-01-24T20:35:11.551+0100 I FTDC     [initandlisten] Initializing full-time diagnostic data capture with directory '/home/bj/Bureau/坐在你的对桌/SU/C_SU/technoWeb/./mongoDB/diagnostic.data'
+2022-01-24T20:35:11.552+0100 I NETWORK  [initandlisten] waiting for connections on port 27017
+2022-01-24T20:35:23.848+0100 I NETWORK  [listener] connection accepted from 127.0.0.1:46648 #1 (1 connection now open)
+2022-01-24T20:35:23.848+0100 I NETWORK  [conn1] received client metadata from 127.0.0.1:46648 conn1: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "5.0.5" }, os: { type: "Linux", name: "Ubuntu", architecture: "x86_64", version: "18.04" } }
+2022-01-24T20:35:33.658+0100 I NETWORK  [conn1] end connection 127.0.0.1:46648 (0 connections now open)
+2022-01-24T20:35:36.935+0100 I NETWORK  [listener] connection accepted from 127.0.0.1:46650 #2 (1 connection now open)
+2022-01-24T20:35:36.935+0100 I NETWORK  [conn2] received client metadata from 127.0.0.1:46650 conn2: { application: { name: "MongoDB Shell" }, driver: { name: "MongoDB Internal Client", version: "5.0.5" }, os: { type: "Linux", name: "Ubuntu", architecture: "x86_64", version: "18.04" } }
+2022-01-24T20:35:38.540+0100 I NETWORK  [conn2] end connection 127.0.0.1:46650 (0 connections now open)

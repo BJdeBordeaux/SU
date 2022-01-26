@@ -1,0 +1,13 @@
+2022-01-24T20:28:22.614+0100 I CONTROL  [initandlisten] MongoDB starting : pid=14329 port=27017 dbpath=/home/bj/Bureau/坐在你的对桌/SU/C_SU/technoWeb/./mongoDB 64-bit host=bj-Lenovo-ideapad-310S-14IKB
+2022-01-24T20:28:22.614+0100 I CONTROL  [initandlisten] db version v3.6.8
+2022-01-24T20:28:22.614+0100 I CONTROL  [initandlisten] git version: 8e540c0b6db93ce994cc548f000900bdc740f80a
+2022-01-24T20:28:22.614+0100 I CONTROL  [initandlisten] OpenSSL version: OpenSSL 1.1.1  11 Sep 2018
+2022-01-24T20:28:22.614+0100 I CONTROL  [initandlisten] allocator: tcmalloc
+2022-01-24T20:28:22.614+0100 I CONTROL  [initandlisten] modules: none
+2022-01-24T20:28:22.614+0100 I CONTROL  [initandlisten] build environment:
+2022-01-24T20:28:22.614+0100 I CONTROL  [initandlisten]     distarch: x86_64
+2022-01-24T20:28:22.614+0100 I CONTROL  [initandlisten]     target_arch: x86_64
+2022-01-24T20:28:22.614+0100 I CONTROL  [initandlisten] options: { processManagement: { fork: true }, storage: { dbPath: "./mongoDB" }, systemLog: { destination: "file", path: "./mongoDBLog/mongod.log" } }
+2022-01-24T20:28:22.614+0100 I STORAGE  [initandlisten] exception in initAndListen: DBPathInUse: Unable to lock the lock file: /home/bj/Bureau/坐在你的对桌/SU/C_SU/technoWeb/./mongoDB/mongod.lock (Resource temporarily unavailable). Another mongod instance is already running on the /home/bj/Bureau/坐在你的对桌/SU/C_SU/technoWeb/./mongoDB directory, terminating
+2022-01-24T20:28:22.614+0100 I CONTROL  [initandlisten] now exiting
+2022-01-24T20:28:22.614+0100 I CONTROL  [initandlisten] shutting down with code:100
