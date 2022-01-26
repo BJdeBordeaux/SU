@@ -1,8 +1,14 @@
-# SU
-exercices for assignment in Sorbonne University
-Some files edited by Allen Sobot, agradacimiento XD
+# SU : a repository for assigments
 
-![](https://raw.github.com/meolu/walle-web/master/screenshot/logo.jpg)
+![](https://raw.github.com/BJdeBordeaux/SU/master/logosu.png)
+
+[![Author](https://img.shields.io/badge/Author-BJdeBordeaux-blue.svg "Author")](https://github.com/BJdeBordeaux/SU "Author")
+[![](https://img.shields.io/badge/Collaborator-Sorbonne_Université_Students-green.svg "Collaborator")]()
+
+Feature
+=======================
+
+
 
 Walle 2.0 - [官方主页](https://www.walle-web.io)
 =========================
