@@ -1,0 +1,69 @@
+body {
+    display: flex;
+}
+
+form {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    border-spacing: 10px;
+    align-items: center;
+}
+
+.inputArea {
+    display: grid;
+    gap: 1rem;
+    column-gap: 2rem;
+    border: black solid 2px;
+    border-spacing: 20px;
+    margin: auto;
+    padding: 15px;
+    align-self: center;
+    outline: dimgray;
+    min-width: 200px;
+}
+
+.verticalArea {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+}
+
+.verticalField {
+    display: flex;
+}
+
+.field {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+
+form div label {
+    margin-right: auto;
+}
+
+.buttonField {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+table {
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    border: 4px solid black;
+    border-spacing: 20px;
+    box-shadow: 2px 2px 2px 2px grey;
+}
+
+div button {
+    alignment: center;
+    margin-right: auto;
+    padding: 2px 2px 2px 2px;
+}

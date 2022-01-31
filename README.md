@@ -31,11 +31,13 @@ Encantado, soy Junji LI, un estudiante de China. A hora estudio Ciencias de la C
 
 <img src="https://raw.github.com/BJdeBordeaux/SU/master/wechatQRcode.jpg" width="359" height="484" alt="Wechat QR Code" style="float: left;"/>
 
-<!-- 项目背景
+<!-- 
+项目背景
 安装
 使用
 Badge
 相关项目（可选）
 主要项目负责人
 参与贡献方式
-开源协议 -->
+开源协议 
+-->
