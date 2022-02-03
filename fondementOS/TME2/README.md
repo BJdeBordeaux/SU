@@ -35,24 +35,24 @@
     1. les affichages:
         ```shell
         $ ./mytimes2 "sleep 5" ./loopsys ./loopcpu
-        # pour sleep 5
-        Temps total: 5.001772
+        Commande : sleep 5
+        Temps total: 5.002745
         Temps utilisateur: 0.000000
         Temps système: 0.000000
         Temps utilisateur fils: 0.000000
         Temps système fils: 0.000000
-        # pour ./loopsys
-        Temps total: 0.093892
+        Commande : ./loopsys
+        Temps total: 0.129191
         Temps utilisateur: 0.000000
         Temps système: 0.000000
-        Temps utilisateur fils: 0.090000
+        Temps utilisateur fils: 0.120000
         Temps système fils: 0.000000
-        # pour ./loopcpu
-        Temps total: 9.551745
+        Commande : ./loopcpu
+        Temps total: 8.980207
         Temps utilisateur: 0.000000
         Temps système: 0.000000
-        Temps utilisateur fils: 9.340000
-        Temps système fils: 0.020000
+        Temps utilisateur fils: 8.970000
+        Temps système fils: 0.000000
         ```
 
 1. Changement de priorité
@@ -64,9 +64,106 @@
         0 R  1000  6091  4306  0  80   0 -  9142 -      pts/1    00:00:00 ps
         ```
 
-    1. priorité de la commande : 19
+    1. priorité de la commande : 99
         ```shell
         F S   UID   PID  PPID  C PRI  NI ADDR SZ WCHAN  TTY          TIME CMD
         0 S  1000  4306  4204  0  80   0 -  7967 sigsus pts/1    00:00:00 zsh
         0 R  1000  7244  4306  0  99  19 -  9142 -      pts/1    00:00:00 ps
+        ```
+
+    1. Si on baisse la priorité, alors le processus touché [6]23433 donne son résultat plus rapidement.
+        ```shell
+        # script tourné via zsh
+        ➜  TME2 git:(master) ✗
+        for i in $(seq 1 9)      
+        do
+                if [ $i = 4 ]
+            then
+                        nice -n -18 ./mytimes2 ./loopcpu &
+                else
+                        ./mytimes2 ./loopcpu &
+                fi
+        done
+        ```
+        ce qui donne l'affichage suivant :
+        ```shell
+        [3] 23428
+        [4] 23429
+        [5] 23431
+        [6] 23433
+        [7] 23435
+        [8] 23436
+        [9] 23440
+        [10] 23445
+        [11] 23447
+        ➜  TME2 git:(master) ✗ Commande : ./loopcpu
+        Temps total: 9.296894
+        Temps utilisateur: 0.000000
+        Temps système: 0.000000
+        Temps utilisateur fils: 9.260000
+        Temps système fils: 0.010000
+
+        [6]    23433 done       nice -n -18 ./mytimes2 ./loopcpu
+        ➜  TME2 git:(master) ✗ Commande : ./loopcpu
+        Temps total: 21.633890
+        Temps utilisateur: 0.000000
+        Temps système: 0.000000
+        Temps utilisateur fils: 9.290000
+        Temps système fils: 0.020000
+
+        [4]    23429 done       ./mytimes2 ./loopcpu
+        ➜  TME2 git:(master) ✗ Commande : ./loopcpu
+        Temps total: 22.100417
+        Temps utilisateur: 0.000000
+        Temps système: 0.000000
+        Temps utilisateur fils: 9.300000
+        Temps système fils: 0.000000
+
+        [7]    23435 done       ./mytimes2 ./loopcpu
+        ➜  TME2 git:(master) ✗ Commande : ./loopcpu
+        Temps total: 22.369032
+        Temps utilisateur: 0.000000
+        Temps système: 0.000000
+        Temps utilisateur fils: 9.300000
+        Temps système fils: 0.010000
+
+        [5]    23431 done       ./mytimes2 ./loopcpu
+        ➜  TME2 git:(master) ✗ Commande : ./loopcpu
+        Temps total: 22.888488
+        Temps utilisateur: 0.000000
+        Temps système: 0.000000
+        Temps utilisateur fils: 9.320000
+        Temps système fils: 0.010000
+
+        [9]    23440 done       ./mytimes2 ./loopcpu
+        ➜  TME2 git:(master) ✗ Commande : ./loopcpu
+        Temps total: 23.161449
+        Temps utilisateur: 0.000000
+        Temps système: 0.000000
+        Temps utilisateur fils: 9.290000
+        Temps système fils: 0.010000
+
+        [8]    23436 done       ./mytimes2 ./loopcpu
+        Commande : ./loopcpu
+        Temps total: 23.149493
+        Temps utilisateur: 0.000000
+        Temps système: 0.000000
+        Temps utilisateur fils: 9.300000
+        Temps système fils: 0.010000
+        [11]  + 23447 done       ./mytimes2 ./loopcpu
+        ➜  TME2 git:(master) ✗ ➜  TME2 git:(master) ✗ Commande : ./loopcpu
+        Temps total: 23.864221
+        Temps utilisateur: 0.000000
+        Temps système: 0.000000
+        Temps utilisateur fils: 9.310000
+        Temps système fils: 0.020000
+
+        [10]  + 23445 done       ./mytimes2 ./loopcpu
+        Commande : ./loopcpu
+        Temps total: 23.906371
+        Temps utilisateur: 0.000000
+        Temps système: 0.000000
+        Temps utilisateur fils: 9.300000
+        Temps système fils: 0.010000
+        [3]  + 23428 done       ./mytimes2 ./loopcpu
         ```

@@ -36,6 +36,7 @@ void lance_commande2(char *command){
     long int delt_u = fin.tv_usec - debut.tv_usec;
     long int delt_s = fin.tv_sec - debut.tv_sec;
     double temps_total = delt_s + delt_u*1./CLOCKS_PER_SEC;
+    printf("Commande : %s\n", command);
     printf("Temps total: %.6lf\n", temps_total);
     printf("Temps utilisateur: %.6lf\n", (double)(end2.tms_utime - start2.tms_utime)/tick_per_sec);
     printf("Temps système: %.6lf\n", (double)(end2.tms_stime - start2.tms_stime)/tick_per_sec);
