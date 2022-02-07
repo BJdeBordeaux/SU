@@ -8,7 +8,7 @@ class Pendu{
         this.errors = 0
         this.foundcount = 0
         this.mot = []
-        for (let index = 0; index < mot_a_trouver.length; index++) {
+        for (let index = 0; index < this.mot_a_trouver.length; index++) {
             this.mot[index] = "_";
         }
     }
@@ -46,10 +46,6 @@ class Pendu{
     }
 
     play(){
-        new Promise((resolve, rejects)=>{
-
-        })
-
         const readline = require('readline');
         readline.emitKeypressEvents(process.stdin);
         process.stdin.setRawMode(true);
@@ -62,23 +58,27 @@ class Pendu{
                 var ketResult = this.keypressed(str);
                 if(ketResult == 1){
                     this.show()
-                    console.log("Partie gagnée!")
+                    process.stdin.removeListener("keypress", f)
                     process.stdin.pause()
-                    return;
+                    console.log("Gagnée !");
                 }else if(ketResult == 0){
                     this.show()
-                    console.log("Partie perdue...")
+                    process.stdin.removeListener("keypress", f)
                     process.stdin.pause()
-                    return;
+                    console.log("Perdue...");
                 }else{
                     this.show()
                     console.log("Taper une lettre")
                 }
             }
         }
-
-        process.stdin.on('keypress', f);
         
+        let promise = new Promise((resolve, rejects)=>{
+            process.stdin.on('keypress', f);
+        })
+        
+        return promise
+
         // Ne pas oublier de faire process.stdin.removeListener("keypress", f)
         // afin de "nettoyer le handler"
     }

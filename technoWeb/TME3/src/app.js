@@ -11,11 +11,22 @@ process.stdin.on('keypress', (_str, key) => {
         process.exit();
     }
 });
+
 const pendu = require("./pendu.js")
 
-new pendu.Pendu("POMME", 5).show()
-readline.cursorTo(process.stdout, 0, 0)
-readline.clearScreenDown(process.stdout)
+// readline.cursorTo(process.stdout, 0, 0)
+// readline.clearScreenDown(process.stdout)
+const dico = require("./dico.js")
+const path = require('path')
+const dicopath = path.join(path.dirname(__dirname), "dico.txt")
+let min_mot_length = 5
 
-const pomme = new pendu.Pendu("POMME", 5)
-pomme.play()
+const init = async (dico_path) => {
+    let mots = await dico.lit(dico_path, min_mot_length)
+    let mot_cible = mots[random.int(0, mots.length-1)]
+    const game = new pendu.Pendu(mot_cible, min_mot_length)
+    game.play()
+}
+
+init("./dico.txt")
+
