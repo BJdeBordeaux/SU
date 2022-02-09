@@ -1,0 +1,202 @@
+# #Decompresser _genomic.fna.gz
+# with gzip.open('_genomic.fna.gz', 'rb') as f_in:
+#     with open('_genomic.fna', 'wb') as f_out:
+#         shutil.copyfileobj(f_in, f_out)
+
+# Dictionnaire codons -> acides aminés. Les codons stops sont représentés
+# avec le caractère "*"
+CODEGENETIQUE = {
+    "TTT": "F", "TTC": "F","TTA": "L","TTG": "L","TCT": "S","TCC": "S","TCA": "S","TCG": "S","TAT": "Y","TAC": "Y",
+    "TAA": "*","TAG": "*","TGT": "C","TGC": "C","TGA": "*","TGG": "W","CTT": "L","CTC": "L","CTA": "L","CTG": "L",
+    "CCT": "P","CCC": "P","CCA": "P","CCG": "P","CAT": "H","CAC": "H","CAA": "Q","CAG": "Q","CGT": "R","CGC": "R",
+    "CGA": "R","CGG": "R","ATT": "I","ATC": "I","ATA": "I","ATG": "M","ACT": "T","ACC": "T","ACA": "T","ACG": "T",
+    "AAT": "N","AAC": "N","AAA": "K","AAG": "K","AGT": "S","AGC": "S","AGA": "R","AGG": "R","GTT": "V","GTC": "V",
+    "GTA": "V","GTG": "V","GCT": "A","GCC": "A","GCA": "A","GCG": "A","GAT": "D","GAC": "D","GAA": "E","GAG": "E",
+    "GGT": "G","GGC": "G","GGA": "G","GGG": "G"
+}
+# Utiliser les sequences TESTSEQ et TESTSEQCLEAN pour tester vos fonctions
+TESTSEQ = "ATGAAACGCATTAGCMMCACCATTACCACCACCATCACCATTACCACAGKTAACGGTGCGGGCTGA"
+TESTSEQCLEAN = "ATGAAACGCATTAGCACCACCATTACCACCACCATCACCATTACCACAGGTAACGGTGCGGGCTGA"
+
+import doctest # C’est pour pouvoir utiliser doctest.testmod() et tester les fonctions
+import random
+from tracemalloc import start
+from turtle import st
+
+random.choice(['A', 'C', 'T', 'G'])
+
+def remplace_non_identifies(seq):
+    """
+    Remplace les nucléotides non identifiés par une des possibilités de façon aléatoire.
+    entrée : sequence ayant peut-etre des nucleotides non identifiés
+    sortie : sequence (nettoyé) sans nucléotides non identifiés 
+    >>> remplace_non_identifies(TESTSEQCLEAN)
+    'ATGAAACGCATTAGCACCACCATTACCACCACCATCACCATTACCACAGGTAACGGTGCGGGCTGA'
+    """
+    options = {
+        "R": ["G", "A"],
+        "Y": ["T", "C"],
+        "K": ["G", "T"],
+        "M": ["A", "C"],
+        "S": ["G", "C"],
+        "W": ["A", "T"],
+        "B": ["G", "T", "C"],
+        "D": ["G", "A", "T"],
+        "H": ["A", "C", "T"],
+        "V": ["G", "C", "A"],
+        "N": ["A", "G", "C", "T"],
+        "X": ["A", "G", "C", "T"]
+    }
+    res = ""
+    for index in range(len(seq)):
+        if seq[index] in options:
+            res += random.choice(options[seq[index]])
+        else:
+            res += seq[index]
+    return res
+
+doctest.testmod()
+
+remplace_non_identifies(TESTSEQ)
+
+
+##############################################################################
+
+# Question 2
+def listecodon(seq):
+    """
+    Renvoie une liste de codons pour une séquence passée en paramètre.
+    entrée : sequence de nucléotides
+    sortie : list de codons de la sequence d'entrée
+
+    Si la longueur de la séquence n'est pas un multiple de 3 elle ne tiendra pas 
+    compte des 1 ou 2 nucléotides restant à la fin.
+    
+    >>> listecodon('AAACCC')
+    ['AAA', 'CCC']
+    >>> listecodon('AAACC')
+    ['AAA']
+    >>> listecodon('AAAC')
+    ['AAA']
+    """
+    
+    seq3x = seq[:(len(seq)//3)*3]
+    return [seq3x[i:i+3] for i in range(0, len(seq3x), 3)]
+
+doctest.testmod()
+
+assert listecodon(TESTSEQCLEAN) == [
+    'ATG', 'AAA', 'CGC', 'ATT', 'AGC', 'ACC', 'ACC', 'ATT', 'ACC', 'ACC',
+    'ACC', 'ATC', 'ACC', 'ATT', 'ACC', 'ACA', 'GGT', 'AAC', 'GGT', 'GCG',
+    'GGC', 'TGA']
+
+##############################################################################
+
+
+# Question 3
+def reversecompl(seq):
+    """Renvoie le brin complémentaire d’une séquence.
+    entrée : sequence de nucléotides (brin sens)
+    sortie : sequence de nucléotides (brin complementaire)
+    >>> reversecompl('AACGTGGCA')
+    'TGCCACGTT'
+    """
+    compl = {'A': 'T', 'C': 'G', 'G': 'C', 'T':'A'}
+    res = ''
+    for index in range(len(seq)):
+        res = compl[seq[index]] + res
+    return res
+
+print (reversecompl('AACGTGGCA'))
+assert reversecompl(TESTSEQCLEAN) == "TCAGCCCGCACCGTTACCTGTGGTAATGGTGATGGTGGTGGTAATGGTGGTGCTAATGCGTTTCAT"
+
+
+##############################################################################
+
+
+def trouver_positions_orfs(codons):
+    """Retourne les positions de cadre ouverts de la liste des codons.
+    entrée : liste de codons
+    sortie : les positions [start] et [stop] de cadre ouverts de la liste des codons
+    
+    >>> trouver_positions_orfs(['ATG', 'AAA', 'CGC', 'ATT', 'TAG', 'ATG', 'ACC', 'ATT', 'ACC', 'ACC', 'ACC', 'ATC', 'ACC', 'ATT', 'ACC', 'ACA', 'GGT', 'AAC', 'TGA', 'GGT', 'GCG', 'GGC'])
+    ([0, 5], [4, 18])
+    """
+    starts = [i for i, codon in enumerate(codons) if codon in {'ATG', 'GTG', 'TTG'}] #positions de tous les starts dans codons
+    stops =  [i for i, codon in enumerate(codons) if codon in {'TAA', 'TAG', 'TGA'}] #positions de tous les stops  dans codons
+    
+   
+    orf_starts = [] #renvoie la liste de positions de codons start
+    orf_stops = []  #renvoie la liste de positions de codons stop, les deux liste ont la meme taille et sont de pair start/stop 
+    
+    if len(starts)== 0 or len(stops) == 0:
+        return (orf_starts, orf_stops)
+    
+    starts_index = stops_index = last_starts_index = last_stops_index = 0
+    
+    orf_starts.append(starts[starts_index])
+
+    count_append = 1
+    
+    while starts_index < len(starts) and stops_index < len(stops):
+        if count_append%2 == 0: # append start
+            starts_index += 1
+            if starts_index >= len(starts):
+                break
+            if(starts[starts_index] > stops[last_stops_index]):
+                orf_starts.append(starts[starts_index])
+                last_starts_index = starts_index
+                count_append += 1
+            
+        else: # count_append//2 == 1, append stop
+            if(stops[stops_index] > starts[last_starts_index]):
+                orf_stops.append(stops[stops_index])
+                last_stops_index = stops_index
+                count_append += 1
+            stops_index += 1
+    
+    if count_append%2 == 1:
+        orf_starts.pop()
+
+    return (orf_starts, orf_stops)
+
+# doctest.testmod()
+
+# Question 4
+
+def liste_orfs_sens(seq):
+    """
+    Liste de tous les cadres ouverts de lectures du brin sens.
+    entrée : sequence de nucléotides 
+    sortie : liste contenant tous les cadres ouverts de lectures
+    >>> sorted(liste_orfs_sens('AAATGATGTAATAGTGTTTTGATTAGGGCAT'))
+    ['ATGATGTAA', 'GTGTTTTGA']
+    
+    contre-sens: 'ATGCCCTAA', 
+    """
+    orfs = []
+    cadres = [listecodon(seq), listecodon(seq[1:]), listecodon(seq[2:])]
+    for i_cadre in range(3):
+        (start_liste, stop_liste) = trouver_positions_orfs(cadres[i_cadre])
+        assert(len(start_liste) == len(stop_liste))
+        for index in range(len(start_liste)):
+            start_pos = start_liste[index]
+            stop_pos = stop_liste[index]
+            orfs.append(''.join(cadres[i_cadre][start_pos:stop_pos+1]))
+    return orfs
+
+
+sorted(liste_orfs_sens('AAATGATGTAATAGTGTTTTGATTAGGGCAT'))
+
+
+def liste_orfs(seq):
+    """
+    Liste de tous les cadres ouverts de lectures du brin sens et complementaire.
+    entrée : sequence de nucléotides 
+    sortie : liste contenant tous les cadres ouverts de lectures      
+    >>> sorted(liste_orfs('AAATGATGTAATAAGTTTTGATTAGGGTA'))
+    ['ATGATGTAA']
+    """
+    return list(set(liste_orfs_sens(seq)) | set(liste_orfs_sens(reversecompl(seq))))
+
+doctest.testmod()
