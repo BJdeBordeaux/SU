@@ -18,7 +18,8 @@ CODEGENETIQUE = {
 TESTSEQ = "ATGAAACGCATTAGCMMCACCATTACCACCACCATCACCATTACCACAGKTAACGGTGCGGGCTGA"
 TESTSEQCLEAN = "ATGAAACGCATTAGCACCACCATTACCACCACCATCACCATTACCACAGGTAACGGTGCGGGCTGA"
 
-import doctest # C’est pour pouvoir utiliser doctest.testmod() et tester les fonctions
+import doctest
+from fileinput import filename # C’est pour pouvoir utiliser doctest.testmod() et tester les fonctions
 import random
 from tracemalloc import start
 from turtle import st
@@ -200,3 +201,53 @@ def liste_orfs(seq):
     return list(set(liste_orfs_sens(seq)) | set(liste_orfs_sens(reversecompl(seq))))
 
 doctest.testmod()
+
+def annotationOrfs(genome, outputFile, seuilOrf, orfs):
+    """
+    Produire une annotation des gènes d'un génome à partir de l'ensemble des orfs
+    entrée : genome sequences
+    entrée : seuilOrf - seuil pour dire qu’un ORF est un gène
+    entrée : orfs - ensemble des orfs detecté par la fonction liste_orfs
+    entrée : outputFile - nom du fichier pour sauvegarder l'annotation
+    sortie : None
+    """
+    valide_orfs = [orf for orf in orfs if len(orf) >= seuilOrf]
+    len_orfs = [len(orf) for orf in valide_orfs]
+    brin2 = reversecompl(genome)
+    index_start_orfs_1 = []
+    index_start_orfs_2 = []
+    pos = 0
+    last_len = 0
+    for orf in valide_orfs:
+        pos = genome[pos+last_len:].find(orf)
+        last_len = len(orf)
+        index_start_orfs_1.append(pos)
+    pos = 0
+    last_len = 0
+    for orf in valide_orfs:
+        pos = brin2[pos+last_len:].find(orf)
+        last_len = len(orf)
+        index_start_orfs_2.append(pos)
+    with open(outputFile, "w") as of:
+        of.write('number, start position, stop position, strand, length\n')
+        count = 0
+        virgule = ", "
+        for i in range(len(valide_orfs)):
+            if index_start_orfs_1[i] != -1:
+                count += 1
+                number = str(count)
+                start_pos = str(index_start_orfs_1[i] + 1)
+                len_orf = str(len_orfs[i])
+                stop_pos = str(index_start_orfs_1[i] + 1 + len_orfs[i] - 1)
+                strand = " + "
+                of.write(number + virgule + start_pos + virgule + stop_pos + virgule + strand + virgule + len_orf + "\n")
+            if index_start_orfs_2[i] != -1:
+                count += 1
+                number = str(count)
+                start_pos = str(index_start_orfs_2[i] + 1)
+                len_orf = str(len_orfs[i])
+                stop_pos = str(index_start_orfs_2[i] + 1 + len_orfs[i] - 1)
+                strand = " - "
+                of.write(number + virgule + start_pos + virgule + stop_pos + virgule + strand + virgule + len_orf + "\n")
+
+annotationOrfs(genome, 'annotation_des_orfs.csv', 1000, orfs)
