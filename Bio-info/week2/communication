@@ -241,6 +241,7 @@ def annotationOrfs(genome, outputFile, seuilOrf, orfs):
                 stop_pos = str(index_start_orfs_1[i] + 1 + len_orfs[i] - 1)
                 strand = " + "
                 of.write(number + virgule + start_pos + virgule + stop_pos + virgule + strand + virgule + len_orf + "\n")
+        for i in range(len(valide_orfs)):
             if index_start_orfs_2[i] != -1:
                 count += 1
                 number = str(count)
