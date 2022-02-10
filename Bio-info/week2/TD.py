@@ -1,42 +1,50 @@
-from ast import Try
-from gettext import find
 
-
-seq = 'atgtaccgtcgatcgtagcttgatcgatcg'
 
 startCodons = ('ATG')
 stopCodons = ('TAA', 'TAG', 'TGA')
 
-def validLen(start, end):
-	if (end-start+1)//3 == 0:
-		return True
-	return False
+def afficheORF(sequence, startCodons, stopCodons):
+    import re
+    grp = [
+        match.group()[:-3] for match in re.finditer(
+            '((ATG)((?!TAA|TAG|TGA)([ACTG][ACTG][ACTG]))*(TAA|TAG|TGA))',
+            sequence.upper())
+    ]
+    res = max(grp, key=len, default='')
+    print(res.lower())
 
-def scan3(sequence, pos):
-	return sequence[pos:pos+3]
+# afficheORF('atgtaccgtcgatcgtagcttgatcgatcg', startCodons, stopCodons)
 
-def compare3(str1, str2):
-	return str1.lower() == str2.lower()
+background = {'A' : 0.26, 'C' : 0.24, 'G' : 0.23, 'T' : 0.27}
 
-def scanSequenceBase(sequence, startCodons, stopCodons):
-	start = end = -1
-	pos = 0
-	try:
-		for index in range(len(sequence)//3):
-			pos = 3*index
-			if start == -1:
-				for startCodon in startCodons:
-					if compare3(scan3(sequence, pos).lower(), startCodon) :
-						start = pos
-			if end == -1:
-				
-	start = sequence.find(startCodons)
-	for stopCodon in stopCodons:
-		endTmp = sequence.find(stopCodon)
-		if validLen(start, endTmp):
-			
+def probBack(sequence, background):
+    res = 1.
+    for nuc in sequence.upper():
+        res *= background[nuc]
+    print(round(res, 5))
 
-		ends.append()
+print(probBack('acggt', background))
 
-	for i in range(len(sequence[start+3:])):
-	return (start, end)
+def countCodons(sequence, listCodons):
+    li = []
+    for codon in listCodons:
+        li.append(sequence.lower().count(codon.lower()))
+    print("(", end='')
+    for i in range(len(li)-1):
+        print(str(li[i])+", ", end = '')
+    print(str(li[-1]) + ")")
+
+countCodons('atgtaccgtcgatcgtagcttgatcgatcg', ('atg','ccg','gat'))
+
+background = {'AAC' : 0.0026, 'ACG' : 0.0024, 'CGT' : 0.023, 'CAT' : 0.0027}
+
+def probBack(sequence, background):
+    res = 1.
+    for i in range(len(sequence)-2):
+        res *= background[sequence[i:i+3].upper()]
+    strtmp = "{:.4e}".format(res)
+    if strtmp[-2] == "0":
+        res = strtmp[:-2] + strtmp[-1]
+    print(res)
+
+probBack('aacgt', background)

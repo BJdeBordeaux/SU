@@ -21,8 +21,6 @@ TESTSEQCLEAN = "ATGAAACGCATTAGCACCACCATTACCACCACCATCACCATTACCACAGGTAACGGTGCGGGCT
 import doctest
 from fileinput import filename # C’est pour pouvoir utiliser doctest.testmod() et tester les fonctions
 import random
-from tracemalloc import start
-from turtle import st
 
 random.choice(['A', 'C', 'T', 'G'])
 
