@@ -180,9 +180,10 @@
         Average:                3.201s          0.850s          2.351s
         --------------------------------------------------------------------
         ```
-    1. Non. On peut voir depuis le début, peu import la duration du processus, ils sont exécutés.
+    1. À priori, Non. On peut voir depuis le début, peu import la duration du processus, ils sont exécutés.
+        Or, si on ajoute des tâches de petit ncpu au fur et à mesure, ils ont une priorité plus élevée grâce à leur ncpu qui est nul. Donc les processus longs qui ont consommé des ncpu auront un risque de famine.
         ```shell
-        SJF Election !
+        ASJF Election !
         Proc. Long 0 - 0
         Proc. Long 0 - 8000000
         Proc. Long 0 - 16000000
@@ -215,7 +216,7 @@
         Proc. Long 0 - 232000000
         Proc. Long 0 - 240000000
         Proc. Long 0 - 248000000
-        SJF Election !
+        ASJF Election !
         Proc. Court 1 - 0
         Proc. Court 1 - 8000000
         Proc. Court 1 - 16000000
@@ -228,7 +229,7 @@
         Proc. Court 1 - 72000000
         ############ FIN COURT 1
 
-        SJF Election !
+        ASJF Election !
         Proc. Court 0 - 0
         Proc. Court 0 - 8000000
         Proc. Court 0 - 16000000
@@ -241,7 +242,7 @@
         Proc. Court 0 - 72000000
         ############ FIN COURT 0
 
-        SJF Election !
+        ASJF Election !
         Proc. Long 1 - 0
         Proc. Long 1 - 8000000
         Proc. Long 1 - 16000000
@@ -274,7 +275,7 @@
         Proc. Long 1 - 232000000
         Proc. Long 1 - 240000000
         Proc. Long 1 - 248000000
-        SJF Election !
+        ASJF Election !
         Proc. Court 3 - 0
         Proc. Court 3 - 8000000
         Proc. Court 3 - 16000000
@@ -287,7 +288,7 @@
         Proc. Court 3 - 72000000
         ############ FIN COURT 3
 
-        SJF Election !
+        ASJF Election !
         Proc. Court 2 - 0
         Proc. Court 2 - 8000000
         Proc. Court 2 - 16000000
@@ -300,7 +301,7 @@
         Proc. Court 2 - 72000000
         ############ FIN COURT 2
 
-        SJF Election !
+        ASJF Election !
         Proc. Long 0 - 256000000
         Proc. Long 0 - 264000000
         Proc. Long 0 - 272000000
@@ -331,7 +332,7 @@
         Proc. Long 0 - 472000000
         Proc. Long 0 - 480000000
         Proc. Long 0 - 488000000
-        SJF Election !
+        ASJF Election !
         Proc. Court 4 - 0
         Proc. Court 4 - 8000000
         Proc. Court 4 - 16000000
@@ -344,7 +345,7 @@
         Proc. Court 4 - 72000000
         ############ FIN COURT 4
 
-        SJF Election !
+        ASJF Election !
         Proc. Long 1 - 256000000
         Proc. Long 1 - 264000000
         Proc. Long 1 - 272000000
@@ -376,7 +377,7 @@
         Proc. Long 1 - 480000000
         Proc. Long 1 - 488000000
         Proc. Long 1 - 496000000
-        SJF Election !
+        ASJF Election !
         Proc. Court 5 - 0
         Proc. Court 5 - 8000000
         Proc. Court 5 - 16000000
@@ -389,7 +390,7 @@
         Proc. Court 5 - 72000000
         ############ FIN COURT 5
 
-        SJF Election !
+        ASJF Election !
         Proc. Long 0 - 496000000
         Proc. Long 0 - 504000000
         Proc. Long 0 - 512000000
@@ -421,7 +422,7 @@
         Proc. Long 0 - 720000000
         Proc. Long 0 - 728000000
         Proc. Long 0 - 736000000
-        SJF Election !
+        ASJF Election !
         Proc. Court 6 - 0
         Proc. Court 6 - 8000000
         Proc. Court 6 - 16000000
@@ -434,7 +435,7 @@
         Proc. Court 6 - 72000000
         ############ FIN COURT 6
 
-        SJF Election !
+        ASJF Election !
         Proc. Long 1 - 504000000
         Proc. Long 1 - 512000000
         Proc. Long 1 - 520000000
@@ -465,7 +466,7 @@
         Proc. Long 1 - 720000000
         Proc. Long 1 - 728000000
         Proc. Long 1 - 736000000
-        SJF Election !
+        ASJF Election !
         Proc. Court 7 - 0
         Proc. Court 7 - 8000000
         Proc. Court 7 - 16000000
@@ -478,7 +479,7 @@
         Proc. Court 7 - 72000000
         ############ FIN COURT 7
 
-        SJF Election !
+        ASJF Election !
         Proc. Long 0 - 744000000
         Proc. Long 0 - 752000000
         Proc. Long 0 - 760000000
@@ -488,7 +489,7 @@
         Proc. Long 0 - 792000000
         ############ FIN LONG 0
 
-        SJF Election !
+        ASJF Election !
         Proc. Long 1 - 744000000
         Proc. Long 1 - 752000000
         Proc. Long 1 - 760000000

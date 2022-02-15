@@ -68,7 +68,6 @@ int RandomElect(void) {
 int SJFElect(void) {
   int p;
 
-  /* Choisir le processus p  - A ecrire en TP */
   printf("SJF Election !\n");
 
   double duration_min = __DBL_MAX__;
@@ -89,8 +88,7 @@ int SJFElect(void) {
 int ApproxSJF(void) {
   int p;
 
-  /* Choisir le processus p  - A ecrire en TP */
-  printf("SJF Election !\n");
+  printf("ASJF Election !\n");
 
   double cpu_min = Tproc[0].ncpu;
   p = 0;
