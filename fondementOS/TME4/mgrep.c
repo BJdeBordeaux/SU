@@ -4,41 +4,56 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <sys/resource.h>
 
-int main(int argc, char *argv[])
+#define MAXFILS 1
+
+int main(int argc, char const *argv[])
 {
-    printf("This is parent process %d\n", getpid());
-    pid_t p1, p2;
-    int status_child, exit_child;
-    int taille = 255;
-    char commandBuffer[taille];
-    for (int i = 0; i < argc-2; i++)
+    pid_t pid;
+    int i;
+    for (i = 0; i < (argc-2>MAXFILS?MAXFILS:argc-2); i++)
     {
-        if ((p1=fork())==0)
-        {
-            // child process
-            printf("child process %d\n", getpid());
-            strcat(commandBuffer, "grep");
-            strcat(commandBuffer, " ");
-            strcat(commandBuffer, argv[1]);
-            strcat(commandBuffer, " ");
-            strcat(commandBuffer, argv[i+2]);
-            // printf(strdup(commandBuffer));
-            system(commandBuffer);
-            printf("\nEnd child process: %d\n", getpid());
-            // printf("\nEnd child process: %d, status: %d\n", exit_child, WEXITSTATUS(status_child));
-            // return 0;
-            exit(1);
+        pid = fork();
+        if(pid == 0 || pid == -1){
+            break;
         }
+    }
+    if(pid == -1){
+        // error
+        fprintf(stderr, "error !\n");
+        exit(EXIT_FAILURE);
+    }else if (pid == 0)        // child process
+    {
+        printf("child process %d\n", getpid());
+        execlp("grep", "grep", argv[1], argv[i+2], NULL);
+        printf("End child process: %d\n", getpid());
+        exit(EXIT_SUCCESS);
+    }else
+    {
         // parent process
-
+        int k;
+        struct rusage r;
+        while((k=wait3(&pid, 0, &r))>0){
+            struct timeval utime, stime;
+            utime = r.ru_utime;
+            stime = r.ru_stime;
+            printf("PID %d :\n\tutime: %ld.%06lds\n\tstime: %ld.%06lds\n", k, utime.tv_sec, utime.tv_usec, stime.tv_sec, stime.tv_usec);
+            if(i<argc-2){
+                pid = fork();
+                if (pid==0)
+                {
+                    // child process
+                    printf("child process %d\n", getpid());
+                    execlp("grep", "grep", argv[1], argv[i+2], NULL);
+                    printf("End child process: %d\n", getpid());
+                    exit(EXIT_SUCCESS);
+                }
+                i++;
+            }
+        };
+        printf("End parent process: %d\n", getpid());
     }
-
-    exit_child = wait(&status_child);
-    if(WIFEXITED(status_child)){
-        
-    }
-
-    printf("End parent process: %d\n", getpid());
+    
     return 0;
 }

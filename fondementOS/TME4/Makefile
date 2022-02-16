@@ -1,7 +1,7 @@
 CFLAGS = -g -Wextra
 CC = gcc
 
-PROGRAMS = mgrep mgrep2 testf
+PROGRAMS = mgrep zombie
 
 .PHONY:	all clean
 
@@ -10,10 +10,7 @@ all: $(PROGRAMS)
 mgrep: mgrep.c
 	$(CC) -o $@ $(CFLAGS) $^
 	
-mgrep2: mgrep2.c
-	$(CC) -o $@ $(CFLAGS) $^
-
-testf: testf.c
+zombie: zombie.c
 	$(CC) -o $@ $(CFLAGS) $^
 
 clean:
