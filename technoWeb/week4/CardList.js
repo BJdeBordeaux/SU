@@ -18,7 +18,7 @@ class CardList extends React.Component {
         
         return (
             <div className="card">{this.state.Cartes.map((card, index) => {
-                <Card symbol={card.Card} affichage={card.feedback}/>
+                return <Card symbol={card.Card} affichage={card.feedback}/>
             })}
             </div>
         )

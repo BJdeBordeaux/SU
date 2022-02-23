@@ -5,7 +5,7 @@ class FormAddCard extends React.Component{
 
     send(event){
         var data_to_send={
-            Card: this.re,
+            Card: this.ref.symbol.value,
             feedback: this.props.display.value,
         }
         this.props.addCard(data_to_send)
