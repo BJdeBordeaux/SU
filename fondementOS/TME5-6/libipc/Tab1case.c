@@ -18,7 +18,7 @@
 /* definition des semaphores */ 
 
 	// A completer
-  #define SEM_E 0
+  #define SEM_EMET 0
   #define SEM_NB_RECEPT 1
   int RECEP[NR];
   
@@ -58,7 +58,7 @@ t_segpart *sp;
 	// A completer - contient les instructions executees
         // par un emetteur
 void Emettre(char* msg){
-  P(SEM_E);
+  P(SEM_EMET);
   sp->msg = msg;
   printf("(Message sent!)\n");
   for (int i = 0; i < NR; i++)
@@ -82,7 +82,7 @@ void Recevoir(int i){
   if(sp->nbRecpt ==NR){
     sp->nbRecpt = 0;
     printf("Case Libéré\n");
-    V(SEM_E);
+    V(SEM_EMET);
   }
   V(SEM_NB_RECEPT);
 }
