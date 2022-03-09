@@ -1,5 +1,4 @@
-import  React  from 'react';
-import ReactDOM from 'react-dom';
+import  {Component}  from 'react';
 
 class Card extends Component {
     constructor(props) {
@@ -12,14 +11,14 @@ class Card extends Component {
     }
 
     handleCardClick(){
-        if(this.state.affichage == 'hidden'){
+        if(this.state.affichage === 'hidden'){
             this.setState({affichage: 'visible'});
         }
     }
 
     render() {
         return (
-            <div className="cards" onClick={() => handleCardClick()}>{this.state.affichage=='visible'?this.props.symbol:'_'}</div>
+            <div className="cards" onClick={() => this.handleCardClick()}>{this.state.affichage==='visible'?this.props.symbol:'_'}</div>
             
         );
     }
