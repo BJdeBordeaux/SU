@@ -1,7 +1,7 @@
 IPCPATH = ./lib 
 CFLAGS = -Wall -I$(IPCPATH)
 
-all: Tab1case TabNcases  
+all: Tab1case TabNcase  
 
 Tab1case: Tab1case.o
 	gcc -o Tab1case Tab1case.o -L$(IPCPATH) -lIPC
