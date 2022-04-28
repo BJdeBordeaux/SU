@@ -50,7 +50,8 @@ char *tas_malloc(unsigned int taille)
 
 int tas_free(char *ptr)
 {
-    
+    // free a block
+    tas[ptr - tas - 1] = -1;
     return 0;
 }
 
@@ -65,8 +66,12 @@ int main(int argc, char **argv)
     strcpy(p1, "tp 1");
     strcpy(p2, "tp 2");
     strcpy(p3, "tp 3");
-    tas_free(p2);
+    tas_free(p1);
     p4 = (char *)tas_malloc(8);
     strcpy(p4, "systeme");
+    p5 = (char *)tas_malloc(3);
+    strcpy(p5, "si");
+    char* p6 = (char *)tas_malloc(3);
+    strcpy(p6, "fi");
     afficher_tas();
 }
